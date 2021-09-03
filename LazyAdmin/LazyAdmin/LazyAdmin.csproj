@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Folder Include="Forms\" />
-    <Folder Include="Scripts\" />
   </ItemGroup>
 
 </Project>
