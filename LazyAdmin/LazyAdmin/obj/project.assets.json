@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Dev\\LazyAdmin(Rework)\\LazyAdmin\\LazyAdmin\\LazyAdmin.csproj",
+      "projectUniqueName": "D:\\Dev\\LazyAdmin(Rework)\\LazyAdmin\\LazyAdmin\\LazyAdmin\\LazyAdmin.csproj",
       "projectName": "LazyAdmin",
-      "projectPath": "D:\\Dev\\LazyAdmin(Rework)\\LazyAdmin\\LazyAdmin\\LazyAdmin.csproj",
+      "projectPath": "D:\\Dev\\LazyAdmin(Rework)\\LazyAdmin\\LazyAdmin\\LazyAdmin\\LazyAdmin.csproj",
       "packagesPath": "C:\\Users\\matp\\.nuget\\packages\\",
-      "outputPath": "D:\\Dev\\LazyAdmin(Rework)\\LazyAdmin\\LazyAdmin\\obj\\",
+      "outputPath": "D:\\Dev\\LazyAdmin(Rework)\\LazyAdmin\\LazyAdmin\\LazyAdmin\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
