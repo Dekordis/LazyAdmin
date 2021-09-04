@@ -1,0 +1,21 @@
+﻿																This document is a reference for all methods
+
+
+
+													ClipBoardToNAV - This method process all information for copy it in our services
+
+For use it, you need call them via App.ClipBoardToNAV(); 
+Add your Array and also choose one of parametrs:
+		1. "ToNav" - Parametr which take all Variables form array and add "|" between them, for search all assets in Navision
+		2. "ToTicket" - Parametr which create our standart messege for copy to Jira Ticket
+		3. "ToExcel" - Parametr which build text for copy it to Excel document. !! For this parametr also you need add count word in string in array !!
+		Preferably you need use 2,3,4 count words in string.
+
+		Example:
+
+App.ClipBoardToNAV(string task, string[] Array);
+		Example for "ToExcel":
+App.ClipBoardToNAV("ToExcel", YourArray, 5);
+
+													
+													NextMethod

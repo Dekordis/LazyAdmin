@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "LazyAdmin": {
+      "commandName": "Project",
+      "workingDirectory": "S:\\LazyAdmin\\LazyAdmin\\LazyAdmin\\bin\\Debug"
+    }
+  }
+}
