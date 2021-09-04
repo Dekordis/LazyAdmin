@@ -1,0 +1,7 @@
+﻿												This is Database with all interesting informations about window and design
+
+																	How Delete Header
+
+1. Choose properties of window ( RBM - Set Current Selection - "Window" )
+2. Find AllowsTransparency and set paramert to TRUE
+3. Find WindowStyle and set paramert to NONE

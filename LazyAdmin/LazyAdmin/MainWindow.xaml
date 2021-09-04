@@ -5,8 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LazyAdmin"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="MainWindow" Height="450" Width="800" WindowStyle="ThreeDBorderWindow" Background="White">
+    <Viewbox Stretch="Fill">
+        <Grid Height="434.04" Width="800">
+            <Button Content="Setup Software" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top" Height="60" Width="121"/>
+            <Button Content="X" HorizontalAlignment="Right" Margin="0,5,5,0" VerticalAlignment="Top" Width="29"/>
+            <Button Content="-" HorizontalAlignment="Right" Margin="0,5,40,0" VerticalAlignment="Top" Width="25"/>
 
-    </Grid>
+        </Grid>
+    </Viewbox>
 </Window>
