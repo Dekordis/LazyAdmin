@@ -31,7 +31,6 @@ namespace LazyAdmin
             _TestWindow TestWindow = new _TestWindow();
             TestWindow.Show();
             this.Hide();
-
         }
     }
 }

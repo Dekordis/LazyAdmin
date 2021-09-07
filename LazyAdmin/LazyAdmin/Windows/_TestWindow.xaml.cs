@@ -23,5 +23,10 @@ namespace LazyAdmin.Windows
         {
             InitializeComponent();
         }
+
+        private void TestButton(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
