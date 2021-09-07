@@ -11,6 +11,7 @@
             <Button Content="Setup Software" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top" Height="60" Width="121"/>
             <Button Content="X" HorizontalAlignment="Right" Margin="0,5,5,0" VerticalAlignment="Top" Width="29"/>
             <Button Content="-" HorizontalAlignment="Right" Margin="0,5,40,0" VerticalAlignment="Top" Width="25"/>
+            <Button x:Name="_TestButton" Content="TEST" HorizontalAlignment="Left" Margin="136,50,0,0" VerticalAlignment="Top" Height="60" Width="111" Click="TestButton"/>
 
         </Grid>
     </Viewbox>

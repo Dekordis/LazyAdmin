@@ -10,28 +10,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
-using LazyAdmin.Windows;
 
-namespace LazyAdmin
+namespace LazyAdmin.Windows
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for _TestWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class _TestWindow : Window
     {
-        public MainWindow()
+        public _TestWindow()
         {
             InitializeComponent();
-        }
-
-        private void TestButton(object sender, RoutedEventArgs e)
-        {
-            _TestWindow TestWindow = new _TestWindow();
-            TestWindow.Show();
-            this.Hide();
-
         }
     }
 }
