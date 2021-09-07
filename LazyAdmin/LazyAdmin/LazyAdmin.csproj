@@ -7,8 +7,4 @@
     <StartupObject>LazyAdmin.App</StartupObject>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="Forms\" />
-  </ItemGroup>
-
 </Project>

@@ -20,7 +20,6 @@ namespace LazyAdmin
         }
         private void UpdateProgram()
         {
-
         }
     }
 }
