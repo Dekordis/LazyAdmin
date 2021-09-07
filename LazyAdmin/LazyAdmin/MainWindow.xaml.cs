@@ -24,6 +24,11 @@ namespace LazyAdmin
         public MainWindow()
         {
             InitializeComponent();
+
+        }
+        private void MoveWindow(object sender, MouseButtonEventArgs e)
+        {
+            this.DragMove();
         }
 
         private void TestButton(object sender, RoutedEventArgs e)

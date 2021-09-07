@@ -5,13 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LazyAdmin"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" WindowStyle="ThreeDBorderWindow" Background="White">
+        Title="MainWindow" Height="450" Width="800" WindowStyle="None" Background="Transparent" ResizeMode="NoResize" MouseLeftButtonDown="MoveWindow">
     <Viewbox Stretch="Fill">
         <Grid Height="434.04" Width="800">
             <Button Content="Setup Software" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top" Height="60" Width="121"/>
             <Button Content="X" HorizontalAlignment="Right" Margin="0,5,5,0" VerticalAlignment="Top" Width="29"/>
             <Button Content="-" HorizontalAlignment="Right" Margin="0,5,40,0" VerticalAlignment="Top" Width="25"/>
             <Button x:Name="_TestButton" Content="TEST" HorizontalAlignment="Left" Margin="300,200,0,0" VerticalAlignment="Top" Height="60" Width="111" Click="TestButton"/>
+            <Button x:Name="_Header" Content="Button" HorizontalAlignment="Left" Margin="360,0,0,0" VerticalAlignment="Top"/>
 
         </Grid>
     </Viewbox>
