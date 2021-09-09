@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -13,6 +11,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using LazyAdmin.Windows;
+using System.Reflection;
+using System.Text;
+using System.Collections.Generic;
 
 namespace LazyAdmin
 {
@@ -21,14 +22,12 @@ namespace LazyAdmin
     /// </summary>
     public partial class MainWindow : Window
     {
+        public string DesignParametr = "None";
         public MainWindow()
         {
             InitializeComponent();
+            App.HeaderRender(_HeaderButtonGrid, this);
 
-        }
-        private void MoveWindow(object sender, MouseButtonEventArgs e)
-        {
-            this.DragMove();
         }
 
         private void TestButton(object sender, RoutedEventArgs e)

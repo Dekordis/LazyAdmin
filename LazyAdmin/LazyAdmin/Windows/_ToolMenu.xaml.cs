@@ -15,19 +15,13 @@ using System.Windows.Shapes;
 namespace LazyAdmin.Windows
 {
     /// <summary>
-    /// Interaction logic for _TestWindow.xaml
+    /// Interaction logic for ToolMenu.xaml
     /// </summary>
-    public partial class _TestWindow : Window
+    public partial class ToolMenu : Window
     {
-        public _TestWindow()
+        public ToolMenu()
         {
             InitializeComponent();
-            App.HeaderRender(_HeaderButtonGrid, this);
         }
-        private void TestButton(object sender, RoutedEventArgs e)
-        {
-
-        }
-
     }
 }
