@@ -14,4 +14,8 @@
     <Page Remove="Forms\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="System.Management.Automation" Version="7.1.4" />
+  </ItemGroup>
+
 </Project>
