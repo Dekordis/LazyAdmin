@@ -27,13 +27,16 @@ namespace LazyAdmin
         {
             InitializeComponent();
             App.WindowSettings(_HeaderButtonGrid, this);
-
         }
-
         private void TestButton(object sender, RoutedEventArgs e)
         {
             _TestWindow TestWindow = new _TestWindow();
             App.OpenWindow(this, TestWindow);
+        }
+
+        private void _SetupSoftware_MouseEnter(object sender, MouseEventArgs e)
+        {
+
         }
     }
 }

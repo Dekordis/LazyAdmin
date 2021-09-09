@@ -8,8 +8,6 @@
         Title="MainWindow" Height="450" Width="800" WindowStyle="None" Background="Transparent" ResizeMode="NoResize">
     <Viewbox Stretch="Fill">
         <Grid Height="434.04" Width="800">
-            <Button Content="Setup Software" HorizontalAlignment="Left" Margin="20,0,0,0" VerticalAlignment="Center" Height="60" Width="121"/>
-            <Button x:Name="_TestButton" Content="TEST" HorizontalAlignment="Left" Margin="20,43,0,0" VerticalAlignment="Top" Height="60" Width="111" Click="TestButton"/>
             <Grid x:Name="_HeaderButtonGrid" HorizontalAlignment="Center" VerticalAlignment="Center" Height="434" RenderTransformOrigin="0.5,0.5" Width="800">
                 <Grid.RenderTransform>
                     <TransformGroup>
@@ -20,6 +18,17 @@
                     </TransformGroup>
                 </Grid.RenderTransform>
             </Grid>
+
+            <Button x:Name="_SetupSoftware" FontFamily="Microsoft YaHei Light" FontWeight="Bold" FontSize ="22"  Content="  Setup&#10;Software" HorizontalAlignment="Left" Margin="10,100,0,0" VerticalAlignment="Top" Height="60" Width="120" BorderBrush ="#acacb9" Foreground="Azure" Background="#232329" BorderThickness ="0.5"/>
+            <Button x:Name="_TestButton" Content="TEST" HorizontalAlignment="Left" Margin="679,364,0,0" VerticalAlignment="Top" Height="60" Width="111" Click="TestButton"/>
+            <Button x:Name="_Tools" FontFamily="Microsoft YaHei Light" FontWeight="Bold" FontSize ="22"  Content="Tools" HorizontalAlignment="Left" Margin="135,100,0,0" VerticalAlignment="Top" Height="60" Width="120" BorderBrush ="#acacb9" Foreground="Azure" Background="#232329" BorderThickness ="0.5"/>
+            <Button x:Name="_NavToolButton" FontFamily="Microsoft YaHei Light" FontWeight="Bold" FontSize ="22"  Content="NavTool" HorizontalAlignment="Left" Margin="260,100,0,0" VerticalAlignment="Top" Height="60" Width="120" BorderBrush ="#acacb9" Foreground="Azure" Background="#232329" BorderThickness ="0.5"/>
+            <Button x:Name="_InDevButton" FontFamily="Microsoft YaHei Light" FontWeight="Bold" FontSize ="22"  Content="InDev" HorizontalAlignment="Left" Margin="10,165,0,0" VerticalAlignment="Top" Height="60" Width="120" BorderBrush ="#acacb9" Foreground="Azure" Background="#232329" BorderThickness ="0.5"/>
+            <Button x:Name="_InDevButton_2" FontFamily="Microsoft YaHei Light" FontWeight="Bold" FontSize ="22"  Content="InDev" HorizontalAlignment="Left" Margin="135,165,0,0" VerticalAlignment="Top" Height="60" Width="120" BorderBrush ="#acacb9" Foreground="Azure" Background="#232329" BorderThickness ="0.5"/>
+            <Button x:Name="_Macros" FontFamily="Microsoft YaHei Light" FontWeight="Bold" FontSize ="22"  Content="Macros" HorizontalAlignment="Left" Margin="260,165,0,0" VerticalAlignment="Top" Height="60" Width="120" BorderBrush ="#acacb9" Foreground="Azure" Background="#232329" BorderThickness ="0.5"/>
+            <Button x:Name="_Links" FontFamily="Microsoft YaHei Light" FontWeight="Bold" FontSize ="22"  Content="Links" HorizontalAlignment="Left" Margin="10,230,0,0" VerticalAlignment="Top" Height="60" Width="120" BorderBrush ="#acacb9" Foreground="Azure" Background="#232329" BorderThickness ="0.5"/>
+            <Button x:Name="_Hotkeys" FontFamily="Microsoft YaHei Light" FontWeight="Bold" FontSize ="22"  Content="Hotkeys" HorizontalAlignment="Left" Margin="135,230,0,0" VerticalAlignment="Top" Height="60" Width="120" BorderBrush ="#acacb9" Foreground="Azure" Background="#232329" BorderThickness ="0.5"/>
+            <Button x:Name="_Options" FontFamily="Microsoft YaHei Light" FontWeight="Bold" FontSize ="22"  Content="Options" HorizontalAlignment="Left" Margin="260,230,0,0" VerticalAlignment="Top" Height="60" Width="120" BorderBrush ="#acacb9" Foreground="Azure" Background="#232329" BorderThickness ="0.5"/>
 
         </Grid>
     </Viewbox>

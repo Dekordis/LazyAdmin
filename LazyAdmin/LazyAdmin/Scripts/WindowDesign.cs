@@ -90,14 +90,6 @@ namespace LazyAdmin
             TargetWindow.Show();
             CurrentWindow.Hide();
         }
-        //private void ToolsMenu_FormClosed(object sender, FormClosedEventArgs e)//при закрытии данной формы - открывает основную форму в месте окна данной формы и скрывает данную форму.
-        //{
-        //    // вызываем главную форму, которая открыла текущую, главная форма всегда = 0 - [0]
-        //    Form MainWindow = Application.OpenForms[0];
-        //    MainWindow.StartPosition = FormStartPosition.Manual; // меняем параметр StartPosition у Form1
-        //    MainWindow.Left = this.Left; // задаём открываемой форме позицию слева равную позиции текущей формы
-        //    MainWindow.Top = this.Top; // задаём открываемой форме позицию сверху равную позиции текущей формы
-        //    MainWindow.Show(); // отображаем основную форму
-        //}
+
     }
 }
