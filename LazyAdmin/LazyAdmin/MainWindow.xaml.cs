@@ -26,15 +26,14 @@ namespace LazyAdmin
         public MainWindow()
         {
             InitializeComponent();
-            App.HeaderRender(_HeaderButtonGrid, this);
+            App.WindowSettings(_HeaderButtonGrid, this);
 
         }
 
         private void TestButton(object sender, RoutedEventArgs e)
         {
             _TestWindow TestWindow = new _TestWindow();
-            TestWindow.Show();
-            this.Hide();
+            App.OpenWindow(this, TestWindow);
         }
     }
 }

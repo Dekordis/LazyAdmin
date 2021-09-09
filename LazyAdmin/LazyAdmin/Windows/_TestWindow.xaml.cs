@@ -22,7 +22,7 @@ namespace LazyAdmin.Windows
         public _TestWindow()
         {
             InitializeComponent();
-            App.HeaderRender(_HeaderButtonGrid, this);
+            App.WindowSettings(_HeaderButtonGrid, this);
         }
         private void TestButton(object sender, RoutedEventArgs e)
         {

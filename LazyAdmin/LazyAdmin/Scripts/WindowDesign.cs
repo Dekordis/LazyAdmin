@@ -7,8 +7,9 @@ namespace LazyAdmin
 {
     partial class App
     {
-        static public void HeaderRender(Grid HeaderGrid, Window CurrentWindow)
+        static public void WindowSettings(Grid HeaderGrid, Window CurrentWindow)
         {
+            WindowDesign(CurrentWindow);
             Button _CloseWindow = new Button();
             _CloseWindow.Height = 25;
             _CloseWindow.Width = 35;
@@ -17,7 +18,7 @@ namespace LazyAdmin
             _CloseWindow.BorderBrush = Brushes.Transparent;
             _CloseWindow.Click += (s, ee) => {CloseThisWindow(CurrentWindow); };
             _CloseWindow.VerticalAlignment = VerticalAlignment.Top;
-            _CloseWindow.HorizontalAlignment = HorizontalAlignment.Right;
+            _CloseWindow.HorizontalAlignment = HorizontalAlignment.Left;
             Label _CloseButtonText = new Label();
             _CloseButtonText.Content = "X";
             _CloseButtonText.FontFamily = new FontFamily("Century Gothic");
@@ -29,7 +30,7 @@ namespace LazyAdmin
             HeaderGrid.Children.Add(_CloseWindow);
 
             Button _MinimizeWindow = new Button();
-            _MinimizeWindow.Margin = new Thickness(0, 0, -700, 0);
+            _MinimizeWindow.Margin = new Thickness(0, 0, 700, 0);
             _MinimizeWindow.Height = 25;
             _MinimizeWindow.Width = 35;
             _MinimizeWindow.Name = "_MinimizeWindow";
@@ -51,6 +52,20 @@ namespace LazyAdmin
         static public void CloseThisWindow(Window CurrentWindow)
         {
             CurrentWindow.Close();
+            Window MainWindow = Application.Current.MainWindow;
+            try
+            {   
+             MainWindow.Left = CurrentWindow.Left;
+             MainWindow.Top = CurrentWindow.Top;
+             MainWindow.Show();
+            }
+            catch(NullReferenceException)
+            {
+            }
+            catch (Exception)
+            {
+            }
+
         }
         static public void MinimizeThisWindow(Window CurrentWindow)
         {
@@ -64,6 +79,25 @@ namespace LazyAdmin
         {
             CurrentWindow.AllowsTransparency = true;
             CurrentWindow.WindowStyle = WindowStyle.None;
+            CurrentWindow.Background = (SolidColorBrush)new BrushConverter().ConvertFrom("#FF43494F");
+            CurrentWindow.WindowStartupLocation = WindowStartupLocation.Manual;
+
         }
+        static public void OpenWindow(Window CurrentWindow, Window TargetWindow)
+        {
+            TargetWindow.Left = CurrentWindow.Left;
+            TargetWindow.Top = CurrentWindow.Top;
+            TargetWindow.Show();
+            CurrentWindow.Hide();
+        }
+        //private void ToolsMenu_FormClosed(object sender, FormClosedEventArgs e)//при закрытии данной формы - открывает основную форму в месте окна данной формы и скрывает данную форму.
+        //{
+        //    // вызываем главную форму, которая открыла текущую, главная форма всегда = 0 - [0]
+        //    Form MainWindow = Application.OpenForms[0];
+        //    MainWindow.StartPosition = FormStartPosition.Manual; // меняем параметр StartPosition у Form1
+        //    MainWindow.Left = this.Left; // задаём открываемой форме позицию слева равную позиции текущей формы
+        //    MainWindow.Top = this.Top; // задаём открываемой форме позицию сверху равную позиции текущей формы
+        //    MainWindow.Show(); // отображаем основную форму
+        //}
     }
 }
