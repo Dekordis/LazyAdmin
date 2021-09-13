@@ -20,17 +20,17 @@ namespace LazyAdmin
             _CloseWindow.VerticalAlignment = VerticalAlignment.Top;
             _CloseWindow.HorizontalAlignment = HorizontalAlignment.Left;
             Label _CloseButtonText = new Label();
-            _CloseButtonText.Content = "X";
+            _CloseButtonText.Content = "×";
             _CloseButtonText.FontFamily = new FontFamily("Century Gothic");
-            _CloseButtonText.FontSize = 20;
-            _CloseButtonText.FontWeight = FontWeights.UltraBold;
-            _CloseButtonText.Margin = new Thickness(0, -5, 0, -5);
+            _CloseButtonText.FontSize = 30;
+            //_CloseButtonText.FontWeight = FontWeights.UltraBold;
+            _CloseButtonText.Margin = new Thickness(0, -10, 0, -5);
             _CloseButtonText.Foreground = Brushes.White;
             _CloseWindow.Content = _CloseButtonText;
             HeaderGrid.Children.Add(_CloseWindow);
 
             Button _MinimizeWindow = new Button();
-            _MinimizeWindow.Margin = new Thickness(0, 0, 700, 0);
+            _MinimizeWindow.Margin = new Thickness(0, 0, 630, 0);
             _MinimizeWindow.Height = 25;
             _MinimizeWindow.Width = 35;
             _MinimizeWindow.Name = "_MinimizeWindow";
@@ -47,6 +47,27 @@ namespace LazyAdmin
             _MinimizeButtonText.Foreground = Brushes.White;
             _MinimizeWindow.Content = _MinimizeButtonText;
             HeaderGrid.Children.Add(_MinimizeWindow);
+
+            Button _MaximizeWindow = new Button();
+            _MaximizeWindow.Margin = new Thickness(0, 0, 700, 0);
+            _MaximizeWindow.Height = 25;
+            _MaximizeWindow.Width = 35;
+            _MaximizeWindow.Name = "_MinimizeWindow";
+            _MaximizeWindow.Background = Brushes.Transparent;
+            _MaximizeWindow.BorderBrush = Brushes.Transparent;
+            _MaximizeWindow.Click += (s, ee) => { MaximizeThisWindow(CurrentWindow); };
+            _MaximizeWindow.VerticalAlignment = VerticalAlignment.Top;
+            Label _MaximizeButtonText = new Label();
+            _MaximizeButtonText.Content = "⛶";
+            _MaximizeButtonText.FontFamily = new FontFamily("Century Gothic");
+            _MaximizeButtonText.FontSize = 17;
+            _MaximizeButtonText.FontWeight = FontWeights.UltraBold;
+            _MaximizeButtonText.Margin = new Thickness(0, -8.5, 0, 0);
+            _MaximizeButtonText.Padding = new Thickness(0, 12, 0, 0);
+            _MaximizeButtonText.Foreground = Brushes.White;
+            _MaximizeWindow.Content = _MaximizeButtonText;
+            HeaderGrid.Children.Add(_MaximizeWindow);
+
             CurrentWindow.MouseLeftButtonDown += (s, ee) => { MoveWindow(CurrentWindow); };
         }
         static public void CloseThisWindow(Window CurrentWindow)
@@ -69,7 +90,19 @@ namespace LazyAdmin
         }
         static public void MinimizeThisWindow(Window CurrentWindow)
         {
-            CurrentWindow.WindowState = System.Windows.WindowState.Minimized;
+            CurrentWindow.WindowState = WindowState.Minimized;
+        }
+        static public void MaximizeThisWindow(Window CurrentWindow)
+        {
+            if (CurrentWindow.WindowState != WindowState.Maximized)
+            {
+                CurrentWindow.WindowState = WindowState.Maximized;
+
+            }
+            else
+            {
+                CurrentWindow.WindowState = WindowState.Normal;
+            }
         }
         static public void MoveWindow(Window CurrentWindow)
         {
@@ -81,7 +114,7 @@ namespace LazyAdmin
             CurrentWindow.WindowStyle = WindowStyle.None;
             CurrentWindow.Background = (SolidColorBrush)new BrushConverter().ConvertFrom("#FF43494F");
             CurrentWindow.WindowStartupLocation = WindowStartupLocation.Manual;
-
+            CurrentWindow.ResizeMode = ResizeMode.CanResizeWithGrip;
         }
         static public void OpenWindow(Window CurrentWindow, Window TargetWindow)
         {
