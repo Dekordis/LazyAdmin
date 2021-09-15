@@ -9,14 +9,6 @@
     <Viewbox Stretch="Fill">
         <Grid Height="434.04" Width="800">
             <Grid x:Name="_HeaderButtonGrid" HorizontalAlignment="Center" VerticalAlignment="Center" Height="434" RenderTransformOrigin="0.5,0.5" Width="800">
-                <Grid.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform ScaleX="-1"/>
-                        <SkewTransform/>
-                        <RotateTransform/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </Grid.RenderTransform>
             </Grid>
 
             <Button x:Name="_SetupSoftware" FontFamily="Microsoft YaHei Light" FontWeight="Bold" FontSize ="30"  Content="  Setup&#10;Software" HorizontalAlignment="Left" Margin="10,100,0,0" VerticalAlignment="Top" Height="101" Width="253" BorderBrush ="#acacb9" Foreground="Azure" Background="#232329" BorderThickness ="0.5" Click="OpenSetupSoftwareMenu"/>
