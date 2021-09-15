@@ -1,5 +1,9 @@
 ﻿using System;
 using System.Windows;
+using System.Management.Automation;
+using System.Management.Automation.Runspaces;
+using System.IO;
+using System.Diagnostics;
 
 namespace LazyAdmin
 {
@@ -10,6 +14,7 @@ namespace LazyAdmin
         static string User = @"Azure\cklfsstorage"; //This variable needed for contain User of Azure
         static string MainPath; //This variable contain Path of programm
         static string RemotePath; ////This variable contain Remote Path to Azure folder 
+        
         static public void AzureConnection(string Action)//This method needed for connect and disconnect Azure Folder
         {
             if (Action == "Connect")
@@ -31,12 +36,41 @@ namespace LazyAdmin
             //Dear Serhii please create method with 2 parameters (connect, disconnect) Azure disk 
             //When method was finished it must delete all temp files and other not necessary objects (!just only use disconnect parametr!) 
         }
-        private void RunScript()
+        static public void RunScript(string PathtoFile, string TypeOfRun)
         {
-
+           
+            if (TypeOfRun == "Single")  //простой запус пс1
+            {
+                PowerShell Script = PowerShell.Create();
+                Script.AddScript(PathtoFile);
+                Script.Invoke();
+            }
+  
+            else if (TypeOfRun == "Multi")  //запуск пс1 новым процессом
+            {
+                ProcessStartInfo Script = new ProcessStartInfo();
+                Script.FileName = @"powershell.exe";
+                Script.Arguments = "\"&'" + PathtoFile + "'\"";
+                Script.UseShellExecute = false;
+                Script.CreateNoWindow = true;
+                Process PowerShellScriptToll = new Process();
+                PowerShellScriptToll.StartInfo = Script;
+                PowerShellScriptToll.Start();
+            }
         }
+        static public void RunScript(string[] PathtoFile)
+        {
+            PowerShell Script = PowerShell.Create();
+            foreach (var Path in PathtoFile)
+            {
+                Script.AddScript(Path);
+            }
+            Script.Invoke();
+        }
+
         private void UpdateProgram()
         {
+
         }
     }
 }

@@ -26,7 +26,9 @@ namespace LazyAdmin.Windows
         }
         private void TestButton(object sender, RoutedEventArgs e)
         {
-
+            string Path = @"C:\test";
+            string TypeOfRun = "Run several scripts";
+            App.RunScript(Path, TypeOfRun);
         }
 
     }
