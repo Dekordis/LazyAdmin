@@ -15,13 +15,14 @@ using System.Windows.Shapes;
 namespace LazyAdmin.Windows
 {
     /// <summary>
-    /// Interaction logic for _NavTool.xaml
+    /// Interaction logic for _ToolsMenu.xaml
     /// </summary>
-    public partial class _NavTool : Window
+    public partial class _ToolsMenu : Window
     {
-        public _NavTool()
+        public _ToolsMenu()
         {
             InitializeComponent();
+            App.WindowSettings(_HeaderButtonGrid, this);
         }
     }
 }
