@@ -24,5 +24,6 @@ namespace LazyAdmin.Windows
             InitializeComponent();
             App.WindowSettings(_HeaderButtonGrid, this);
         }
+
     }
 }
