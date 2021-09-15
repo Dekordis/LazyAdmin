@@ -9,7 +9,7 @@
     <Viewbox Stretch="Fill">
         <Grid Height="434.04" Width="800">
             <Grid x:Name="_HeaderButtonGrid" HorizontalAlignment="Center" VerticalAlignment="Center" Height="434" RenderTransformOrigin="0.5,0.5" Width="800">
-                <Button x:Name="_UploadFromAMT" Content="Upload" HorizontalAlignment="Left" Margin="10,37,0,0" VerticalAlignment="Top" Height="25" Width="76"/>
+                <Button x:Name="_UploadFromAMT" Content="Upload" HorizontalAlignment="Left" Margin="10,37,0,0" VerticalAlignment="Top" Height="25" Width="76" Click="Upload"/>
                 <TextBox x:Name="_EnterText" HorizontalAlignment="Left" Margin="91,41,0,0" Text="Enter S/N or CiklumID" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" Height="17"/>
                 <CheckBox x:Name="_ReceivingEquipment" Content="Receiving Equipment" HorizontalAlignment="Left" Margin="244,43,0,0" VerticalAlignment="Top" Foreground="White"/>
                 <CheckBox x:Name="_SendingEquipment" Content="Sending Equipment" HorizontalAlignment="Left" Margin="380,43,0,0" VerticalAlignment="Top" Foreground="White"/>

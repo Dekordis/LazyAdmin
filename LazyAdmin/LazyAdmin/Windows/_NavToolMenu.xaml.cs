@@ -24,5 +24,10 @@ namespace LazyAdmin.Windows
             InitializeComponent();
             App.WindowSettings(_HeaderButtonGrid, this);
         }
+
+        private void Upload(object sender, RoutedEventArgs e)
+        {
+            App.Upload(_DataGridFromAMT);
+        }
     }
 }
