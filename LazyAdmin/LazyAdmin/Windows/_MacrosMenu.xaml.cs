@@ -15,13 +15,14 @@ using System.Windows.Shapes;
 namespace LazyAdmin.Windows
 {
     /// <summary>
-    /// Interaction logic for MacrosMenu.xaml
+    /// Interaction logic for _MacrosMenu.xaml
     /// </summary>
-    public partial class MacrosMenu : Window
+    public partial class _MacrosMenu : Window
     {
-        public MacrosMenu()
+        public _MacrosMenu()
         {
             InitializeComponent();
+            App.WindowSettings(_HeaderButtonGrid, this);
         }
     }
 }

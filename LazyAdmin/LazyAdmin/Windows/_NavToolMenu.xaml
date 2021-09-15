@@ -1,0 +1,39 @@
+﻿<Window x:Class="LazyAdmin.Windows._NavToolMenu"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LazyAdmin.Windows"
+        mc:Ignorable="d"
+        Title="_NavToolMenu" Height="450" Width="800" WindowStyle="None" Background="Transparent" ResizeMode="NoResize">
+    <Viewbox Stretch="Fill">
+        <Grid Height="434.04" Width="800">
+            <Grid x:Name="_HeaderButtonGrid" HorizontalAlignment="Center" VerticalAlignment="Center" Height="434" RenderTransformOrigin="0.5,0.5" Width="800">
+                <Button x:Name="_UploadFromAMT" Content="Upload" HorizontalAlignment="Left" Margin="10,37,0,0" VerticalAlignment="Top" Height="25" Width="76"/>
+                <TextBox x:Name="_EnterText" HorizontalAlignment="Left" Margin="91,41,0,0" Text="Enter S/N or CiklumID" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" Height="17"/>
+                <CheckBox x:Name="_ReceivingEquipment" Content="Receiving Equipment" HorizontalAlignment="Left" Margin="244,43,0,0" VerticalAlignment="Top" Foreground="White"/>
+                <CheckBox x:Name="_SendingEquipment" Content="Sending Equipment" HorizontalAlignment="Left" Margin="380,43,0,0" VerticalAlignment="Top" Foreground="White"/>
+                <CheckBox x:Name="_Mute" Content="Mute" HorizontalAlignment="Left" Margin="509,43,0,0" VerticalAlignment="Top" Foreground="White" RenderTransformOrigin="0.618,2.194"/>
+                <Button x:Name="_GetCiklumID" Content="Get Ciklum ID" HorizontalAlignment="Left" Margin="562,37,0,0" VerticalAlignment="Top" Height="25" Width="81"/>
+                <Button x:Name="_GetSerialNumber" Content="Get S/N" HorizontalAlignment="Left" Margin="645,37,0,0" VerticalAlignment="Top" Height="25" Width="86"/>
+                <Button x:Name="_Get" Content="Get" HorizontalAlignment="Left" Margin="731,37,0,0" VerticalAlignment="Top" Height="25" Width="59"/>
+                <DataGrid x:Name="_DataGridFromAMT" Margin="0,65,400,0">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Ciklum ID"/>
+                        <DataGridTextColumn Header="Serial Number"/>
+                        <DataGridTextColumn Header="Description" Width="250"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+                <DataGrid x:Name="_DataGridResult" Margin="405,65,0,0">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Ciklum ID"/>
+                        <DataGridTextColumn Header="Serial Number"/>
+                        <DataGridTextColumn Header="Desciption" Width="203"/>
+                        <DataGridTextColumn Header="Status"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+
+        </Grid>
+    </Viewbox>
+</Window>

@@ -18,4 +18,30 @@ App.ClipBoardToNAV(string task, string[] Array);
 App.ClipBoardToNAV("ToExcel", YourArray, 5);
 
 													
-													NextMethod
+													          HeaderRender - This method create standart setup for window
+
+For use it, you need call them via App.WindowSettings(Grid,CurrentWindow)
+You need add 2 parameters: 
+		1.Grid - It's standart grid which stretch on full window
+		2.CurrentWindow - you need select your current window - Recommend to use (this)
+
+		Example:
+
+App.WindowSettings(_HeaderButtonGrid, this);
+															 
+
+
+															 OpenWindow -  This method open window in same location
+
+For use it, you need create new window like - "_WindowName WindowName = new _WindowName();" and also call them via  App.OpenWindow(CurrentWindow, WindowName);
+You need add 2 parameters: 
+		1.CurrentWindow - you need select your current window - Recommend to use (this)
+		2.WindowName - you need create new window and select it in this method
+
+		Example:
+
+_WindowName NewWindowName = new _WindowName();
+App.OpenWindow(this, NewWindowName);
+            
+
+

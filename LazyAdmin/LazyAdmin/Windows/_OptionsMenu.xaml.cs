@@ -22,6 +22,7 @@ namespace LazyAdmin.Windows
         public _OptionsMenu()
         {
             InitializeComponent();
+            App.WindowSettings(_HeaderButtonGrid, this);
         }
     }
 }
