@@ -24,10 +24,20 @@ namespace LazyAdmin.Windows
             InitializeComponent();
             App.WindowSettings(_HeaderButtonGrid, this);
         }
-
         private void Upload(object sender, RoutedEventArgs e)
         {
             App.Upload(_DataGridFromAMT);
+        }
+        private void EnterText(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                if (_EnterText.Text == "" || _EnterText.Text == null || _EnterText.Text == " ") _EnterText.Clear();
+                else
+                {
+                    App.Input(_DataGridResult, _EnterText.Text.TrimStart().ToUpper());
+                }
+            }
         }
     }
 }

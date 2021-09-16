@@ -1,11 +1,17 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Collections.Generic;
+using System.Windows.Input;
+
+
+
 
 namespace LazyAdmin
 {
     partial class App
     {
+        static List<Colums> ColumsList = new List<Colums>();
         static public void Upload(DataGrid _DataGrid)
         {
             string[] StringClipBoardData = Clipboard.GetText().Split('\n'); // Count of rows
@@ -29,20 +35,61 @@ namespace LazyAdmin
                     Manufacturer += elements;
                     Model += elements;
                     FullDescription += elements;
-                    //_DataGrid.Rows.Add(ClipBoardData[CiklumID], ClipBoardData[SerialNumber].ToUpper(), ClipBoardData[Type] + " " + ClipBoardData[Manufacturer] + " " + ClipBoardData[Model]);
+                    if (ClipBoardData[Type] == null || ClipBoardData[Manufacturer] == null || ClipBoardData[Model] == null)
+                    {
+                        _DataGrid.Items.Add(new Colums { CiklumIDColum = ClipBoardData[CiklumID], SerialNumberColum = ClipBoardData[SerialNumber].ToUpper(), DesciptionColum = ClipBoardData[FullDescription] });
+                    }
+                    else
+                    {
+                        _DataGrid.Items.Add(new Colums { CiklumIDColum = ClipBoardData[CiklumID], SerialNumberColum = ClipBoardData[SerialNumber].ToUpper(), DesciptionColum = (ClipBoardData[Type] + " " + ClipBoardData[Manufacturer] + " " + ClipBoardData[Model]) });
+                    }
+                    _DataGrid.ItemsSource = ColumsList;
                 }
             }
             catch (Exception)
             {
             }
         }
-        static public void Input()
+        class Colums
         {
-
+            public string CiklumIDColum { get; set; }
+            public string SerialNumberColum { get; set; }
+            public string DesciptionColum { get; set; }
+            public string StatusColum { get; set; }
         }
-        static private void Cheking()
+        static public void Input(DataGrid _DataGrid, string String)
         {
-
+            int Itteration = 0;
+            bool Success = false;
+            int CiklumID = 0;
+            string SerialNumber = null;
+            string Description = null; ;
+            QRConvert(String, true, Description);
+            for (int i = 0; i == String.Length; i++)
+            {
+                if (Char.IsNumber(String, i) == true) Itteration++;
+                if (Itteration == String.Length) Success = true;
+            }
+            if ((String.Length == 6 || String.Length == 13) && Success == true)
+            {
+                CiklumID = Int32.Parse(String);
+            }
+            else
+            {
+                SerialNumber = String;
+            }
+            Cheking(_DataGrid, CiklumID, SerialNumber, Description);
+        }
+        static private void Cheking(DataGrid _DataGrid, int CiklumID, string SerialNumber, string Description)
+        {
+            if (CiklumID != 0 && SerialNumber != null && Description != null)
+            {
+                _DataGrid.Items.Add(new Colums { CiklumIDColum = CiklumID.ToString(), SerialNumberColum = SerialNumber, DesciptionColum = Description });
+            }
+            else if (CiklumID != 0 && SerialNumber != null && Description == null)
+            {
+                _DataGrid.Items.Add(new Colums { CiklumIDColum = CiklumID.ToString(), SerialNumberColum = SerialNumber});
+            }
         }
         static public void Checkboxes()
         {
@@ -51,6 +98,25 @@ namespace LazyAdmin
         static public void Output()
         {
 
+        }
+        static public void QRConvert(string String, string Output)
+        {
+            if (Output == "Serial Number")
+            {
+
+            }
+            else if (Output == "Description")
+            {
+
+            }
+        }
+        static public void QRConvert(string String, bool DescriptionAndSerialNumber, string Output)
+        {
+            if (DescriptionAndSerialNumber == true)
+            {
+                String = "SerialNumber";
+                Output += "Some Description";
+            }
         }
     }
 }
