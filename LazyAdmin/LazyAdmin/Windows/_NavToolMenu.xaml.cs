@@ -40,5 +40,9 @@ namespace LazyAdmin.Windows
                 }
             }
         }
+        private void _EnterText_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            _EnterText.Clear();
+        }
     }
 }

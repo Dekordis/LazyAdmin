@@ -11,6 +11,9 @@ namespace LazyAdmin
 {
     partial class App
     {
+        static int CiklumID = 0;
+        static string SerialNumber = null;
+        static string Description = null;
         static List<Colums> ColumsList = new List<Colums>();
         static public void Upload(DataGrid _DataGrid) //uploading information from Navision
         {
@@ -31,16 +34,16 @@ namespace LazyAdmin
                 {
                     CiklumID += elements;
                     SerialNumber += elements;
-                    Type += elements;
-                    Manufacturer += elements;
-                    Model += elements;
                     FullDescription += elements;
-                    if (ClipBoardData[Type] == null || ClipBoardData[Manufacturer] == null || ClipBoardData[Model] == null)
+                    if (Type == -1 || Manufacturer == -1 || Model == -1)
                     {
                         _DataGrid.Items.Add(new Colums { CiklumIDColum = ClipBoardData[CiklumID], SerialNumberColum = ClipBoardData[SerialNumber].ToUpper(), DesciptionColum = ClipBoardData[FullDescription] });
                     }
                     else
                     {
+                        Type += elements;
+                        Manufacturer += elements;
+                        Model += elements;
                         _DataGrid.Items.Add(new Colums { CiklumIDColum = ClipBoardData[CiklumID], SerialNumberColum = ClipBoardData[SerialNumber].ToUpper(), DesciptionColum = (ClipBoardData[Type] + " " + ClipBoardData[Manufacturer] + " " + ClipBoardData[Model]) });
                     }
                     _DataGrid.ItemsSource = ColumsList;
@@ -61,15 +64,13 @@ namespace LazyAdmin
         {
             int Itteration = 0;
             bool Success = false;
-            int CiklumID = 0;
-            string SerialNumber = null;
-            string Description = null; ;
             QRConvert(String, true, Description);
-            for (int i = 0; i == String.Length; i++)
+            for (int i = 0; i != String.Length; i++)
             {
                 if (Char.IsNumber(String, i) == true) Itteration++;
-                if (Itteration == String.Length) Success = true;
+                if (Itteration == String.Length -1) Success = true;
             }
+
             if ((String.Length == 6 || String.Length == 13) && Success == true)
             {
                 CiklumID = Int32.Parse(String);
@@ -80,15 +81,20 @@ namespace LazyAdmin
             }
             Cheking(_DataGrid, CiklumID, SerialNumber, Description);
         }
-        static private void Cheking(DataGrid _DataGrid, int CiklumID, string SerialNumber, string Description) //Checking info from amt/textbox and DataGrids
+        static private void Cheking(DataGrid _DataGrid, int LocalCiklumID, string LocalSerialNumber, string LocalDescription) //Checking info from amt/textbox and DataGrids
         {
-            if (CiklumID != 0 && SerialNumber != null && Description != null)
+            if (LocalCiklumID != 0 && LocalSerialNumber != null && LocalDescription != null)
             {
-                _DataGrid.Items.Add(new Colums { CiklumIDColum = CiklumID.ToString(), SerialNumberColum = SerialNumber, DesciptionColum = Description });
+                _DataGrid.Items.Add(new Colums { CiklumIDColum = CiklumID.ToString(), SerialNumberColum = LocalSerialNumber, DesciptionColum = LocalDescription });
+                CiklumID = 0;
+                SerialNumber = null;
+                Description = null;
             }
-            else if (CiklumID != 0 && SerialNumber != null && Description == null)
+            else if (LocalCiklumID != 0 && SerialNumber != null && LocalDescription == null)
             {
-                _DataGrid.Items.Add(new Colums { CiklumIDColum = CiklumID.ToString(), SerialNumberColum = SerialNumber});
+                _DataGrid.Items.Add(new Colums { CiklumIDColum = LocalCiklumID.ToString(), SerialNumberColum = LocalSerialNumber });
+                CiklumID = 0;
+                SerialNumber = null;
             }
             else
             {

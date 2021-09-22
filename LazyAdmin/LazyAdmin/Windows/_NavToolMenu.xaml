@@ -10,7 +10,7 @@
         <Grid Height="434.04" Width="800">
             <Grid x:Name="_HeaderButtonGrid" HorizontalAlignment="Center" VerticalAlignment="Center" Height="434" RenderTransformOrigin="0.5,0.5" Width="800">
                 <Button x:Name="_UploadFromAMT" Content="Upload" HorizontalAlignment="Left" Margin="10,37,0,0" VerticalAlignment="Top" Height="25" Width="76" Click="Upload"/>
-                <TextBox x:Name="_EnterText" HorizontalAlignment="Left" Margin="91,41,0,0" Text="Enter S/N or CiklumID" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" Height="17" KeyDown="EnterText"/>
+                <TextBox x:Name="_EnterText" HorizontalAlignment="Left" Margin="91,41,0,0" Text="Enter S/N or CiklumID" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" Height="17" KeyDown="EnterText" PreviewMouseDown="_EnterText_PreviewMouseDown"/>
                 <CheckBox x:Name="_SendingEquipment" Content="Sending Equipment" HorizontalAlignment="Left" Margin="246,42,0,0" VerticalAlignment="Top" Foreground="White"/>
                 <CheckBox x:Name="_Mute" Content="Mute" HorizontalAlignment="Center" Margin="0,42,0,0" VerticalAlignment="Top" Foreground="White" RenderTransformOrigin="0.618,2.194"/>
                 <Button x:Name="_GetCiklumID" Content="Get Ciklum ID" HorizontalAlignment="Left" Margin="562,37,0,0" VerticalAlignment="Top" Height="25" Width="81"/>
@@ -31,6 +31,9 @@
                         <DataGridTextColumn Header="Status" Binding = "{Binding Path=StatusColum}"/>
                     </DataGrid.Columns>
                 </DataGrid>
+                <ComboBox x:Name="_ContextMenu" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="120">
+                    <Button Content="Clear All Information" ClickMode="Press"/>
+                </ComboBox>
             </Grid>
 
         </Grid>
