@@ -36,6 +36,7 @@ namespace LazyAdmin.Windows
                 else
                 {
                     App.Input(_DataGridResult, _EnterText.Text.TrimStart().ToUpper());
+                    _EnterText.Clear();
                 }
             }
         }

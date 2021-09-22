@@ -12,7 +12,7 @@ namespace LazyAdmin
     partial class App
     {
         static List<Colums> ColumsList = new List<Colums>();
-        static public void Upload(DataGrid _DataGrid)
+        static public void Upload(DataGrid _DataGrid) //uploading information from Navision
         {
             string[] StringClipBoardData = Clipboard.GetText().Split('\n'); // Count of rows
             string[] ClipBoardData = Clipboard.GetText().Split('\t');  // Array elements from ClipBoard
@@ -56,8 +56,8 @@ namespace LazyAdmin
             public string SerialNumberColum { get; set; }
             public string DesciptionColum { get; set; }
             public string StatusColum { get; set; }
-        }
-        static public void Input(DataGrid _DataGrid, string String)
+        }//class for adding ID for colums
+        static public void Input(DataGrid _DataGrid, string String) //input info from TextBox for DataGrids
         {
             int Itteration = 0;
             bool Success = false;
@@ -80,7 +80,7 @@ namespace LazyAdmin
             }
             Cheking(_DataGrid, CiklumID, SerialNumber, Description);
         }
-        static private void Cheking(DataGrid _DataGrid, int CiklumID, string SerialNumber, string Description)
+        static private void Cheking(DataGrid _DataGrid, int CiklumID, string SerialNumber, string Description) //Checking info from amt/textbox and DataGrids
         {
             if (CiklumID != 0 && SerialNumber != null && Description != null)
             {
@@ -89,6 +89,10 @@ namespace LazyAdmin
             else if (CiklumID != 0 && SerialNumber != null && Description == null)
             {
                 _DataGrid.Items.Add(new Colums { CiklumIDColum = CiklumID.ToString(), SerialNumberColum = SerialNumber});
+            }
+            else
+            {
+                MessageBox.Show($"CiklumID:{CiklumID.ToString()} \n and serialnumber:{SerialNumber}");
             }
         }
         static public void Checkboxes()
