@@ -28,6 +28,20 @@ namespace LazyAdmin
             InitializeComponent();
             App.WindowSettings(_HeaderButtonGrid, this);
         }
+
+<<<<<<< HEAD
+
+=======
+        private void CipboardPlus(object sender, RoutedEventArgs e)
+        {
+            App.ChangeClipboard("Add comment");
+        }
+
+        private void NoComment(object sender, RoutedEventArgs e)
+        {
+            App.ChangeClipboard("No comment");
+>>>>>>> 66af441844011628272f9264a81e32fce4f547b0
+        }
     }
     public partial class MainWindow : Window
     {
@@ -47,14 +61,6 @@ namespace LazyAdmin
         {
             _NavToolMenu NavToolMenu = new _NavToolMenu();
             App.OpenWindow(this, NavToolMenu);
-        }
-
-        private void OpenInDevMenu(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("Ha-ha");
-            MessageBox.Show("Program will be shutdowned after 5 sec");
-            MessageBox.Show("Joke\nHa-ha");
-            Close();
         }
 
         private void OpenTestMenu(object sender, RoutedEventArgs e)
@@ -85,6 +91,7 @@ namespace LazyAdmin
         {
             _OptionsMenu OptionsMenu = new _OptionsMenu();
             App.OpenWindow(this, OptionsMenu);
+          
         }
     } //    "Buttons"
 }

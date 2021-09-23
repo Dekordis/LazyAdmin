@@ -25,5 +25,18 @@ namespace LazyAdmin.Windows
             App.WindowSettings(_HeaderButtonGrid, this);
         }
 
+        private void _TestButton_Click(object sender, RoutedEventArgs e)
+        {
+            string PathtoFile = @"C:\Users\Skho\Desktop\ClipboardChanger.ps1";
+            string TypeOfRun = "Single";
+            App.RunScript(PathtoFile, TypeOfRun);
+        }
+       
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            string ExtentionFile = "bat";
+            string PathToFolder = @"D:\Scripts\ClipboardChanger2";
+            App.GetFilesFromFolder(PathToFolder, ExtentionFile);
+        }
     }
 }
