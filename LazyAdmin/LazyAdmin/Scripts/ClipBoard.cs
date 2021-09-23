@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Controls;
+using System.Collections.Generic;
+using System.Windows.Input;
 
 namespace LazyAdmin
 {
@@ -45,6 +48,7 @@ namespace LazyAdmin
                 }
                 Clipboard.SetText(ClipboardInput);
             }
+
         }
         static public void ClipBoardToNAV(string task, string[] Array, int LengtOfString) // This method must to process all information for copy it in our services
         {
@@ -86,6 +90,88 @@ namespace LazyAdmin
                 }
                 HeaderWasSet = false;
                 Clipboard.SetText(ClipboardInput);
+            }
+        }
+        static public void ChangeClipboard(string task)
+        {
+            string[] StringClipBoardData = Clipboard.GetText().Split('\n'); // Count of rows
+            string[] ClipBoardData = Clipboard.GetText().Split('\t');  // Array elements from ClipBoard
+            int elements = StringClipBoardData[0].Split('\t').Length - 1; // Lenght of row
+            int rows = StringClipBoardData.Length -1; // Count of rows without header
+            int CiklumID = Array.IndexOf(ClipBoardData, "Ciklum ID");
+            int SerialNumber = Array.IndexOf(ClipBoardData, "Serial No.");
+            int Type = Array.IndexOf(ClipBoardData, "Type");
+            int Manufacturer = Array.IndexOf(ClipBoardData, "Manufacturer");
+            int Model = Array.IndexOf(ClipBoardData, "Model");
+            int FullDescription = Array.IndexOf(ClipBoardData, "Full Description");
+            int Status = Array.IndexOf(ClipBoardData, "Status");
+            int Eact = Array.IndexOf(ClipBoardData, "EAA Status");
+            int Reimb = Array.IndexOf(ClipBoardData, "Reimbursable Type");
+            int CurrentUser = Array.IndexOf(ClipBoardData, "Current User");
+            int Branch = Array.IndexOf(ClipBoardData, "Branch");
+            string Result = null; 
+            try
+            {
+                for (int i = 1; i <= rows; i++)
+                {
+                    CiklumID += elements;
+                    SerialNumber += elements;
+                    FullDescription += elements;
+                    Status += elements;
+                    Eact += elements;
+                    Reimb += elements;
+                    CurrentUser += elements;
+                    Branch += elements;
+                    if (ClipBoardData[Reimb] == "Non-Reimb.") ClipBoardData[Reimb] = null;
+                    if (task == "No comment")
+                    {
+                        if (Type == -1 || Manufacturer == -1 || Model == -1)
+                        {
+                            Result += $@"{ClipBoardData[FullDescription]} with CiklumID {ClipBoardData[CiklumID]} and serial number {ClipBoardData[SerialNumber]}";
+                            Result += "\n \n";
+                        }
+                        else
+                        {
+                            Type += elements;
+                            Manufacturer += elements;
+                            Model += elements;
+                            Result += $"{ClipBoardData[Reimb]} {ClipBoardData[Type]} {ClipBoardData[Manufacturer]} {ClipBoardData[Model]} with CiklumID {ClipBoardData[CiklumID]} and serial number {ClipBoardData[SerialNumber]}";
+                            Result += "\n \n";
+                        }
+                    }
+                    else if (task == "Add comment")
+                    {
+                        Type += elements;
+                        Manufacturer += elements;
+                        Model += elements;
+                        if (ClipBoardData[Status] == "Operational" || ClipBoardData[Status] == "Temporary" || ClipBoardData[Status] == "Rented")
+                        {
+                            Result += $"{ClipBoardData[Reimb]} {ClipBoardData[Type]} {ClipBoardData[Manufacturer]} {ClipBoardData[Model]} with CiklumID {ClipBoardData[CiklumID]} and serial number {ClipBoardData[SerialNumber]} in status {ClipBoardData[Status]} assigned to {ClipBoardData[CurrentUser]}, E-Act {ClipBoardData[Eact]}";
+                            Result += "\n \n";
+
+                        }
+                        else if (ClipBoardData[Status] == "To Check")
+                        {
+                            Result += $@"{ClipBoardData[Reimb]} {ClipBoardData[Type]} {ClipBoardData[Manufacturer]} {ClipBoardData[Model]} with CiklumID {ClipBoardData[CiklumID]} and serial number {ClipBoardData[SerialNumber]} in status {ClipBoardData[Status]} assigned to {ClipBoardData[CurrentUser]}";
+                            Result += "\n \n";
+                        }
+                        else if (ClipBoardData[Status] == "Transfer")
+                        {
+                            Result += $@"{ClipBoardData[Reimb]} {ClipBoardData[Type]} {ClipBoardData[Manufacturer]} {ClipBoardData[Model]} with CiklumID {ClipBoardData[CiklumID]} and serial number {ClipBoardData[SerialNumber]} transfered to {ClipBoardData[Branch]}";
+                            Result += "\n \n";
+                        }
+                        else
+                        {
+                            Result += $@"{ClipBoardData[Reimb]} {ClipBoardData[Type]} {ClipBoardData[Manufacturer]} {ClipBoardData[Model]} with CiklumID {ClipBoardData[CiklumID]} and serial number {ClipBoardData[SerialNumber]} in status {ClipBoardData[Status]}";
+                            Result += "\n \n";
+                        }
+                    }
+
+                }
+                Clipboard.SetText(Result);
+            }
+            catch (Exception)
+            {
             }
         }
     }

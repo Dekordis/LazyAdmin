@@ -4,6 +4,7 @@ using System.Management.Automation;
 using System.Management.Automation.Runspaces;
 using System.IO;
 using System.Diagnostics;
+using System.Linq;
 
 namespace LazyAdmin
 {
@@ -24,7 +25,7 @@ namespace LazyAdmin
                 System.Diagnostics.Process.Start("CMD.exe", StringCmdText);
                 MessageBox.Show("Connected");
             }
-            else if (Action == "Disconnect")
+            else if (Action == "Disconnect") //disconnect not work
             {
                 string StringCmdText;
                 StringCmdText = @"/C cmdkey /delete:cklfilesharestorage.file.core.windows.net";
@@ -66,6 +67,14 @@ namespace LazyAdmin
                 Script.AddScript(Path);
             }
             Script.Invoke();
+        }
+        static public void GetFilesFromFolder(string Pathtofolder, string ExtentionFile)
+        {
+            string[] files = System.IO.Directory.GetFiles(Pathtofolder, $"*.{ExtentionFile}");//set path to folder with files in var PathToFolder, set extention of needed files 
+            foreach (var file in files)
+            {
+                MessageBox.Show($"{file}");
+            }
         }
 
         private void UpdateProgram()
