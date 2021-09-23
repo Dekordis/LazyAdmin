@@ -28,6 +28,9 @@ namespace LazyAdmin
             InitializeComponent();
             App.WindowSettings(_HeaderButtonGrid, this);
         }
+    }
+    public partial class MainWindow : Window
+    {
         private void CipboardPlus(object sender, RoutedEventArgs e)
         {
             App.ChangeClipboard("Add comment");
@@ -37,9 +40,6 @@ namespace LazyAdmin
         {
             App.ChangeClipboard("No comment");
         }
-    }
-    public partial class MainWindow : Window
-    {
         private void OpenSetupSoftwareMenu(object sender, RoutedEventArgs e)
         {
             _SetupSoftwareMenu SetupSoftwareMenu = new _SetupSoftwareMenu();
