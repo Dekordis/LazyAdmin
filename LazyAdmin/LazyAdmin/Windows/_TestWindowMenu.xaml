@@ -8,9 +8,7 @@
         Title="_TestWindowMenu" Height="450" Width="800" WindowStyle="None" Background="Transparent" ResizeMode="NoResize">
     <Viewbox Stretch="Fill">
         <Grid Height="434.04" Width="800">
-            <Grid x:Name="_HeaderButtonGrid" HorizontalAlignment="Center" VerticalAlignment="Center" Height="434" RenderTransformOrigin="0.5,0.5" Width="800">
-            </Grid>
-
+            <Grid x:Name="_HeaderButtonGrid" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Right" VerticalAlignment="Top" Width="150" Height="50"/>
         </Grid>
     </Viewbox>
 </Window>
