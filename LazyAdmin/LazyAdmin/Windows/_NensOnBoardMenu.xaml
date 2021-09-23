@@ -5,12 +5,32 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LazyAdmin.Windows"
         mc:Ignorable="d"
-        Title="_NensOnBoardMenu" Height="450" Width="800" WindowStyle="None" Background="Transparent" ResizeMode="NoResize">
-    <Viewbox Stretch="Fill">
-        <Grid Height="434.04" Width="800">
-            <Grid x:Name="_HeaderButtonGrid" HorizontalAlignment="Center" VerticalAlignment="Center" Height="434" RenderTransformOrigin="0.5,0.5" Width="800">
-            </Grid>
-
+        Title="_NensOnBoardMenu" Height="700" Width="1600" WindowStyle="None" Background="Transparent" ResizeMode="NoResize">
+    <Viewbox x:Name="MainViewBox" Stretch="Fill">
+        <Grid Height="700" Width="1600">
+            <Grid x:Name="_HeaderButtonGrid" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Right" VerticalAlignment="Top" Width="150" Height="50"/>
+            <DataGrid Margin="0,95,0,0" AutoGenerateColumns="False" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="600" Width="1600">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Start Date" HeaderStringFormat="" CanUserResize="True" FontStyle="Normal" FontWeight="Normal"/>
+                    <DataGridTextColumn Header="Name"/>
+                    <DataGridTextColumn Header="Project"/>
+                    <DataGridTextColumn Header="Specific Project"/>
+                    <DataGridTextColumn Header="Login"/>
+                    <DataGridTextColumn Header="Pass"/>
+                    <DataGridTextColumn Header="Ciklum ID"/>
+                    <DataGridTextColumn Header="Workstation Standart"/>
+                    <DataGridTextColumn Header="Additional Requirements"/>
+                    <DataGridTextColumn Header="Software"/>
+                    <DataGridTextColumn Header="Onboarding"/>
+                    <DataGridTextColumn Header="Address"/>
+                    <DataGridTextColumn Header="Phone"/>
+                    <DataGridHyperlinkColumn Header="Root"/>
+                    <DataGridHyperlinkColumn Header="HW"/>
+                    <DataGridHyperlinkColumn Header="Communication"/>
+                    <DataGridTextColumn Header="Comments"/>
+                    <DataGridCheckBoxColumn Header="Prepared"/>
+                </DataGrid.Columns>
+            </DataGrid>
         </Grid>
     </Viewbox>
 </Window>

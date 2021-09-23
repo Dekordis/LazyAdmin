@@ -22,7 +22,6 @@ namespace LazyAdmin
     /// </summary>
     public partial class MainWindow : Window
     {
-        public string DesignParametr = "None";
         public MainWindow()
         {
             InitializeComponent();
@@ -39,6 +38,11 @@ namespace LazyAdmin
         private void NoComment(object sender, RoutedEventArgs e)
         {
             App.ChangeClipboard("No comment");
+        }
+        private void OpenNensOnBoardMenu(object sender, RoutedEventArgs e)
+        {
+            _NensOnBoardMenu NensOnBoardMenu = new _NensOnBoardMenu();
+            App.OpenWindow(this, NensOnBoardMenu);
         }
         private void OpenSetupSoftwareMenu(object sender, RoutedEventArgs e)
         {

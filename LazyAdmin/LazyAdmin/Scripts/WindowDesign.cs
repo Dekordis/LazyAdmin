@@ -30,7 +30,7 @@ namespace LazyAdmin
             HeaderGrid.Children.Add(_CloseWindow);
 
             Button _MinimizeWindow = new Button();
-            _MinimizeWindow.Margin = new Thickness(0, 0, -630, 0);
+            _MinimizeWindow.Margin = new Thickness(0, 0, 20, 0);
             _MinimizeWindow.Height = 25;
             _MinimizeWindow.Width = 35;
             _MinimizeWindow.Name = "_MinimizeWindow";
@@ -49,7 +49,7 @@ namespace LazyAdmin
             HeaderGrid.Children.Add(_MinimizeWindow);
 
             Button _MaximizeWindow = new Button();
-            _MaximizeWindow.Margin = new Thickness(0, 0, -700, 0);
+            _MaximizeWindow.Margin = new Thickness(0, 0, -50, 0);
             _MaximizeWindow.Height = 25;
             _MaximizeWindow.Width = 35;
             _MaximizeWindow.Name = "_MinimizeWindow";
