@@ -22,16 +22,11 @@ namespace LazyAdmin
     /// </summary>
     public partial class MainWindow : Window
     {
-        public string DesignParametr = "None";
         public MainWindow()
         {
             InitializeComponent();
             App.WindowSettings(_HeaderButtonGrid, this);
         }
-
-<<<<<<< HEAD
-
-=======
         private void CipboardPlus(object sender, RoutedEventArgs e)
         {
             App.ChangeClipboard("Add comment");
@@ -40,11 +35,15 @@ namespace LazyAdmin
         private void NoComment(object sender, RoutedEventArgs e)
         {
             App.ChangeClipboard("No comment");
->>>>>>> 66af441844011628272f9264a81e32fce4f547b0
         }
     }
     public partial class MainWindow : Window
     {
+        private void NensOnBoard(object sender, RoutedEventArgs e)
+        {
+            _NensOnBoardMenu NensOnBoardMenu = new _NensOnBoardMenu();
+            App.OpenWindow(this, NensOnBoardMenu);
+        }
         private void OpenSetupSoftwareMenu(object sender, RoutedEventArgs e)
         {
             _SetupSoftwareMenu SetupSoftwareMenu = new _SetupSoftwareMenu();

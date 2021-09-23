@@ -15,7 +15,7 @@ using System.Windows.Shapes;
 namespace LazyAdmin.Windows
 {
     /// <summary>
-    /// Interaction logic for _NenOnBoardMenu.xaml
+    /// Interaction logic for _NensOnBoardMenu.xaml
     /// </summary>
     public partial class _NensOnBoardMenu : Window
     {
