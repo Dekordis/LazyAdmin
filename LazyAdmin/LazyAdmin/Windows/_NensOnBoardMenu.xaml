@@ -31,6 +31,7 @@
                     <DataGridCheckBoxColumn Header="Prepared"/>
                 </DataGrid.Columns>
             </DataGrid>
+            <Button Content="Button" HorizontalAlignment="Left" Margin="10,35,0,0" VerticalAlignment="Top" Height="42" Width="87"/>
         </Grid>
     </Viewbox>
 </Window>
