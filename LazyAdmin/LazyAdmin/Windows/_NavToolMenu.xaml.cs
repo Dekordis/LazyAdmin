@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using LazyAdmin.DataBase;
 
 namespace LazyAdmin.Windows
 {
@@ -23,6 +26,7 @@ namespace LazyAdmin.Windows
         {
             InitializeComponent();
             App.WindowSettings(_HeaderButtonGrid, this);
+            App.Load();
         }
         private void Upload(object sender, RoutedEventArgs e)
         {
@@ -43,6 +47,11 @@ namespace LazyAdmin.Windows
         private void _EnterText_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             _EnterText.Clear();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

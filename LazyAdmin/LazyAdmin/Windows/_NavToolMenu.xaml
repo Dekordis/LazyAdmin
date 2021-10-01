@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LazyAdmin.Windows"
         mc:Ignorable="d"
-        Title="_NavToolMenu" Height="450" Width="800" WindowStyle="None" Background="Transparent" ResizeMode="NoResize">
+        Title="_NavToolMenu" Height="450" Width="800" WindowStyle="None" Background="Transparent" ResizeMode="NoResize" Loaded="Window_Loaded">
     <Viewbox Stretch="Fill">
         <Grid Height="434.04" Width="800">
             <Grid x:Name="_HeaderButtonGrid" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Right" VerticalAlignment="Top" Width="150" Height="50"/>
@@ -16,19 +16,19 @@
                 <Button x:Name="_GetCiklumID" Content="Get Ciklum ID" HorizontalAlignment="Left" Margin="562,37,0,0" VerticalAlignment="Top" Height="25" Width="81"/>
                 <Button x:Name="_GetSerialNumber" Content="Get S/N" HorizontalAlignment="Left" Margin="645,37,0,0" VerticalAlignment="Top" Height="25" Width="86"/>
                 <Button x:Name="_Get" Content="Get" HorizontalAlignment="Left" Margin="731,37,0,0" VerticalAlignment="Top" Height="25" Width="59"/>
-                <DataGrid x:Name="_DataGridFromAMT" Margin="0,65,400,0">
+                <DataGrid x:Name="_DataGridFromAMT" Margin="0,65,400,0" AutoGenerateColumns="False">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Ciklum ID" Binding = "{Binding Path=CiklumIDColum}"/>
-                        <DataGridTextColumn Header="Serial Number" Binding = "{Binding Path=SerialNumberColum}"/>
-                        <DataGridTextColumn Header="Description" Binding = "{Binding Path=DesciptionColum}" Width="250"/>
+                        <DataGridTextColumn Header="Ciklum ID" Binding = "{Binding Path=CiklumIDFromDataBase}"/>
+                        <DataGridTextColumn Header="Serial Number" Binding = "{Binding Path=SerialNumberFromDataBase}"/>
+                        <DataGridTextColumn Header="Description" Binding = "{Binding Path=DescriptionFromDataBase}" Width="250"/>
                     </DataGrid.Columns>
                 </DataGrid>
-                <DataGrid x:Name="_DataGridResult" Margin="405,65,0,0">
+            <DataGrid x:Name="_DataGridResult" Margin="405,65,0,0" AutoGenerateColumns="False">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Ciklum ID" Binding = "{Binding Path=CiklumIDColum}"/>
-                        <DataGridTextColumn Header="Serial Number" Binding = "{Binding Path=SerialNumberColum}"/>
-                        <DataGridTextColumn Header="Desciption" Binding = "{Binding Path=DesciptionColum}" Width="203"/>
-                        <DataGridTextColumn Header="Status" Binding = "{Binding Path=StatusColum}"/>
+                    <DataGridTextColumn Header="Ciklum ID" Binding = "{Binding Path=CiklumIDFromDataBase}"/>
+                    <DataGridTextColumn Header="Serial Number" Binding = "{Binding Path=SerialNumberFromDataBase}"/>
+                    <DataGridTextColumn Header="Desciption" Binding = "{Binding Path=DescriptionFromDataBase}" Width="203"/>
+                    <DataGridTextColumn Header="Status" Binding = "{Binding Path=StatusColum}"/>
                     </DataGrid.Columns>
                 </DataGrid>
                 <ComboBox x:Name="_ContextMenu" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="120">

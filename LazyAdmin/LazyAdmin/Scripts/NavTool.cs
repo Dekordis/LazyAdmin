@@ -3,18 +3,51 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Collections.Generic;
 using System.Windows.Input;
-
-
-
+using LazyAdmin.DataBase;
+using System.ComponentModel;
+using System.Collections.ObjectModel;
 
 namespace LazyAdmin
 {
     partial class App
     {
-        static int CiklumID = 0;
+        static string CiklumID = null;
         static string SerialNumber = null;
         static string Description = null;
-        static List<Colums> ColumsList = new List<Colums>();
+        private static BindingList<GridDataBase> _GridDataBases;
+        private static BindingList<GridDataBase> _GridDataBasesResult;
+        static public void Load()
+        {
+            _GridDataBases = new BindingList<GridDataBase>();
+            _GridDataBasesResult = new BindingList<GridDataBase>();
+            _GridDataBases.ListChanged += _GridDataBases_ListChanged;
+            _GridDataBasesResult.ListChanged += _GridDataBasesResult_ListChanged;
+        }
+
+        private static void _GridDataBasesResult_ListChanged(object sender, ListChangedEventArgs e)
+        {
+            try
+            {
+                if (e.ListChangedType == ListChangedType.ItemChanged || e.ListChangedType == ListChangedType.ItemAdded || e.ListChangedType == ListChangedType.ItemDeleted) ;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message.ToString());
+            }
+        }
+
+        private static void _GridDataBases_ListChanged(object sender, ListChangedEventArgs e)
+        {
+            try
+            {
+                if (e.ListChangedType == ListChangedType.ItemChanged || e.ListChangedType == ListChangedType.ItemAdded || e.ListChangedType == ListChangedType.ItemDeleted);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message.ToString());
+            }
+        }
+
         static public void Upload(DataGrid _DataGrid) //uploading information from Navision
         {
             string[] StringClipBoardData = Clipboard.GetText().Split('\n'); // Count of rows
@@ -37,78 +70,110 @@ namespace LazyAdmin
                     FullDescription += elements;
                     if (Type == -1 || Manufacturer == -1 || Model == -1)
                     {
-                        _DataGrid.Items.Add(new Colums { CiklumIDColum = ClipBoardData[CiklumID], SerialNumberColum = ClipBoardData[SerialNumber].ToUpper(), DesciptionColum = ClipBoardData[FullDescription] });
+                        try
+                        {
+                            _GridDataBases.Add(new GridDataBase() { CiklumIDFromDataBase = ClipBoardData[CiklumID], SerialNumberFromDataBase = ClipBoardData[SerialNumber].ToUpper(), DescriptionFromDataBase = ClipBoardData[FullDescription] });
+                        }
+                        catch (Exception)
+                        {
+                            _GridDataBases.Add(new GridDataBase() { CiklumIDFromDataBase = ClipBoardData[CiklumID], SerialNumberFromDataBase = ClipBoardData[SerialNumber].ToUpper()});
+                        }
                     }
-                    else
+                    else if(CiklumID != SerialNumber)
                     {
                         Type += elements;
                         Manufacturer += elements;
                         Model += elements;
-                        _DataGrid.Items.Add(new Colums { CiklumIDColum = ClipBoardData[CiklumID], SerialNumberColum = ClipBoardData[SerialNumber].ToUpper(), DesciptionColum = (ClipBoardData[Type] + " " + ClipBoardData[Manufacturer] + " " + ClipBoardData[Model]) });
+                        _GridDataBases.Add(new GridDataBase() { CiklumIDFromDataBase = ClipBoardData[CiklumID], SerialNumberFromDataBase = ClipBoardData[SerialNumber].ToUpper(), DescriptionFromDataBase = (ClipBoardData[Type] + ClipBoardData[Manufacturer] + ClipBoardData[Model])});
                     }
-                    _DataGrid.ItemsSource = ColumsList;
                 }
+                _DataGrid.ItemsSource = _GridDataBases;
+
             }
             catch (Exception)
             {
             }
         }
-        class Colums
-        {
-            public string CiklumIDColum { get; set; }
-            public string SerialNumberColum { get; set; }
-            public string DesciptionColum { get; set; }
-            public string StatusColum { get; set; }
-        }//class for adding ID for colums
         static public void Input(DataGrid _DataGrid, string String) //input info from TextBox for DataGrids
         {
-            int Itteration = 0;
-            bool Success = false;
+            int Number;
+            bool success = int.TryParse(String, out Number);
             QRConvert(String, true, Description);
-            for (int i = 0; i != String.Length; i++)
+            if (Description != null);
+            else if (success && (String.Length == 6 || String.Length == 13))
             {
-                if (Char.IsNumber(String, i) == true) Itteration++;
-                if (Itteration == String.Length -1) Success = true;
-            }
-
-            if ((String.Length == 6 || String.Length == 13) && Success == true)
-            {
-                CiklumID = Int32.Parse(String);
+                CiklumID = Number.ToString();
             }
             else
             {
                 SerialNumber = String;
             }
-            Cheking(_DataGrid, CiklumID, SerialNumber, Description);
+            CheckingToResult();
+            _DataGrid.ItemsSource = _GridDataBasesResult;
+            
         }
-        static private void Cheking(DataGrid _DataGrid, int LocalCiklumID, string LocalSerialNumber, string LocalDescription) //Checking info from amt/textbox and DataGrids
+        static public void CheckingToResult()
         {
-            if (LocalCiklumID != 0 && LocalSerialNumber != null && LocalDescription != null)
+            if (CiklumID != null && SerialNumber !=null)
             {
-                _DataGrid.Items.Add(new Colums { CiklumIDColum = CiklumID.ToString(), SerialNumberColum = LocalSerialNumber, DesciptionColum = LocalDescription });
-                CiklumID = 0;
+                _GridDataBasesResult.Add(new GridDataBase() { CiklumIDFromDataBase = CiklumID.ToString(), SerialNumberFromDataBase = SerialNumber.ToUpper()});
+                CiklumID = null;
                 SerialNumber = null;
-                Description = null;
-            }
-            else if (LocalCiklumID != 0 && SerialNumber != null && LocalDescription == null)
-            {
-                _DataGrid.Items.Add(new Colums { CiklumIDColum = LocalCiklumID.ToString(), SerialNumberColum = LocalSerialNumber });
-                CiklumID = 0;
-                SerialNumber = null;
-            }
-            else
-            {
-                MessageBox.Show($"CiklumID:{CiklumID.ToString()} \n and serialnumber:{SerialNumber}");
+                Checking();
             }
         }
-        static public void Checkboxes()
+        static public void Checking() //сравнение листов, сравнение строк без дескрипшена, добовление статуа.
         {
-
+            if (_GridDataBases.Equals(_GridDataBasesResult)) MessageBox.Show("true");
         }
-        static public void Output()
-        {
+        //class Colums
+        //{
+        //    public string CiklumIDColum { get; set; }
+        //    public string SerialNumberColum { get; set; }
+        //    public string DesciptionColum { get; set; }
+        //    public string StatusColum { get; set; }
+        //}//class for adding ID for colums
+        //static public void Input(DataGrid _DataGrid, string String) //input info from TextBox for DataGrids
+        //{
+        //    int Itteration = 0;
+        //    bool Success = false;
+        //    QRConvert(String, true, Description);
+        //    for (int i = 0; i != String.Length; i++)
+        //    {
+        //        if (Char.IsNumber(String, i) == true) Itteration++;
+        //        if (Itteration == String.Length -1) Success = true;
+        //    }
 
-        }
+        //    if ((String.Length == 6 || String.Length == 13) && Success == true)
+        //    {
+        //        CiklumID = Int32.Parse(String);
+        //    }
+        //    else
+        //    {
+        //        SerialNumber = String;
+        //    }
+        //    Cheking(_DataGrid, CiklumID, SerialNumber, Description);
+        //}
+        //static private void Cheking(DataGrid _DataGrid, int LocalCiklumID, string LocalSerialNumber, string LocalDescription) //Checking info from amt/textbox and DataGrids
+        //{
+        //    if (LocalCiklumID != 0 && LocalSerialNumber != null && LocalDescription != null)
+        //    {
+        //        _DataGrid.Items.Add(new Colums { CiklumIDColum = CiklumID.ToString(), SerialNumberColum = LocalSerialNumber, DesciptionColum = LocalDescription });
+        //        CiklumID = 0;
+        //        SerialNumber = null;
+        //        Description = null;
+        //    }
+        //    else if (LocalCiklumID != 0 && SerialNumber != null && LocalDescription == null)
+        //    {
+        //        _DataGrid.Items.Add(new Colums { CiklumIDColum = LocalCiklumID.ToString(), SerialNumberColum = LocalSerialNumber });
+        //        CiklumID = 0;
+        //        SerialNumber = null;
+        //    }
+        //    else
+        //    {
+        //        MessageBox.Show($"CiklumID:{CiklumID.ToString()} \n and serialnumber:{SerialNumber}");
+        //    }
+        //}
         static public void QRConvert(string String, string Output)
         {
             if (Output == "Serial Number")
