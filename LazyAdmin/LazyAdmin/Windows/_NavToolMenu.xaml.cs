@@ -22,6 +22,7 @@ namespace LazyAdmin.Windows
     /// </summary>
     public partial class _NavToolMenu : Window
     {
+        int i = 0;
         public _NavToolMenu()
         {
             InitializeComponent();
@@ -53,5 +54,10 @@ namespace LazyAdmin.Windows
         {
 
         }
+
+        private void _Get_Click(object sender, RoutedEventArgs e)
+        {
+        }
     }
+
 }

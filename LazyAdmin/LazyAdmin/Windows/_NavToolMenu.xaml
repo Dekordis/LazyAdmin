@@ -15,20 +15,20 @@
                 <CheckBox x:Name="_Mute" Content="Mute" HorizontalAlignment="Center" Margin="0,42,0,0" VerticalAlignment="Top" Foreground="White" RenderTransformOrigin="0.618,2.194"/>
                 <Button x:Name="_GetCiklumID" Content="Get Ciklum ID" HorizontalAlignment="Left" Margin="562,37,0,0" VerticalAlignment="Top" Height="25" Width="81"/>
                 <Button x:Name="_GetSerialNumber" Content="Get S/N" HorizontalAlignment="Left" Margin="645,37,0,0" VerticalAlignment="Top" Height="25" Width="86"/>
-                <Button x:Name="_Get" Content="Get" HorizontalAlignment="Left" Margin="731,37,0,0" VerticalAlignment="Top" Height="25" Width="59"/>
+                <Button x:Name="_Get" Content="Get" HorizontalAlignment="Left" Margin="731,37,0,0" VerticalAlignment="Top" Height="25" Width="59" Click="_Get_Click"/>
                 <DataGrid x:Name="_DataGridFromAMT" Margin="0,65,400,0" AutoGenerateColumns="False">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Ciklum ID" Binding = "{Binding Path=CiklumIDFromDataBase}"/>
-                        <DataGridTextColumn Header="Serial Number" Binding = "{Binding Path=SerialNumberFromDataBase}"/>
-                        <DataGridTextColumn Header="Description" Binding = "{Binding Path=DescriptionFromDataBase}" Width="250"/>
+                    <DataGridTextColumn Header="Ciklum ID" Binding = "{Binding Path=CiklumID}"/>
+                    <DataGridTextColumn Header="Serial Number" Binding = "{Binding Path=SerialNumber}"/>
+                    <DataGridTextColumn Header="Description" Binding = "{Binding Path=Description}" Width="250"/>
                     </DataGrid.Columns>
                 </DataGrid>
             <DataGrid x:Name="_DataGridResult" Margin="405,65,0,0" AutoGenerateColumns="False">
                     <DataGrid.Columns>
-                    <DataGridTextColumn Header="Ciklum ID" Binding = "{Binding Path=CiklumIDFromDataBase}"/>
-                    <DataGridTextColumn Header="Serial Number" Binding = "{Binding Path=SerialNumberFromDataBase}"/>
-                    <DataGridTextColumn Header="Desciption" Binding = "{Binding Path=DescriptionFromDataBase}" Width="203"/>
-                    <DataGridTextColumn Header="Status" Binding = "{Binding Path=StatusColum}"/>
+                    <DataGridTextColumn Header="Ciklum ID" Binding = "{Binding Path=CiklumID}"/>
+                    <DataGridTextColumn Header="Serial Number" Binding = "{Binding Path=SerialNumber}"/>
+                    <DataGridTextColumn Header="Desciption" Binding = "{Binding Path=Description}" Width="203"/>
+                    <DataGridTextColumn Header="Status" Binding = "{Binding Path=Status}"/>
                     </DataGrid.Columns>
                 </DataGrid>
                 <ComboBox x:Name="_ContextMenu" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="120">
