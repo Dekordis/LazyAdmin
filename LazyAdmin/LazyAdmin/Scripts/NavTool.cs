@@ -7,6 +7,8 @@ using LazyAdmin.DataBase;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Diagnostics;
+using System.Timers;
 
 namespace LazyAdmin
 {
@@ -28,8 +30,7 @@ namespace LazyAdmin
         private static ObservableCollection<Asset> GridOfAssetsCheking;
         private static FileIOService FileIOServiceFromAMT;
         private static FileIOService FileIOServiceResult;
-
-
+        private static System.Timers.Timer Timer;
 
         static public void Load(DataGrid _DataGridFromAMT, DataGrid _DataGridResult)
         {
@@ -39,7 +40,6 @@ namespace LazyAdmin
             {
                 GridOfAssets = FileIOServiceFromAMT.LoadData();
                 GridOfAssetsResult = FileIOServiceResult.LoadData();
-
             }
             catch (Exception err)
             {
@@ -51,31 +51,30 @@ namespace LazyAdmin
             _DataGridResult.ItemsSource = GridOfAssetsResult;
 
             GridOfAssets.CollectionChanged += GridOfAssets_CollectionChanged;
-            GridOfAssetsResult.CollectionChanged += GridOfAssetsResult_CollectionChanged;
-        }
+            GridOfAssetsResult.CollectionChanged += GridOfAssets_CollectionChanged;
+            SetTimer(30000);
 
-        private static void GridOfAssets_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        }
+        private static void AutoSave(Object source, ElapsedEventArgs e)
         {
-            if (e.Action == NotifyCollectionChangedAction.Add || e.Action == NotifyCollectionChangedAction.Remove || e.Action == NotifyCollectionChangedAction.Move || e.Action == NotifyCollectionChangedAction.Reset || e.Action == NotifyCollectionChangedAction.Replace || e.Action != NotifyCollectionChangedAction.Add)
+            try
             {
-                try
-                {
-                    FileIOServiceFromAMT.SaveData(sender);
-                }
-                catch (Exception err)
-                {
-                    MessageBox.Show(err.Message);
-                }
+                FileIOServiceFromAMT.SaveData(GridOfAssets);
+                FileIOServiceResult.SaveData(GridOfAssetsResult);
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show(err.Message);
             }
         }
-        private static void GridOfAssetsResult_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private static void GridOfAssets_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            if (e.Action == NotifyCollectionChangedAction.Add || e.Action == NotifyCollectionChangedAction.Remove || e.Action == NotifyCollectionChangedAction.Move || e.Action == NotifyCollectionChangedAction.Reset || e.Action == NotifyCollectionChangedAction.Replace)
+            if (e.Action == NotifyCollectionChangedAction.Add || e.Action == NotifyCollectionChangedAction.Remove)
             {
                 try
                 {
-                    FileIOServiceResult.SaveData(sender);
-
+                    FileIOServiceFromAMT.SaveData(GridOfAssets);
+                    FileIOServiceResult.SaveData(GridOfAssetsResult);
                 }
                 catch (Exception err)
                 {
@@ -160,7 +159,7 @@ namespace LazyAdmin
             int Number;
             bool success = int.TryParse(String, out Number);
             QRConvert(String, true, InputDescription);
-            if (InputDescription != null);
+            if (InputDescription != null) ;
             else if (success && (String.Length == 6 || String.Length == 13))
             {
                 InputCiklumID = Number.ToString();
@@ -212,7 +211,7 @@ namespace LazyAdmin
             }
             else if (InputCiklumID != null && InputWrongSerialNumber != null)
             {
-                GridOfAssetsResult.Add(new Asset() { CiklumID = InputCiklumID.ToString(), SerialNumber = InputWrongSerialNumber.ToUpper(), Description = GridOfAssets[IndexOfCiklumIDAsset].Description, Status = "Wrong SerialNumber"});
+                GridOfAssetsResult.Add(new Asset() { CiklumID = InputCiklumID.ToString(), SerialNumber = InputWrongSerialNumber.ToUpper(), Description = GridOfAssets[IndexOfCiklumIDAsset].Description, Status = "Wrong SerialNumber" });
                 InputCiklumID = null;
                 InputWrongSerialNumber = null;
                 IndexOfCiklumIDAsset = -1;
@@ -258,14 +257,14 @@ namespace LazyAdmin
         private static void Search(ObservableCollection<Asset> source, string input, string status) //Method for searching 1. Index 2. Column. You need add some binding list, string with searching text and empty variable for result(column, index(int!))
         {
             if (status == "Status")
-            for (int i = 0; i < source.Count; i++)
-            {
-                if (source[i].Status.IndexOf(input) != -1)
+                for (int i = 0; i < source.Count; i++)
                 {
-                    IndexOfAsset = source[i].Status.IndexOf(input);
-                    break;
-                }
-            };
+                    if (source[i].Status.IndexOf(input) != -1)
+                    {
+                        IndexOfAsset = source[i].Status.IndexOf(input);
+                        break;
+                    }
+                };
         }
         static public void QRConvert(string String, string Output)
         {
@@ -293,7 +292,7 @@ namespace LazyAdmin
         }
         static public void FinishSending()
         {
-            if(GridOfAssets.Count == GridOfAssetsResult.Count)
+            if (GridOfAssets.Count == GridOfAssetsResult.Count)
             {
                 int rowcount = 0;
                 for (int i = 0; i < GridOfAssets.Count; i++)
@@ -303,12 +302,12 @@ namespace LazyAdmin
                         if (GridOfAssets[i].AssetRow == GridOfAssetsResult[b].AssetRow) rowcount++;
                     }
                 }
-                if(rowcount == GridOfAssets.Count)
+                if (rowcount == GridOfAssets.Count)
                 {
                     GridOfAssetsResult.Clear();
                     for (int i = 0; i < GridOfAssets.Count; i++)
                     {
-                        GridOfAssetsResult.Add(new Asset { CiklumID = GridOfAssets[i].CiklumID, SerialNumber = GridOfAssets[i].SerialNumber, Description = GridOfAssets[i].Description, Status = "Prepared to delivery"});
+                        GridOfAssetsResult.Add(new Asset { CiklumID = GridOfAssets[i].CiklumID, SerialNumber = GridOfAssets[i].SerialNumber, Description = GridOfAssets[i].Description, Status = "Prepared to delivery" });
                     }
                     GridOfAssets.Clear();
                     MessageBox.Show("Done!", "Cheking");
@@ -423,6 +422,15 @@ namespace LazyAdmin
                 }
             }
 
+        }
+        private static void SetTimer(int interval)
+        {
+            // Create a timer with a two second interval.
+            Timer = new Timer(interval);
+            // Hook up the Elapsed event for the timer. 
+            Timer.Elapsed += AutoSave;
+            Timer.AutoReset = true;
+            Timer.Enabled = true;
         }
 
     }

@@ -15,7 +15,7 @@ namespace LazyAdmin
         static string User = @"Azure\cklfsstorage"; //This variable needed for contain User of Azure
         static string MainPath; //This variable contain Path of programm
         static string RemotePath; ////This variable contain Remote Path to Azure folder 
-        
+
         static public void AzureConnection(string Action)//This method needed for connect and disconnect Azure Folder
         {
             if (Action == "Connect")
@@ -32,21 +32,21 @@ namespace LazyAdmin
                 System.Diagnostics.Process.Start("CMD.exe", StringCmdText);
                 MessageBox.Show("Disconnected");
             }
-            
+
 
             //Dear Serhii please create method with 2 parameters (connect, disconnect) Azure disk 
             //When method was finished it must delete all temp files and other not necessary objects (!just only use disconnect parametr!) 
         }
         static public void RunScript(string PathtoFile, string TypeOfRun)
         {
-           
+
             if (TypeOfRun == "Single")  //простой запус пс1
             {
                 PowerShell Script = PowerShell.Create();
                 Script.AddScript(PathtoFile);
                 Script.Invoke();
             }
-  
+
             else if (TypeOfRun == "Multi")  //запуск пс1 новым процессом
             {
                 ProcessStartInfo Script = new ProcessStartInfo();

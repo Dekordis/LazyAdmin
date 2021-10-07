@@ -16,7 +16,7 @@ namespace LazyAdmin
             _CloseWindow.Name = "_CloseWindow";
             _CloseWindow.Background = Brushes.Transparent;
             _CloseWindow.BorderBrush = Brushes.Transparent;
-            _CloseWindow.Click += (s, ee) => {CloseThisWindow(CurrentWindow); };
+            _CloseWindow.Click += (s, ee) => { CloseThisWindow(CurrentWindow); };
             _CloseWindow.VerticalAlignment = VerticalAlignment.Top;
             _CloseWindow.HorizontalAlignment = HorizontalAlignment.Right;
             Label _CloseButtonText = new Label();
@@ -36,7 +36,7 @@ namespace LazyAdmin
             _MinimizeWindow.Name = "_MinimizeWindow";
             _MinimizeWindow.Background = Brushes.Transparent;
             _MinimizeWindow.BorderBrush = Brushes.Transparent;
-            _MinimizeWindow.Click += (s, ee) => { MinimizeThisWindow(CurrentWindow); }; 
+            _MinimizeWindow.Click += (s, ee) => { MinimizeThisWindow(CurrentWindow); };
             _MinimizeWindow.VerticalAlignment = VerticalAlignment.Top;
             Label _MinimizeButtonText = new Label();
             _MinimizeButtonText.Content = "_";
@@ -75,12 +75,12 @@ namespace LazyAdmin
             CurrentWindow.Close();
             Window MainWindow = Application.Current.MainWindow;
             try
-            {   
-             MainWindow.Left = CurrentWindow.Left;
-             MainWindow.Top = CurrentWindow.Top;
-             MainWindow.Show();
+            {
+                MainWindow.Left = CurrentWindow.Left;
+                MainWindow.Top = CurrentWindow.Top;
+                MainWindow.Show();
             }
-            catch(NullReferenceException)
+            catch (NullReferenceException)
             {
             }
             catch (Exception)

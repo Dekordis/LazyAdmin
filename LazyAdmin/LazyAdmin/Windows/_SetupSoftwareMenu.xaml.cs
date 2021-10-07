@@ -31,7 +31,7 @@ namespace LazyAdmin.Windows
             string TypeOfRun = "Single";
             App.RunScript(PathtoFile, TypeOfRun);
         }
-       
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             string ExtentionFile = "bat";

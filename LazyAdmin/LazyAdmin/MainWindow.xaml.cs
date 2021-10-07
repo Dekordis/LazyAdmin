@@ -90,7 +90,7 @@ namespace LazyAdmin
         {
             _OptionsMenu OptionsMenu = new _OptionsMenu();
             App.OpenWindow(this, OptionsMenu);
-          
+
         }
     } //    "Buttons"
 }

@@ -48,7 +48,7 @@ namespace LazyAdmin.Windows
                 Arguments = $"/v:{ip}"
             };
             process.Start();
-        } 
+        }
 
         private void MyCiklum(object sender, EventArgs e)
         {

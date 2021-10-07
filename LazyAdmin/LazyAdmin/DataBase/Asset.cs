@@ -20,7 +20,7 @@ namespace LazyAdmin.DataBase
         public string CiklumID
         {
             get { return _CiklumID; }
-            set 
+            set
             {
                 if (_CiklumID == value) return;
 
@@ -31,7 +31,7 @@ namespace LazyAdmin.DataBase
         public string SerialNumber
         {
             get { return _SerialNumber; }
-            set 
+            set
             {
                 if (_SerialNumber == value) return;
                 _SerialNumber = value;

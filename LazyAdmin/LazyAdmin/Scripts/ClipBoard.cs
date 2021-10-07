@@ -97,7 +97,7 @@ namespace LazyAdmin
             string[] StringClipBoardData = Clipboard.GetText().Split('\n'); // Count of rows
             string[] ClipBoardData = Clipboard.GetText().Split('\t');  // Array elements from ClipBoard
             int elements = StringClipBoardData[0].Split('\t').Length - 1; // Lenght of row
-            int rows = StringClipBoardData.Length -1; // Count of rows without header
+            int rows = StringClipBoardData.Length - 1; // Count of rows without header
             int CiklumID = Array.IndexOf(ClipBoardData, "Ciklum ID");
             int SerialNumber = Array.IndexOf(ClipBoardData, "Serial No.");
             int Type = Array.IndexOf(ClipBoardData, "Type");
@@ -109,7 +109,7 @@ namespace LazyAdmin
             int Reimb = Array.IndexOf(ClipBoardData, "Reimbursable Type");
             int CurrentUser = Array.IndexOf(ClipBoardData, "Current User");
             int Branch = Array.IndexOf(ClipBoardData, "Branch");
-            string Result = null; 
+            string Result = null;
             try
             {
                 for (int i = 1; i <= rows; i++)

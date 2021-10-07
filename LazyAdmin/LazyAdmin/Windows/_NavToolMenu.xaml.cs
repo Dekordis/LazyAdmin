@@ -31,7 +31,7 @@ namespace LazyAdmin.Windows
         }
         private void Upload(object sender, RoutedEventArgs e)
         {
-           App.Upload(_DataGridFromAMT);
+            App.Upload(_DataGridFromAMT);
         }
         private void EnterText(object sender, KeyEventArgs e)
         {
