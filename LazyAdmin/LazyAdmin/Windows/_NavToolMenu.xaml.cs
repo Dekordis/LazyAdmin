@@ -40,12 +40,12 @@ namespace LazyAdmin.Windows
                 if (_EnterText.Text == "" || _EnterText.Text == null || _EnterText.Text == " ") _EnterText.Clear();
                 else if (_SendingEquipment.IsChecked == false)
                 {
-                    App.Input(_EnterText.Text.TrimStart().ToUpper());
+                    App.Input(_EnterText.Text.TrimStart().ToString().ToUpper());
                     _EnterText.Clear();
                 }
                 else
                 {
-                    App.InputSending(_DataGridResult, _EnterText.Text.TrimStart().ToUpper());
+                    App.InputSending(_DataGridResult, _EnterText.Text.ToString().TrimStart().ToUpper());
                     _EnterText.Clear();
                 }
             }
@@ -54,16 +54,6 @@ namespace LazyAdmin.Windows
         {
             _EnterText.Clear();
         }
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void _Get_Click(object sender, RoutedEventArgs e)
-        {
-        }
-
         private void _FinishSending_Click(object sender, RoutedEventArgs e)
         {
             App.FinishSending();
@@ -72,6 +62,19 @@ namespace LazyAdmin.Windows
         private void _Clear_Click(object sender, RoutedEventArgs e)
         {
             App.ClearAssets();
+        }
+
+        private void GetCiklumID(object sender, RoutedEventArgs e)
+        {
+            App.GetCiklumID();
+        }
+        private void GetSerialnumber(object sender, RoutedEventArgs e)
+        {
+            App.GetSerialNumber();
+        }
+        private void GetAll(object sender, RoutedEventArgs e)
+        {
+            App.GetAll();
         }
     }
 

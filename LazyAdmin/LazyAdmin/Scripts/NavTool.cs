@@ -129,9 +129,9 @@ namespace LazyAdmin
         }
         static public void Input(string String)
         {
-            int Number;
+            long Number;
             Search(GridOfAssets, String);
-            bool success = int.TryParse(String, out Number);
+            bool success = long.TryParse(String, out Number);
             if (IndexOfCiklumIDAsset != -1 && ColumnOfDataGrid == "CiklumID")
             {
                 InputCiklumID = String;
@@ -142,7 +142,7 @@ namespace LazyAdmin
                 InputSerialNumber = String;
                 ColumnOfDataGrid = null;
             }
-            else if (success && (String.Length == 6 || String.Length == 13))
+            else if (success && (Number.ToString().Length == 13 || Number.ToString().Length == 6))
             {
                 InputWrongCiklumID = Number.ToString();
             }
@@ -158,9 +158,9 @@ namespace LazyAdmin
         {
             int Number;
             bool success = int.TryParse(String, out Number);
-            QRConvert(String, true, InputDescription);
-            if (InputDescription != null) ;
-            else if (success && (String.Length == 6 || String.Length == 13))
+            //QRConvert(String, true, InputDescription);
+            //else if (InputDescription != null);
+            if (success && (Number.ToString().Length ==  13 || Number.ToString().Length == 6))
             {
                 InputCiklumID = Number.ToString();
             }
@@ -431,6 +431,50 @@ namespace LazyAdmin
             Timer.Elapsed += AutoSave;
             Timer.AutoReset = true;
             Timer.Enabled = true;
+        }
+        public static void GetAll()
+        {
+            string ToClipBoard = "CiklumID\t" + "Serial Number\t" + "Description\t" + "Status\n";
+
+            for (int i = 0; i < GridOfAssets.Count; i++)
+            {
+                ToClipBoard += $"{GridOfAssets[i].CiklumID}\t{GridOfAssets[i].SerialNumber}\t{GridOfAssets[i].Description}\n";
+            }
+            for (int i = 0; i < GridOfAssetsResult.Count; i++)
+            {
+                ToClipBoard += $"{GridOfAssetsResult[i].CiklumID}\t{GridOfAssetsResult[i].SerialNumber}\t{GridOfAssetsResult[i].Description}\t{GridOfAssetsResult[i].Status}\n";
+            }
+            Clipboard.SetText(ToClipBoard);
+        }
+        public static void GetCiklumID()
+        {
+            string ToClipBoard = null;
+            for (int i = 0; i < GridOfAssets.Count; i++)
+            {
+                ToClipBoard += $"{GridOfAssets[i].CiklumID}";
+                ToClipBoard += "|";
+            }
+            for (int i = 0; i < GridOfAssetsResult.Count; i++)
+            {
+                ToClipBoard += $"{GridOfAssetsResult[i].CiklumID}";
+                if(i != GridOfAssetsResult.Count) ToClipBoard += "|";
+            }
+            Clipboard.SetText(ToClipBoard);
+        }
+        public static void GetSerialNumber()
+        {
+            string ToClipBoard = null;
+            for (int i = 0; i < GridOfAssets.Count; i++)
+            {
+                ToClipBoard += $"{GridOfAssets[i].SerialNumber}";
+                ToClipBoard += "|";
+            }
+            for (int i = 0; i < GridOfAssetsResult.Count; i++)
+            {
+                ToClipBoard += $"{GridOfAssetsResult[i].SerialNumber}";
+                if (i != GridOfAssetsResult.Count) ToClipBoard += "|";
+            }
+            Clipboard.SetText(ToClipBoard);
         }
 
     }

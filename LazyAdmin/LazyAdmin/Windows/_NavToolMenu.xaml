@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LazyAdmin.Windows"
         mc:Ignorable="d"
-        Title="_NavToolMenu" Height="450" Width="800" WindowStyle="None" Background="Transparent" ResizeMode="NoResize" Loaded="Window_Loaded">
+        Title="_NavToolMenu" Height="450" Width="800" WindowStyle="None" Background="Transparent" ResizeMode="NoResize">
     <Viewbox Stretch="Fill">
         <Grid Height="434.04" Width="800">
             <Grid x:Name="_HeaderButtonGrid" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Right" VerticalAlignment="Top" Width="150" Height="50"/>
@@ -13,9 +13,9 @@
             <TextBox x:Name="_EnterText" HorizontalAlignment="Left" Margin="91,41,0,0" Text="Enter S/N or CiklumID" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" Height="17" KeyDown="EnterText" PreviewMouseDown="_EnterText_PreviewMouseDown"/>
             <CheckBox x:Name="_SendingEquipment" Content="Sending Equipment" HorizontalAlignment="Left" Margin="246,42,0,0" VerticalAlignment="Top" Foreground="White"/>
             <CheckBox x:Name="_Mute" Content="Mute" HorizontalAlignment="Center" Margin="0,42,0,0" VerticalAlignment="Top" Foreground="White" RenderTransformOrigin="0.618,2.194"/>
-            <Button x:Name="_GetCiklumID" Content="Get Ciklum ID" HorizontalAlignment="Left" Margin="562,37,0,0" VerticalAlignment="Top" Height="25" Width="81"/>
-            <Button x:Name="_GetSerialNumber" Content="Get S/N" HorizontalAlignment="Left" Margin="645,37,0,0" VerticalAlignment="Top" Height="25" Width="86"/>
-            <Button x:Name="_Get" Content="Get" HorizontalAlignment="Left" Margin="731,37,0,0" VerticalAlignment="Top" Height="25" Width="59" Click="_Get_Click"/>
+            <Button x:Name="_GetCiklumID" Content="Get Ciklum ID" HorizontalAlignment="Left" Margin="562,37,0,0" VerticalAlignment="Top" Height="25" Width="81" Click="GetCiklumID"/>
+            <Button x:Name="_GetSerialNumber" Content="Get S/N" HorizontalAlignment="Left" Margin="645,37,0,0" VerticalAlignment="Top" Height="25" Width="86" Click="GetSerialnumber"/>
+            <Button x:Name="_Get" Content="Get" HorizontalAlignment="Left" Margin="731,37,0,0" VerticalAlignment="Top" Height="25" Width="59" Click="GetAll"/>
             <DataGrid x:Name="_DataGridFromAMT" Margin="0,65,400,0" AutoGenerateColumns="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Ciklum ID" Binding = "{Binding Path=CiklumID}"/>
