@@ -8,6 +8,14 @@
     <UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <OutputPath>Release\</OutputPath>
+  </PropertyGroup>
+
   <ItemGroup>
     <Compile Remove="Forms\**" />
     <EmbeddedResource Remove="Forms\**" />
