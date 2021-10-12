@@ -1,19 +1,8 @@
 ﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using LazyAdmin.Windows;
 using System.Reflection;
-using System.Text;
-using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace LazyAdmin
 {
@@ -26,6 +15,8 @@ namespace LazyAdmin
         {
             InitializeComponent();
             App.WindowSettings(_HeaderButtonGrid, this);
+            _ProgramVersion.Content = Assembly.GetExecutingAssembly().GetName().Version.ToString()+".v";
+            ChekUpdates();
         }
     }
     public partial class MainWindow : Window
@@ -93,4 +84,62 @@ namespace LazyAdmin
 
         }
     } //    "Buttons"
+    public partial class MainWindow
+    {
+        string UpdatePath = @"\\cklfsstorage.file.core.windows.net\remoteinstall\LAZYADMIN\Prod\";
+        string CheckVersion;
+        private void ChekUpdates()
+        {
+            try
+            {
+                App.AzureConnection("Connect");
+                FileVersionInfo ProdVersion = FileVersionInfo.GetVersionInfo($@"{UpdatePath}" + "LazyAdmin.exe");
+                CheckVersion = ProdVersion.FileVersion;
+                if (Assembly.GetExecutingAssembly().GetName().Version.ToString() == CheckVersion)
+                {
+                }
+                else if (Assembly.GetExecutingAssembly().GetName().Version.ToString() != CheckVersion)
+                {
+                    string[] LocalStringCheck = Assembly.GetExecutingAssembly().GetName().Version.ToString().Split('.');
+                    string[] RemoteStringCheck = CheckVersion.Split('.');
+                    int LocalCheck1 = Int32.Parse(LocalStringCheck[0]);
+                    int LocalCheck2 = Int32.Parse(LocalStringCheck[1]);
+                    int LocalCheck3 = Int32.Parse(LocalStringCheck[2]);
+                    int LocalCheck4 = Int32.Parse(LocalStringCheck[3]);
+                    int RemoteCheck1 = Int32.Parse(RemoteStringCheck[0]);
+                    int RemoteCheck2 = Int32.Parse(RemoteStringCheck[1]);
+                    int RemoteCheck3 = Int32.Parse(RemoteStringCheck[2]);
+                    int RemoteCheck4 = Int32.Parse(RemoteStringCheck[3]);
+                    if (LocalCheck1 < RemoteCheck1 || (LocalCheck2 < RemoteCheck2 && LocalCheck1 <= RemoteCheck1) || (LocalCheck3 < RemoteCheck3 && (LocalCheck2 <= RemoteCheck2 && LocalCheck1 <= RemoteCheck1)) || (LocalCheck4 < RemoteCheck4 && (LocalCheck3 <= RemoteCheck3 && LocalCheck2 <= RemoteCheck2 && LocalCheck1 <= RemoteCheck1)))
+                    {
+                        Update();
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
+        }
+        private void Update()
+        {
+            try
+            {
+                MessageBoxResult result = MessageBox.Show("Lazy Admin has new version!\ndo you want update?", "Updater", MessageBoxButton.YesNo);
+                if (result == MessageBoxResult.Yes)
+                {
+                    Process update = new Process();
+                    update.StartInfo.FileName = $"Update.bat";
+                    update.Start();
+                    Process.GetCurrentProcess().Kill();
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
+
+        }
+
+    }
 }

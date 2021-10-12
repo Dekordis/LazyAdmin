@@ -9,11 +9,13 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Timers;
+using System.Media;
 
 namespace LazyAdmin
 {
     partial class App
     {
+        #region Variables
         private static readonly string PATHFromAMT = $"{Environment.CurrentDirectory}\\GridOfAssetsFromAMT.json";
         private static readonly string PATHResult = $"{Environment.CurrentDirectory}\\GridOfAssetsResult.json";
         static string InputCiklumID = null;
@@ -30,9 +32,10 @@ namespace LazyAdmin
         private static ObservableCollection<Asset> GridOfAssetsCheking;
         private static FileIOService FileIOServiceFromAMT;
         private static FileIOService FileIOServiceResult;
-        private static System.Timers.Timer Timer;
+        private static Timer Timer;
+        #endregion
 
-        static public void Load(DataGrid _DataGridFromAMT, DataGrid _DataGridResult)
+        static public void Load(DataGrid _DataGridFromAMT, DataGrid _DataGridResult) //Things which load on start
         {
             FileIOServiceFromAMT = new FileIOService(PATHFromAMT);
             FileIOServiceResult = new FileIOService(PATHResult);
@@ -55,7 +58,8 @@ namespace LazyAdmin
             SetTimer(30000);
 
         }
-        private static void AutoSave(Object source, ElapsedEventArgs e)
+        #region Events for Saving
+        private static void AutoSave(Object source, ElapsedEventArgs e) //Autosaving event
         {
             try
             {
@@ -67,7 +71,7 @@ namespace LazyAdmin
                 MessageBox.Show(err.Message);
             }
         }
-        private static void GridOfAssets_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private static void GridOfAssets_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e) //Autosaving event
         {
             if (e.Action == NotifyCollectionChangedAction.Add || e.Action == NotifyCollectionChangedAction.Remove || e.Action == NotifyCollectionChangedAction.Reset)
             {
@@ -82,7 +86,8 @@ namespace LazyAdmin
                 }
             }
         }
-
+        #endregion
+        #region Action with adding info to DataGrid
         static public void Upload(DataGrid _DataGrid) //uploading information from Navision
         {
             string[] StringClipBoardData = Clipboard.GetText().Split('\n'); // Count of rows
@@ -119,7 +124,7 @@ namespace LazyAdmin
                         IndexType += elements;
                         IndexManufacturer += elements;
                         IndexModel += elements;
-                        GridOfAssets.Add(new Asset() { CiklumID = ClipBoardData[IndexCiklumID], SerialNumber = ClipBoardData[IndexSerialNumber].ToUpper(), Description = (ClipBoardData[IndexType] + ClipBoardData[IndexManufacturer] + ClipBoardData[IndexModel]) });
+                        GridOfAssets.Add(new Asset() { CiklumID = ClipBoardData[IndexCiklumID], SerialNumber = ClipBoardData[IndexSerialNumber].ToUpper(), Description = (ClipBoardData[IndexType] +" "+ ClipBoardData[IndexManufacturer] + " " + ClipBoardData[IndexModel]) });
                     }
                 }
             }
@@ -127,27 +132,43 @@ namespace LazyAdmin
             {
             }
         }
-        static public void Input(string String)
+        static public void Input(string String) //input info from TextBox for DataGrids
         {
             long Number;
             Search(GridOfAssets, String);
             bool success = long.TryParse(String, out Number);
             if (IndexOfCiklumIDAsset != -1 && ColumnOfDataGrid == "CiklumID")
             {
+                if (InputCiklumID != null)
+                {
+                    SoundPlay("Repeat");
+                }
                 InputCiklumID = String;
                 ColumnOfDataGrid = null;
             }
             else if (IndexOfSerialNumberAsset != -1 && ColumnOfDataGrid == "SerialNumber")
             {
+                if (InputSerialNumber != null)
+                {
+                    SoundPlay("Repeat");
+                }
                 InputSerialNumber = String;
                 ColumnOfDataGrid = null;
             }
             else if (success && (Number.ToString().Length == 13 || Number.ToString().Length == 6))
             {
+                if (InputWrongCiklumID != null)
+                {
+                    SoundPlay("Repeat");
+                }
                 InputWrongCiklumID = Number.ToString();
             }
             else
             {
+                if (InputWrongSerialNumber != null)
+                {
+                    SoundPlay("Repeat");
+                }
                 InputWrongSerialNumber = String;
             }
             if (IndexOfCiklumIDAsset != -1 || IndexOfSerialNumberAsset != -1) CheckingToResult(IndexOfCiklumIDAsset);
@@ -158,8 +179,6 @@ namespace LazyAdmin
         {
             int Number;
             bool success = int.TryParse(String, out Number);
-            //QRConvert(String, true, InputDescription);
-            //else if (InputDescription != null);
             if (success && (Number.ToString().Length ==  13 || Number.ToString().Length == 6))
             {
                 InputCiklumID = Number.ToString();
@@ -170,66 +189,70 @@ namespace LazyAdmin
             }
             CheckingToResult();
         }
-        static public void CheckingToResult()
+        static public void CheckingToResult() //Method for cheking input info and add it to DataGrid
         {
             if (InputCiklumID != null && InputSerialNumber != null)
             {
                 GridOfAssetsResult.Add(new Asset() { CiklumID = InputCiklumID.ToString(), SerialNumber = InputSerialNumber.ToUpper() });
-                InputCiklumID = null;
-                InputSerialNumber = null;
+                ClearVariable();
+                SoundPlay("Accept");
             }
             else if (InputWrongCiklumID != null && InputWrongSerialNumber != null)
             {
                 GridOfAssetsResult.Add(new Asset() { CiklumID = InputWrongCiklumID.ToString(), SerialNumber = InputWrongSerialNumber.ToUpper(), Status = "No In AMT" });
-                InputWrongCiklumID = null;
-                InputWrongSerialNumber = null;
+                ClearVariable();
+                SoundPlay("Error");
             }
         }
-        static public void CheckingToResult(int index)
+        static public void CheckingToResult(int index) //Method for cheking input info and add it to DataGrid
         {
-            if (InputCiklumID != null && InputSerialNumber != null && IndexOfCiklumIDAsset == IndexOfSerialNumberAsset)
+            if (InputCiklumID != null && InputSerialNumber != null && IndexOfCiklumIDAsset == IndexOfSerialNumberAsset && InputCiklumID.Length != 13)
             {
                 GridOfAssetsResult.Add(new Asset() { CiklumID = InputCiklumID.ToString(), SerialNumber = InputSerialNumber.ToUpper(), Description = GridOfAssets[IndexOfCiklumIDAsset].Description, Status = "Ok" });
                 GridOfAssets.RemoveAt(index);
-                InputCiklumID = null;
-                InputSerialNumber = null;
-                IndexOfCiklumIDAsset = -1;
-                IndexOfSerialNumberAsset = -1;
-                IndexOfAsset = -1;
-                ColumnOfDataGrid = null;
+                ClearVariable();
+                SoundPlay("Accept");
+            }
+            else if (InputCiklumID != null && InputSerialNumber != null && IndexOfCiklumIDAsset == IndexOfSerialNumberAsset && InputCiklumID.Length == 13)
+            {
+                GridOfAssetsResult.Add(new Asset() { CiklumID = InputCiklumID.ToString(), SerialNumber = InputSerialNumber.ToUpper(), Description = GridOfAssets[IndexOfCiklumIDAsset].Description, Status = "Must be labeled via Ciklum ID" });
+                GridOfAssets.RemoveAt(index);
+                ClearVariable();
+                SoundPlay("Accept");
             }
             else if (InputCiklumID != null && InputSerialNumber != null && IndexOfCiklumIDAsset != IndexOfSerialNumberAsset)
             {
                 GridOfAssetsResult.Add(new Asset() { CiklumID = InputCiklumID.ToString(), SerialNumber = InputSerialNumber.ToUpper(), Status = "CiklumID not equal Serial Number" });
                 GridOfAssets.RemoveAt(index);
-                InputCiklumID = null;
-                InputSerialNumber = null;
-                IndexOfCiklumIDAsset = -1;
-                IndexOfSerialNumberAsset = -1;
-                IndexOfAsset = -1;
-                ColumnOfDataGrid = null;
+                ClearVariable();
+                SoundPlay("Error");
             }
             else if (InputCiklumID != null && InputWrongSerialNumber != null)
             {
                 GridOfAssetsResult.Add(new Asset() { CiklumID = InputCiklumID.ToString(), SerialNumber = InputWrongSerialNumber.ToUpper(), Description = GridOfAssets[IndexOfCiklumIDAsset].Description, Status = "Wrong SerialNumber" });
-                InputCiklumID = null;
-                InputWrongSerialNumber = null;
-                IndexOfCiklumIDAsset = -1;
-                IndexOfSerialNumberAsset = -1;
-                IndexOfAsset = -1;
-                ColumnOfDataGrid = null;
+                ClearVariable();
+                SoundPlay("Error");
             }
             else if (InputWrongCiklumID != null && InputSerialNumber != null)
             {
                 GridOfAssetsResult.Add(new Asset() { CiklumID = InputWrongCiklumID.ToString(), SerialNumber = InputSerialNumber.ToUpper(), Description = GridOfAssets[IndexOfSerialNumberAsset].Description, Status = "Wrong CiklumID" });
-                InputWrongCiklumID = null;
-                InputSerialNumber = null;
-                IndexOfCiklumIDAsset = -1;
-                IndexOfSerialNumberAsset = -1;
-                IndexOfAsset = -1;
-                ColumnOfDataGrid = null;
+                ClearVariable();
+                SoundPlay("Error");
             }
         }
+        private static void ClearVariable()
+        {
+            InputWrongCiklumID = null;
+            InputWrongSerialNumber = null;
+            InputCiklumID = null;
+            InputSerialNumber = null;
+            IndexOfCiklumIDAsset = -1;
+            IndexOfSerialNumberAsset = -1;
+            IndexOfAsset = -1;
+            ColumnOfDataGrid = null;
+        } //Method for clearing temporary variables
+        #endregion
+        #region Some additional methods
         private static void Search(ObservableCollection<Asset> source, string input) //Method for searching 1. Index 2. Column. You need add some binding list, string with searching text and empty variable for result(column, index(int!))
         {
             for (int i = 0; i < source.Count; i++)
@@ -266,31 +289,12 @@ namespace LazyAdmin
                     }
                 };
         }
-        static public void QRConvert(string String, string Output)
-        {
-            if (Output == "Serial Number")
-            {
-
-            }
-            else if (Output == "Description")
-            {
-
-            }
-        }
-        static public void QRConvert(string String, bool DescriptionAndSerialNumber, string Output)
-        {
-            if (DescriptionAndSerialNumber == true)
-            {
-                String = "SerialNumber";
-                Output += "Some Description";
-            }
-        }
-        static public void ClearAssets()
+        static public void ClearAssets() //Clearing GrindOfAsset
         {
             GridOfAssets.Clear();
             GridOfAssetsResult.Clear();
         }
-        static public void FinishSending()
+        static public void FinishSending() //Method for equal 2 observables collection (GridOfAssetResult and GridOfAsset)
         {
             if (GridOfAssets.Count == GridOfAssetsResult.Count)
             {
@@ -423,7 +427,7 @@ namespace LazyAdmin
             }
 
         }
-        private static void SetTimer(int interval)
+        private static void SetTimer(int interval) //Timer for autosaving
         {
             // Create a timer with a two second interval.
             Timer = new Timer(interval);
@@ -432,13 +436,17 @@ namespace LazyAdmin
             Timer.AutoReset = true;
             Timer.Enabled = true;
         }
-        public static void GetAll()
+        #endregion
+        #region Output value to clipboard
+        public static void GetAll() //Get info for excel or google sheet
         {
+            ClearNullInCollection(GridOfAssets);
+            ClearNullInCollection(GridOfAssetsResult);
             string ToClipBoard = "CiklumID\t" + "Serial Number\t" + "Description\t" + "Status\n";
 
             for (int i = 0; i < GridOfAssets.Count; i++)
             {
-                ToClipBoard += $"{GridOfAssets[i].CiklumID}\t{GridOfAssets[i].SerialNumber}\t{GridOfAssets[i].Description}\n";
+                ToClipBoard += $"{GridOfAssets[i].CiklumID}\t{GridOfAssets[i].SerialNumber}\t{GridOfAssets[i].Description}\tNot Found\n";
             }
             for (int i = 0; i < GridOfAssetsResult.Count; i++)
             {
@@ -446,36 +454,115 @@ namespace LazyAdmin
             }
             Clipboard.SetText(ToClipBoard);
         }
-        public static void GetCiklumID()
+        public static void GetAllCiklumID() //Get all CiklumID for Navision
         {
             string ToClipBoard = null;
+            ClearNullInCollection(GridOfAssets);
+            ClearNullInCollection(GridOfAssetsResult);
             for (int i = 0; i < GridOfAssets.Count; i++)
             {
                 ToClipBoard += $"{GridOfAssets[i].CiklumID}";
-                ToClipBoard += "|";
+                if (i != GridOfAssets.Count - 1) ToClipBoard += "|";
             }
+            if(GridOfAssetsResult.Count != 0) ToClipBoard += "|";
             for (int i = 0; i < GridOfAssetsResult.Count; i++)
             {
                 ToClipBoard += $"{GridOfAssetsResult[i].CiklumID}";
-                if(i != GridOfAssetsResult.Count) ToClipBoard += "|";
+                if(i != GridOfAssetsResult.Count-1) ToClipBoard += "|";
             }
             Clipboard.SetText(ToClipBoard);
         }
-        public static void GetSerialNumber()
+        public static void GetAllSerialNumber() //Get all Serial Numbers for Navision
         {
+            ClearNullInCollection(GridOfAssets);
+            ClearNullInCollection(GridOfAssetsResult);
             string ToClipBoard = null;
             for (int i = 0; i < GridOfAssets.Count; i++)
             {
                 ToClipBoard += $"{GridOfAssets[i].SerialNumber}";
-                ToClipBoard += "|";
+                if (i != GridOfAssets.Count - 1) ToClipBoard += "|";
             }
+            if (GridOfAssetsResult.Count != 0) ToClipBoard += "|";
             for (int i = 0; i < GridOfAssetsResult.Count; i++)
             {
                 ToClipBoard += $"{GridOfAssetsResult[i].SerialNumber}";
-                if (i != GridOfAssetsResult.Count) ToClipBoard += "|";
+                if (i != GridOfAssetsResult.Count-1) ToClipBoard += "|";
             }
             Clipboard.SetText(ToClipBoard);
         }
+        private static void GetColumnCiklumID(ObservableCollection<Asset> Grid)
+        {
+            ClearNullInCollection(Grid);
+            string ToClipBoard = null;
+            for (int i = 0; i < Grid.Count; i++)
+            {
+                ToClipBoard += $"{Grid[i].CiklumID}";
+                if (i != Grid.Count - 1) ToClipBoard += "|";
+            }
+            Clipboard.SetText(ToClipBoard);
+        }
+        private static void GetColumnSerialNumber(ObservableCollection<Asset> Grid)
+        {
+            ClearNullInCollection(Grid);
+            string ToClipBoard = null;
+            for (int i = 0; i < Grid.Count; i++)
+            {
+                ToClipBoard += $"{Grid[i].SerialNumber}";
+                if (i != Grid.Count - 1) ToClipBoard += "|";
+            }
+            Clipboard.SetText(ToClipBoard);
+        }
+        public static void GetColumn(string String)
+        {
+            if (String == "Serial Number From AMT")
+            {
+                GetColumnSerialNumber(GridOfAssets);
+            }
+            else if (String == "Serial Number Result")
+            {
+                GetColumnSerialNumber(GridOfAssetsResult);
+            }
+            else if (String == "Ciklum ID From AMT")
+            {
+                GetColumnCiklumID(GridOfAssets);
+            }
+            else if (String == "Ciklum ID Result")
+            {
+                GetColumnCiklumID(GridOfAssetsResult);
+            }
+        }
+        private static void ClearNullInCollection(ObservableCollection<Asset> Grid)
+        {
+            for (int i = Grid.Count - 1; i >= 0; i--)
+            {
+                if (Grid[i].AssetRow == null || Grid[i].AssetRow == "")
+                    Grid.RemoveAt(i);
+            }
+        }
+        #endregion
+        #region Sounds
+        static private void SoundPlay(string sound)
+        {
+            string MusicFile = "";
+            if (sound == "Accept")
+            {
+                MusicFile = "Speech On";
+            }
+            else if (sound == "Error")
+            {
+                MusicFile = "Speech Off";
+            }
+            else if (sound == "Repeat")
+            {
+                MusicFile = "chimes";
+            }
+            using (var soundPlayer = new SoundPlayer(@$"c:\Windows\Media\{MusicFile}.wav"))
+            {
+                soundPlayer.Play();
+                soundPlayer.Play();
+            }
 
+        }
+        #endregion
     }
 }

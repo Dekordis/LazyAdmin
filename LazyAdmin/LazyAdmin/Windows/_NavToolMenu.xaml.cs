@@ -1,19 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using LazyAdmin.DataBase;
+
 
 namespace LazyAdmin.Windows
 {
@@ -22,6 +11,7 @@ namespace LazyAdmin.Windows
     /// </summary>
     public partial class _NavToolMenu : Window
     {
+        string Search;
         int i = 0;
         public _NavToolMenu()
         {
@@ -35,8 +25,25 @@ namespace LazyAdmin.Windows
         }
         private void EnterText(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Enter)
+            if ((Keyboard.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift && e.Key == Key.Enter)
             {
+                Search = _EnterText.Text;
+                MessageBox.Show("You press Shift+Enter");
+            }
+            else if (e.Key == Key.Enter)
+            {
+                string[] EnteredTextCheking = _EnterText.Text.Split(',');
+                if (EnteredTextCheking.Length > 1)
+                {
+                    foreach (string element in EnteredTextCheking)
+                    {
+                        string[] elem = element.Split(' ');
+                        if (element.Length == 10)
+                        {
+                            _EnterText.Text = element;
+                        }
+                    }
+                }
                 if (_EnterText.Text == "" || _EnterText.Text == null || _EnterText.Text == " ") _EnterText.Clear();
                 else if (_SendingEquipment.IsChecked == false)
                 {
@@ -50,31 +57,65 @@ namespace LazyAdmin.Windows
                 }
             }
         }
-        private void _EnterText_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        private void ClearTextInTextBox(object sender, MouseButtonEventArgs e)
         {
-            _EnterText.Clear();
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                _EnterText.Clear();
+            }
         }
-        private void _FinishSending_Click(object sender, RoutedEventArgs e)
+        private void ButtonFinishSending(object sender, RoutedEventArgs e)
         {
             App.FinishSending();
         }
 
-        private void _Clear_Click(object sender, RoutedEventArgs e)
+        private void ButtonClearAll(object sender, RoutedEventArgs e)
         {
             App.ClearAssets();
         }
 
         private void GetCiklumID(object sender, RoutedEventArgs e)
         {
-            App.GetCiklumID();
+            App.GetAllCiklumID();
         }
         private void GetSerialnumber(object sender, RoutedEventArgs e)
         {
-            App.GetSerialNumber();
+            App.GetAllSerialNumber();
         }
         private void GetAll(object sender, RoutedEventArgs e)
         {
             App.GetAll();
+        }
+
+        private void ResultCopyColumn(object sender, MouseButtonEventArgs e)
+        {
+            if (e.RightButton == MouseButtonState.Pressed)
+            {
+                if (_DataGridResult.CurrentColumn.Header.ToString() != null)
+                {
+                    App.GetColumn(_DataGridResult.CurrentColumn.Header.ToString() +" Result");
+                }
+            }
+        }
+        private void FromAMTCopyColumn(object sender, MouseButtonEventArgs e)
+        {
+            if (e.RightButton == MouseButtonState.Pressed)
+            {
+                if (_DataGridFromAMT.CurrentColumn.Header.ToString() != null)
+                {
+                    App.GetColumn(_DataGridFromAMT.CurrentColumn.Header.ToString() + " From AMT");
+                }
+            }
+        }
+        private void Highlight()
+        {
+
+        }
+        private void NoSerialNumber(object sender, RoutedEventArgs e)
+        {
+            _EnterText.Text = "No Serial Number";
+            App.Input(_EnterText.Text.TrimStart().ToString().ToUpper());
+            _EnterText.Clear();
         }
     }
 

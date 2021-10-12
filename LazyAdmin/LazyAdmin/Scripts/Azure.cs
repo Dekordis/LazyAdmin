@@ -20,17 +20,23 @@ namespace LazyAdmin
         {
             if (Action == "Connect")
             {
-                string StringCmdText;
-                StringCmdText = @$"/C cmdkey /add:cklfsstorage.file.core.windows.net /user:{User} /pass:{Key}";
-                System.Diagnostics.Process.Start("CMD.exe", StringCmdText);
-                MessageBox.Show("Connected");
+                //string StringCmdText;
+                //StringCmdText = @$"/C cmdkey /add:cklfsstorage.file.core.windows.net /user:{User} /pass:{Key}";
+                //System.Diagnostics.Process.Start("CMD.exe", StringCmdText);
+                var command = @$"/C cmdkey /add:cklfsstorage.file.core.windows.net /user:{User} /pass:{Key}";
+                var process = new Process();
+                process.StartInfo = new ProcessStartInfo
+                {
+                    FileName = "CMD.exe",
+                    Arguments = command
+                };
+                process.Start();
             }
             else if (Action == "Disconnect") //disconnect not work
             {
                 string StringCmdText;
                 StringCmdText = @"/C cmdkey /delete:cklfilesharestorage.file.core.windows.net";
                 System.Diagnostics.Process.Start("CMD.exe", StringCmdText);
-                MessageBox.Show("Disconnected");
             }
 
 

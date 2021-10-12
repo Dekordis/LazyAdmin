@@ -22,6 +22,7 @@
             <Button x:Name="_Options" FontFamily="Microsoft YaHei Light" FontWeight="Bold" FontSize ="30"  Content="Options" HorizontalAlignment="Left" Margin="537,319,0,0" VerticalAlignment="Top" Height="101" Width="253" BorderBrush ="#acacb9" Foreground="Azure" Background="#232329" BorderThickness ="0.5" Click="OpenOptionsMenu"/>
             <Button x:Name="ClipBoardWithComment" FontFamily="Microsoft YaHei Light" FontWeight="Bold" FontSize ="30"  Content="ClipBoard+" HorizontalAlignment="Center" Margin="0,210,0,0" VerticalAlignment="Top" Height="50.5" Width="253" BorderBrush ="#acacb9" Foreground="Azure" Background="#232329" BorderThickness ="0.5" Click="CipboardPlus"/>
             <Button x:Name="ClipBoardWithoutComment" FontFamily="Microsoft YaHei Light" FontWeight="Bold" FontSize ="30"  Content="ClipBoard" HorizontalAlignment="Center" Margin="0,260,0,0" VerticalAlignment="Top" Height="51" Width="253" BorderBrush ="#acacb9" Foreground="Azure" Background="#232329" BorderThickness ="0.5" Click="NoComment"/>
+            <Label x:Name="_ProgramVersion" Content="0.0.0.0" HorizontalAlignment="Left" Margin="695,25,0,0" VerticalAlignment="Top" Width="95" Foreground="#FFBFC3BE" FontSize="22" Height="34"/>
         </Grid>
     </Viewbox>
 </Window>
