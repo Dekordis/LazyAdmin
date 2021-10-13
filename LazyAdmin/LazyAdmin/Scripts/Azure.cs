@@ -23,7 +23,7 @@ namespace LazyAdmin
                 //string StringCmdText;
                 //StringCmdText = @$"/C cmdkey /add:cklfsstorage.file.core.windows.net /user:{User} /pass:{Key}";
                 //System.Diagnostics.Process.Start("CMD.exe", StringCmdText);
-                var command = @$"/C cmdkey /add:cklfsstorage.file.core.windows.net /user:{User} /pass:{Key}";
+                var command = @$"/S /C cmdkey /add:cklfsstorage.file.core.windows.net /user:{User} /pass:{Key}";
                 var process = new Process();
                 process.StartInfo = new ProcessStartInfo
                 {
