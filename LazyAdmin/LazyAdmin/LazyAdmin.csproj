@@ -7,15 +7,15 @@
     <StartupObject>LazyAdmin.App</StartupObject>
     <UseWindowsForms>true</UseWindowsForms>
     <ApplicationIcon>LazyLogo.ico</ApplicationIcon>
-    <Version>2.0.0.1</Version>
+    <Version>2.0</Version>
     <Authors>matp &amp; skho</Authors>
     <Company>Ciklum</Company>
     <Description>It's program - multitool for support engeneers from Ciklum</Description>
     <NeutralLanguage>en</NeutralLanguage>
     <PackageIcon>LazyLogo.ico</PackageIcon>
     <PackageIconUrl />
-    <AssemblyVersion>2.0.0.1</AssemblyVersion>
-    <FileVersion>2.2.0.1</FileVersion>
+    <AssemblyVersion>2.0</AssemblyVersion>
+    <FileVersion>2.0</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -34,6 +34,7 @@
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
+    <None Include="..\.editorconfig" Link=".editorconfig" />
     <Page Remove="Forms\**" />
   </ItemGroup>
 

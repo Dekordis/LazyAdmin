@@ -14,7 +14,7 @@ namespace LazyAdmin.Windows
             InitializeComponent();
             App.WindowSettings(_HeaderButtonGrid, this);
         }
-        private void Startlink(string link) //Method for run links in default browser
+        private static void Startlink(string link) //Method for run links in default browser
         {
             Process.Start(new ProcessStartInfo
             {
@@ -29,25 +29,29 @@ namespace LazyAdmin.Windows
         private void RDPnav(object sender, EventArgs e)
         {
             var ip = "srv-nav-term.kyiv.ciklum.net";
-            var process = new Process();
-            process.StartInfo = new ProcessStartInfo
+            var RDPNavConnect = new Process
             {
-                FileName = "mstsc",
-                Arguments = $"/v:{ip}"
+                StartInfo = new ProcessStartInfo
+                {
+                    FileName = "mstsc",
+                    Arguments = $"/v:{ip}"
+                }
             };
-            process.Start();
+            RDPNavConnect.Start();
         }
 
         private void RDPAD(object sender, EventArgs e)
         {
             var ip = "srv-term-az.kyiv.ciklum.net";
-            var process = new Process();
-            process.StartInfo = new ProcessStartInfo
+            var RDPADConnect = new Process
             {
-                FileName = "mstsc",
-                Arguments = $"/v:{ip}"
+                StartInfo = new ProcessStartInfo
+                {
+                    FileName = "mstsc",
+                    Arguments = $"/v:{ip}"
+                }
             };
-            process.Start();
+            RDPADConnect.Start();
         }
 
         private void MyCiklum(object sender, EventArgs e)

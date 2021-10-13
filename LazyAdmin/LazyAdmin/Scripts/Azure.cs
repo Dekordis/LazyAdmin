@@ -1,42 +1,46 @@
 ﻿using System;
 using System.Windows;
 using System.Management.Automation;
-using System.Management.Automation.Runspaces;
 using System.IO;
 using System.Diagnostics;
-using System.Linq;
 
 namespace LazyAdmin
 {
     partial class App
     {
         //We must use this .CS for all methods which work with Azure 
-        static string Key = @"NSLF6WgwRXvwHdNQxvEjZWsCMvXrsBts3H+nqnAdycFNkxROKF6U3z9MP7/Lz+kluXfjdO+ewwcISduwQlKWgA=="; //This variable needed for contain Key for Azure folder
-        static string User = @"Azure\cklfsstorage"; //This variable needed for contain User of Azure
-        static string MainPath; //This variable contain Path of programm
-        static string RemotePath; ////This variable contain Remote Path to Azure folder 
+        static readonly string Key = @"NSLF6WgwRXvwHdNQxvEjZWsCMvXrsBts3H+nqnAdycFNkxROKF6U3z9MP7/Lz+kluXfjdO+ewwcISduwQlKWgA=="; //This variable needed for contain Key for Azure folder
+        static readonly string User = @"Azure\cklfsstorage"; //This variable needed for contain User of Azure
 
         static public void AzureConnection(string Action)//This method needed for connect and disconnect Azure Folder
         {
             if (Action == "Connect")
             {
-                //string StringCmdText;
-                //StringCmdText = @$"/C cmdkey /add:cklfsstorage.file.core.windows.net /user:{User} /pass:{Key}";
-                //System.Diagnostics.Process.Start("CMD.exe", StringCmdText);
-                var command = @$"/S /C cmdkey /add:cklfsstorage.file.core.windows.net /user:{User} /pass:{Key}";
-                var process = new Process();
-                process.StartInfo = new ProcessStartInfo
+                var ConnectionToAzure = new Process
                 {
-                    FileName = "CMD.exe",
-                    Arguments = command
+                    StartInfo = new ProcessStartInfo
+                    {
+                        //WindowStyle = ProcessWindowStyle.Hidden,
+                        //UseShellExecute = false,
+                        CreateNoWindow = true,
+                        FileName = "cmd.exe",
+                        Arguments = $@"/C cmdkey /add:cklfilesharestorage.file.core.windows.net\remoteinstall /user:{User} /pass:{Key}"
+                    }
                 };
-                process.Start();
+                ConnectionToAzure.Start();
             }
             else if (Action == "Disconnect") //disconnect not work
             {
-                string StringCmdText;
-                StringCmdText = @"/C cmdkey /delete:cklfilesharestorage.file.core.windows.net";
-                System.Diagnostics.Process.Start("CMD.exe", StringCmdText);
+                var DisconnectAzure = new Process
+                {
+                    StartInfo = new ProcessStartInfo
+                    {
+                        CreateNoWindow = true,
+                        FileName = "cmd.exe",
+                        Arguments = @"/C cmdkey /delete:cklfilesharestorage.file.core.windows.net"
+                    }
+                };
+                DisconnectAzure.Start();
             }
 
 
@@ -55,13 +59,17 @@ namespace LazyAdmin
 
             else if (TypeOfRun == "Multi")  //запуск пс1 новым процессом
             {
-                ProcessStartInfo Script = new ProcessStartInfo();
-                Script.FileName = @"powershell.exe";
-                Script.Arguments = "\"&'" + PathtoFile + "'\"";
-                Script.UseShellExecute = false;
-                Script.CreateNoWindow = true;
-                Process PowerShellScriptToll = new Process();
-                PowerShellScriptToll.StartInfo = Script;
+                ProcessStartInfo Script = new()
+                {
+                    FileName = @"powershell.exe",
+                    Arguments = "\"&'" + PathtoFile + "'\"",
+                    UseShellExecute = false,
+                    CreateNoWindow = true
+                };
+                Process PowerShellScriptToll = new()
+                {
+                    StartInfo = Script
+                };
                 PowerShellScriptToll.Start();
             }
         }
@@ -81,11 +89,6 @@ namespace LazyAdmin
             {
                 MessageBox.Show($"{file}");
             }
-        }
-
-        private void UpdateProgram()
-        {
-
         }
     }
 }

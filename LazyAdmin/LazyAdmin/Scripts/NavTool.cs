@@ -18,15 +18,14 @@ namespace LazyAdmin
         #region Variables
         private static readonly string PATHFromAMT = $"{Environment.CurrentDirectory}\\GridOfAssetsFromAMT.json";
         private static readonly string PATHResult = $"{Environment.CurrentDirectory}\\GridOfAssetsResult.json";
-        static string InputCiklumID = null;
-        static string InputSerialNumber = null;
-        static string InputWrongCiklumID = null;
-        static string InputWrongSerialNumber = null;
-        static string InputDescription = null;
-        static string ColumnOfDataGrid = null;
-        static int IndexOfAsset = -1;
-        static int IndexOfSerialNumberAsset = -1;
-        static int IndexOfCiklumIDAsset = -1;
+        private static string InputCiklumID = null;
+        private static string InputSerialNumber = null;
+        private static string InputWrongCiklumID = null;
+        private static string InputWrongSerialNumber = null;
+        private static string ColumnOfDataGrid = null;
+        private static int IndexOfAsset = -1;
+        private static int IndexOfSerialNumberAsset = -1;
+        private static int IndexOfCiklumIDAsset = -1;
         private static ObservableCollection<Asset> GridOfAssets;
         private static ObservableCollection<Asset> GridOfAssetsResult;
         private static ObservableCollection<Asset> GridOfAssetsCheking;
@@ -134,9 +133,8 @@ namespace LazyAdmin
         }
         static public void Input(string String) //input info from TextBox for DataGrids
         {
-            long Number;
             Search(GridOfAssets, String);
-            bool success = long.TryParse(String, out Number);
+            bool success = long.TryParse(String, out long Number);
             if (IndexOfCiklumIDAsset != -1 && ColumnOfDataGrid == "CiklumID")
             {
                 if (InputCiklumID != null)
@@ -177,8 +175,7 @@ namespace LazyAdmin
         }
         static public void InputSending(DataGrid _DataGrid, string String) //input info from TextBox for DataGrids
         {
-            int Number;
-            bool success = int.TryParse(String, out Number);
+            bool success = int.TryParse(String, out int Number);
             if (success && (Number.ToString().Length ==  13 || Number.ToString().Length == 6))
             {
                 InputCiklumID = Number.ToString();
@@ -556,12 +553,9 @@ namespace LazyAdmin
             {
                 MusicFile = "chimes";
             }
-            using (var soundPlayer = new SoundPlayer(@$"c:\Windows\Media\{MusicFile}.wav"))
-            {
-                soundPlayer.Play();
-                soundPlayer.Play();
-            }
-
+            using var soundPlayer = new SoundPlayer(@$"c:\Windows\Media\{MusicFile}.wav");
+            soundPlayer.Play();
+            soundPlayer.Play();
         }
         #endregion
     }

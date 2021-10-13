@@ -11,8 +11,6 @@ namespace LazyAdmin.Windows
     /// </summary>
     public partial class _NavToolMenu : Window
     {
-        string Search;
-        int i = 0;
         public _NavToolMenu()
         {
             InitializeComponent();
@@ -27,7 +25,7 @@ namespace LazyAdmin.Windows
         {
             if ((Keyboard.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift && e.Key == Key.Enter)
             {
-                Search = _EnterText.Text;
+                string Search = _EnterText.Text;
                 MessageBox.Show("You press Shift+Enter");
             }
             else if (e.Key == Key.Enter)
@@ -37,7 +35,6 @@ namespace LazyAdmin.Windows
                 {
                     foreach (string element in EnteredTextCheking)
                     {
-                        string[] elem = element.Split(' ');
                         if (element.Length == 10)
                         {
                             _EnterText.Text = element;
@@ -107,7 +104,7 @@ namespace LazyAdmin.Windows
                 }
             }
         }
-        private void Highlight()
+        private static void Highlight()
         {
 
         }
