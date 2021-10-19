@@ -5,40 +5,45 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LazyAdmin.Windows"
         mc:Ignorable="d"
-        Title="_NavToolMenu" Height="450" Width="800" WindowStyle="None" Background="Transparent" ResizeMode="NoResize">
-    <Viewbox Stretch="Fill">
-        <Grid Height="434.04" Width="800">
-            <Grid x:Name="_HeaderButtonGrid" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Right" VerticalAlignment="Top" Width="150" Height="50"/>
-            <Button x:Name="_UploadFromAMT" Content="Upload" HorizontalAlignment="Left" Margin="10,37,0,0" VerticalAlignment="Top" Height="25" Width="76" Click="Upload"/>
-            <TextBox x:Name="_EnterText" HorizontalAlignment="Left" Margin="139,41,0,0" Text="Enter S/N or CiklumID" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" Height="17" KeyDown="EnterText" PreviewMouseDown="ClearTextInTextBox"/>
-            <CheckBox x:Name="_SendingEquipment" Content="Sending Equipment" HorizontalAlignment="Left" Margin="294,42,0,0" VerticalAlignment="Top" Foreground="White"/>
-            <CheckBox x:Name="_Mute" Content="Mute" HorizontalAlignment="Left" Margin="423,42,0,0" VerticalAlignment="Top" Foreground="White" RenderTransformOrigin="0.618,2.194"/>
-            <Button x:Name="_GetCiklumID" Content="Get Ciklum ID" HorizontalAlignment="Left" Margin="562,37,0,0" VerticalAlignment="Top" Height="25" Width="81" Click="GetCiklumID"/>
-            <Button x:Name="_GetSerialNumber" Content="Get S/N" HorizontalAlignment="Left" Margin="645,37,0,0" VerticalAlignment="Top" Height="25" Width="86" Click="GetSerialnumber"/>
-            <Button x:Name="_Get" Content="Get" HorizontalAlignment="Left" Margin="731,37,0,0" VerticalAlignment="Top" Height="25" Width="59" Click="GetAll"/>
-            <DataGrid x:Name="_DataGridFromAMT" Margin="0,65,400,0" AutoGenerateColumns="False" PreviewMouseDoubleClick="FromAMTCopyColumn">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Ciklum ID" Binding = "{Binding Path=CiklumID}"/>
-                    <DataGridTextColumn Header="Serial Number" Binding = "{Binding Path=SerialNumber}"/>
-                    <DataGridTextColumn Header="Description" Binding = "{Binding Path=Description}" Width="*"/>
-                </DataGrid.Columns>
-            </DataGrid>
-            <DataGrid x:Name="_DataGridResult" Margin="405,65,0,0" AutoGenerateColumns="False" PreviewMouseDoubleClick="ResultCopyColumn">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Ciklum ID" Binding = "{Binding Path=CiklumID}"/>
-                    <DataGridTextColumn Header="Serial Number" Binding = "{Binding Path=SerialNumber}"/>
-                    <DataGridTextColumn Header="Desciption" Binding = "{Binding Path=Description}" Width="*"/>
-                    <DataGridTextColumn Header="Status" Binding = "{Binding Path=Status}" Width="*"/>
-                </DataGrid.Columns>
-            </DataGrid>
-            <ComboBox x:Name="_ContextMenu" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="120">
-                <Button Content="Clear All Information" ClickMode="Press"/>
-                <ComboBoxItem Content="ComboBoxItem"/>
-            </ComboBox>
-            <Button x:Name="_Clear" Content="Clear" HorizontalAlignment="Left" Margin="145,8,0,0" VerticalAlignment="Top" Height="25" Width="76" Click="ButtonClearAll"/>
-            <Button x:Name="_FinishSending" Content="Finish Sending" HorizontalAlignment="Left" Margin="232,8,0,0" VerticalAlignment="Top" Height="25" Width="87" Click="ButtonFinishSending"/>
-            <Button x:Name="_NoSerialNumber" Content="No S/N" HorizontalAlignment="Left" Margin="91,37,0,0" VerticalAlignment="Top" Height="25" Click="NoSerialNumber"/>
-
-        </Grid>
-    </Viewbox>
+        Title="_NavToolMenu" Height="{Binding SystemParameters.PrimaryScreenHeight}" Width="{Binding SystemParameters.PrimaryScreenWidth}" WindowStyle="None" Background="Transparent" ResizeMode="NoResize">
+    <Grid>
+        <Viewbox Stretch="Fill">
+            <Grid Height="434.04" Width="800">
+                    <Grid x:Name="_HeaderButtonGrid" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Right" VerticalAlignment="Top" Width="150" Height="50"/>
+                    <Button x:Name="_UploadFromAMT" Content="Upload" HorizontalAlignment="Left" Margin="10,37,0,0" VerticalAlignment="Top" Height="25" Width="76" Click="Upload"/>
+                    <TextBox x:Name="_EnterText" HorizontalAlignment="Left" Margin="139,41,0,0" Text="Enter S/N or CiklumID" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" Height="17" KeyDown="EnterText" PreviewMouseDown="ClearTextInTextBox"/>
+                    <CheckBox x:Name="_SendingEquipment" Content="Sending Equipment" HorizontalAlignment="Left" Margin="294,42,0,0" VerticalAlignment="Top" Foreground="White"/>
+                    <CheckBox x:Name="_Mute" Content="Mute" HorizontalAlignment="Left" Margin="423,42,0,0" VerticalAlignment="Top" Foreground="White" RenderTransformOrigin="0.618,2.194"/>
+                    <Button x:Name="_GetCiklumID" Content="Get Ciklum ID" HorizontalAlignment="Left" Margin="562,37,0,0" VerticalAlignment="Top" Height="25" Width="81" Click="GetCiklumID"/>
+                    <Button x:Name="_GetSerialNumber" Content="Get S/N" HorizontalAlignment="Left" Margin="645,37,0,0" VerticalAlignment="Top" Height="25" Width="86" Click="GetSerialnumber"/>
+                    <Button x:Name="_Get" Content="Get" HorizontalAlignment="Left" Margin="731,37,0,0" VerticalAlignment="Top" Height="25" Width="59" Click="GetAll"/>
+                    <ComboBox x:Name="_ContextMenu" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="120">
+                        <Button Content="Clear All Information" ClickMode="Press"/>
+                        <ComboBoxItem Content="ComboBoxItem"/>
+                    </ComboBox>
+                    <Button x:Name="_Clear" Content="Clear" HorizontalAlignment="Left" Margin="145,8,0,0" VerticalAlignment="Top" Height="25" Width="76" Click="ButtonClearAll"/>
+                    <Button x:Name="_FinishSending" Content="Finish Sending" HorizontalAlignment="Left" Margin="232,8,0,0" VerticalAlignment="Top" Height="25" Width="87" Click="ButtonFinishSending"/>
+                    <Button x:Name="_NoSerialNumber" Content="No S/N" HorizontalAlignment="Left" Margin="91,37,0,0" VerticalAlignment="Top" Height="25" Click="NoSerialNumber"/>
+                </Grid>
+        </Viewbox>
+        <Viewbox Stretch="Fill">
+            <Grid Height="434.04" Width="800" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <DataGrid x:Name="_DataGridFromAMT" Margin="0,65,400,0" AutoGenerateColumns="False" PreviewMouseDoubleClick="FromAMTCopyColumn">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Ciklum ID" Binding = "{Binding Path=CiklumID}"/>
+                        <DataGridTextColumn Header="Serial Number" Binding = "{Binding Path=SerialNumber}"/>
+                        <DataGridTextColumn Header="Description" Binding = "{Binding Path=Description}" Width="*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+                <DataGrid x:Name="_DataGridResult" Margin="405,65,0,0" AutoGenerateColumns="False" PreviewMouseDoubleClick="ResultCopyColumn">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Ciklum ID" Binding = "{Binding Path=CiklumID}"/>
+                        <DataGridTextColumn Header="Serial Number" Binding = "{Binding Path=SerialNumber}"/>
+                        <DataGridTextColumn Header="Desciption" Binding = "{Binding Path=Description}" Width="*"/>
+                        <DataGridTextColumn Header="Status" Binding = "{Binding Path=Status}" Width="*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </Viewbox>
+    </Grid>
 </Window>

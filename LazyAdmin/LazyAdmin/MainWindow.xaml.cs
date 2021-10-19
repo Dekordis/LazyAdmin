@@ -11,6 +11,7 @@ namespace LazyAdmin
     /// </summary>
     public partial class MainWindow : Window
     {
+
         public MainWindow()
         {
             InitializeComponent();
@@ -18,6 +19,7 @@ namespace LazyAdmin
             _ProgramVersion.Content = Assembly.GetExecutingAssembly().GetName().Version.ToString().Remove(Assembly.GetExecutingAssembly().GetName().Version.ToString().Length - 4) + ".v";
             ChekUpdates();
         }
+
     }
     public partial class MainWindow : Window
     {
@@ -35,11 +37,6 @@ namespace LazyAdmin
             _NensOnBoardMenu NensOnBoardMenu = new();
             App.OpenWindow(this, NensOnBoardMenu);
         }
-        private void OpenSetupSoftwareMenu(object sender, RoutedEventArgs e)
-        {
-            _SetupSoftwareMenu SetupSoftwareMenu = new();
-            App.OpenWindow(this, SetupSoftwareMenu);
-        }
 
         private void OpenToolsMenu(object sender, RoutedEventArgs e)
         {
@@ -53,12 +50,6 @@ namespace LazyAdmin
             App.OpenWindow(this, NavToolMenu);
         }
 
-        private void OpenTestMenu(object sender, RoutedEventArgs e)
-        {
-            _TestWindowMenu TestWindowMenu = new();
-            App.OpenWindow(this, TestWindowMenu);
-        }
-
         private void OpenMacrosMenu(object sender, RoutedEventArgs e)
         {
             _MacrosMenu MacrosMenu = new();
@@ -70,19 +61,52 @@ namespace LazyAdmin
             _LinksMenu LinksMenu = new();
             App.OpenWindow(this, LinksMenu);
         }
-
-        private void OpenHotkeysMenu(object sender, RoutedEventArgs e)
-        {
-            _HotkeysMenu HotkeysMenu = new();
-            App.OpenWindow(this, HotkeysMenu);
-        }
-
         private void OpenOptionsMenu(object sender, RoutedEventArgs e)
         {
             _OptionsMenu OptionsMenu = new();
             App.OpenWindow(this, OptionsMenu);
 
         }
+        private void HideAndMinimize(object sender, RoutedEventArgs e) //Minimize in small window with ClipBoard instrument
+        {
+            if (_NensOnBoard.Visibility == Visibility.Visible)
+            {
+                _NensOnBoard.Visibility = Visibility.Hidden;
+                _NavTool.Visibility = Visibility.Hidden;
+                _Links.Visibility = Visibility.Hidden;
+                _Macros.Visibility = Visibility.Hidden;
+                _Tools.Visibility = Visibility.Hidden;
+                ClipBoardWithComment.HorizontalAlignment = HorizontalAlignment.Left;
+                ClipBoardWithoutComment.HorizontalAlignment = HorizontalAlignment.Left;
+                ClipBoardWithComment.Margin = new Thickness(85, 0, 0, 0);
+                ClipBoardWithoutComment.Margin = new Thickness(340, 0, 0, 0);//grid h 60 main h 40
+                ClipBoardWithComment.Height = 40;
+                ClipBoardWithoutComment.Height = 40;
+                _MainGrid.Height = 40;
+                _MainGrid.Width = 625;
+                _MainWindow.Height = 40;
+                _MainWindow.Topmost = true;
+            }
+            else
+            {
+                _NensOnBoard.Visibility = Visibility.Visible;
+                _NavTool.Visibility = Visibility.Visible;
+                _Links.Visibility = Visibility.Visible;
+                _Macros.Visibility = Visibility.Visible;
+                _Tools.Visibility = Visibility.Visible;
+                ClipBoardWithComment.HorizontalAlignment = HorizontalAlignment.Center;
+                ClipBoardWithoutComment.HorizontalAlignment = HorizontalAlignment.Center;
+                ClipBoardWithComment.Margin = new Thickness(0, 150, 0, 0);
+                ClipBoardWithoutComment.Margin = new Thickness(0, 214, 0, 0);
+                ClipBoardWithComment.Height = 64;
+                ClipBoardWithoutComment.Height = 64;
+                _MainGrid.Height = 434.04;
+                _MainGrid.Width = 800;
+                _MainWindow.Height = 250;
+                _MainWindow.Topmost = false;
+            }
+        }
+
     } //    "Buttons"
     public partial class MainWindow
     {
