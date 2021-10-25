@@ -17,9 +17,10 @@
                     <Button x:Name="_GetCiklumID" Content="Get Ciklum ID" HorizontalAlignment="Left" Margin="562,37,0,0" VerticalAlignment="Top" Height="25" Width="81" Click="GetCiklumID"/>
                     <Button x:Name="_GetSerialNumber" Content="Get S/N" HorizontalAlignment="Left" Margin="645,37,0,0" VerticalAlignment="Top" Height="25" Width="86" Click="GetSerialnumber"/>
                     <Button x:Name="_Get" Content="Get" HorizontalAlignment="Left" Margin="731,37,0,0" VerticalAlignment="Top" Height="25" Width="59" Click="GetAll"/>
-                    <ComboBox x:Name="_ContextMenu" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="120">
-                        <Button Content="Clear All Information" ClickMode="Press"/>
-                        <ComboBoxItem Content="ComboBoxItem"/>
+                    <ComboBox x:Name="_ContextMenu" SelectedIndex="0" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="120">
+                        <ListBoxItem Content="File" Height="0" Visibility="Hidden"/>
+                        <Button x:Name="SaveFileButton" Content="Save" ClickMode="Press" Width="108" Click="SaveFile"/>
+                        <Button x:Name="OpenFileButton" Content="Open" ClickMode="Press" Width="108" Click="OpenFile"/>
                     </ComboBox>
                     <Button x:Name="_Clear" Content="Clear" HorizontalAlignment="Left" Margin="145,8,0,0" VerticalAlignment="Top" Height="25" Width="76" Click="ButtonClearAll"/>
                     <Button x:Name="_FinishSending" Content="Finish Sending" HorizontalAlignment="Left" Margin="232,8,0,0" VerticalAlignment="Top" Height="25" Width="87" Click="ButtonFinishSending"/>

@@ -10,6 +10,7 @@ using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Timers;
 using System.Media;
+using System.IO;
 
 namespace LazyAdmin
 {
@@ -54,8 +55,7 @@ namespace LazyAdmin
 
             GridOfAssets.CollectionChanged += GridOfAssets_CollectionChanged;
             GridOfAssetsResult.CollectionChanged += GridOfAssets_CollectionChanged;
-            SetTimer(30000);
-
+            SetTimer(15000);
         }
         #region Events for Saving
         private static void AutoSave(Object source, ElapsedEventArgs e) //Autosaving event
