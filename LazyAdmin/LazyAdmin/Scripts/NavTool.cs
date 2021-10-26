@@ -529,9 +529,40 @@ namespace LazyAdmin
                     Grid.RemoveAt(i);
             }
         }
-        #endregion
-        #region Sounds
-        static private void SoundPlay(string sound)
+       
+
+        static public void UploadToFixing(DataGrid datagrid)
+        {
+            GridOfAssetsCheking = new ObservableCollection<Asset>();
+            datagrid.ItemsSource = GridOfAssetsCheking;
+
+            for (int i = 0; i < GridOfAssetsResult.Count; i++)
+            {
+                if(GridOfAssetsResult[i].Status != "Ok" && GridOfAssetsResult[i].Status != "FIXED...)")
+                {
+                    //StatusLibrary
+                    GridOfAssetsCheking.Add(new Asset { CiklumID = GridOfAssetsResult[i].CiklumID, SerialNumber = GridOfAssetsResult[i].SerialNumber, Status = GridOfAssetsResult[i].Status});
+                }
+            }
+        }
+        static  public void StatusLibrary(string Status)
+        {
+            if (Status == "")
+            {
+
+            }
+        }
+        static public void FinishFixing(DataGrid datagrid) //Method for equal 2 observables collection (GridOfAssetResult and GridOfAsset)
+        {
+            GridOfAssets.Clear();
+            Upload(datagrid);
+
+        }
+
+
+            #endregion
+            #region Sounds
+            static private void SoundPlay(string sound)
         {
             string MusicFile = "";
             if (sound == "Accept")
