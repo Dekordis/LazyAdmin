@@ -9,23 +9,26 @@
     <Grid>
         <Viewbox Stretch="Fill">
             <Grid Height="434.04" Width="800">
-                    <Grid x:Name="_HeaderButtonGrid" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Right" VerticalAlignment="Top" Width="150" Height="50"/>
-                    <Button x:Name="_UploadFromAMT" Content="Upload" HorizontalAlignment="Left" Margin="10,37,0,0" VerticalAlignment="Top" Height="25" Width="76" Click="Upload"/>
-                    <TextBox x:Name="_EnterText" HorizontalAlignment="Left" Margin="139,41,0,0" Text="Enter S/N or CiklumID" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" Height="17" KeyDown="EnterText" PreviewMouseDown="ClearTextInTextBox"/>
-                    <CheckBox x:Name="_SendingEquipment" Content="Sending Equipment" HorizontalAlignment="Left" Margin="294,42,0,0" VerticalAlignment="Top" Foreground="White"/>
-                    <CheckBox x:Name="_Mute" Content="Mute" HorizontalAlignment="Left" Margin="423,42,0,0" VerticalAlignment="Top" Foreground="White" RenderTransformOrigin="0.618,2.194"/>
-                    <Button x:Name="_GetCiklumID" Content="Get Ciklum ID" HorizontalAlignment="Left" Margin="562,37,0,0" VerticalAlignment="Top" Height="25" Width="81" Click="GetCiklumID"/>
-                    <Button x:Name="_GetSerialNumber" Content="Get S/N" HorizontalAlignment="Left" Margin="645,37,0,0" VerticalAlignment="Top" Height="25" Width="86" Click="GetSerialnumber"/>
-                    <Button x:Name="_Get" Content="Get" HorizontalAlignment="Left" Margin="731,37,0,0" VerticalAlignment="Top" Height="25" Width="59" Click="GetAll"/>
-                    <ComboBox x:Name="_ContextMenu" SelectedIndex="0" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="120">
-                        <ListBoxItem Content="File" Height="0" Visibility="Hidden"/>
-                        <Button x:Name="SaveFileButton" Content="Save" ClickMode="Press" Width="108" Click="SaveFile"/>
-                        <Button x:Name="OpenFileButton" Content="Open" ClickMode="Press" Width="108" Click="OpenFile"/>
-                    </ComboBox>
-                    <Button x:Name="_Clear" Content="Clear" HorizontalAlignment="Left" Margin="145,8,0,0" VerticalAlignment="Top" Height="25" Width="76" Click="ButtonClearAll"/>
-                    <Button x:Name="_FinishSending" Content="Finish Sending" HorizontalAlignment="Left" Margin="232,8,0,0" VerticalAlignment="Top" Height="25" Width="87" Click="ButtonFinishSending"/>
-                    <Button x:Name="_NoSerialNumber" Content="No S/N" HorizontalAlignment="Left" Margin="91,37,0,0" VerticalAlignment="Top" Height="25" Click="NoSerialNumber"/>
-                </Grid>
+                <Grid x:Name="_HeaderButtonGrid" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Right" VerticalAlignment="Top" Width="150" Height="50"/>
+                <Button x:Name="_UploadFromAMT" Content="Upload" HorizontalAlignment="Left" Margin="10,37,0,0" VerticalAlignment="Top" Height="25" Width="76" Click="Upload"/>
+                <TextBox x:Name="_EnterText" HorizontalAlignment="Left" Margin="139,41,0,0" Text="Enter S/N or CiklumID" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" Height="17" KeyDown="EnterText" PreviewMouseDown="ClearTextInTextBox"/>
+                <CheckBox x:Name="_SendingEquipment" Content="Sending Equipment" HorizontalAlignment="Left" Margin="294,42,0,0" VerticalAlignment="Top" Foreground="White"/>
+                <CheckBox x:Name="_Mute" Content="Mute" HorizontalAlignment="Left" Margin="423,42,0,0" VerticalAlignment="Top" Foreground="White" RenderTransformOrigin="0.618,2.194"/>
+                <Button x:Name="_GetCiklumID" Content="Get Ciklum ID" HorizontalAlignment="Left" Margin="562,37,0,0" VerticalAlignment="Top" Height="25" Width="81" Click="GetCiklumID"/>
+                <Button x:Name="_GetSerialNumber" Content="Get S/N" HorizontalAlignment="Left" Margin="645,37,0,0" VerticalAlignment="Top" Height="25" Width="86" Click="GetSerialnumber"/>
+                <Button x:Name="_Get" Content="Get" HorizontalAlignment="Left" Margin="731,37,0,0" VerticalAlignment="Top" Height="25" Width="59" Click="GetAll"/>
+                <ComboBox x:Name="_ContextMenu" SelectedIndex="0" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="120">
+                    <ListBoxItem Content="File" Height="0" Visibility="Hidden"/>
+                    <Button x:Name="SaveFileButton" Content="Save" ClickMode="Press" Width="108" Click="SaveFile"/>
+                    <Button x:Name="OpenFileButton" Content="Open" ClickMode="Press" Width="108" Click="OpenFile"/>
+                </ComboBox>
+                <Button x:Name="_Clear" Content="Clear" HorizontalAlignment="Left" Margin="145,8,0,0" VerticalAlignment="Top" Height="25" Width="76" Click="ButtonClearAll"/>
+                <Button x:Name="_Start" Content="Start" HorizontalAlignment="Right" Margin="0,8,280,0" VerticalAlignment="Top" Height="25" Width="76" Click="StartFixing"/>
+                <Button x:Name="_Finish" Content="Finish" HorizontalAlignment="Right" Margin="0,8,200,0" VerticalAlignment="Top" Height="25" Width="76" Click="FinishFixing" Visibility="Hidden"/>
+                <Button x:Name="_FinishSending" Content="Finish Sending" HorizontalAlignment="Left" Margin="232,8,0,0" VerticalAlignment="Top" Height="25" Width="87" Click="ButtonFinishSending"/>
+                <Button x:Name="_NoSerialNumber" Content="No S/N" HorizontalAlignment="Left" Margin="91,37,0,0" VerticalAlignment="Top" Height="25" Click="NoSerialNumber"/>
+                <Label Content="Fix Issues:" HorizontalAlignment="Left" HorizontalContentAlignment="Right" Margin="382,8,0,0" VerticalAlignment="Top" Height="25" Width="65" Foreground="White"/>
+            </Grid>
         </Viewbox>
         <Viewbox Stretch="Fill">
             <Grid Height="434.04" Width="800" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
@@ -44,6 +47,15 @@
                         <DataGridTextColumn Header="Serial Number" Binding = "{Binding Path=SerialNumber}"/>
                         <DataGridTextColumn Header="Desciption" Binding = "{Binding Path=Description}" Width="*"/>
                         <DataGridTextColumn Header="Status" Binding = "{Binding Path=Status}" Width="*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+                <DataGrid x:Name="_DataGridFixing" Margin="0,65,0,0" AutoGenerateColumns="False" IsReadOnly="True" Visibility="Hidden">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Ciklum ID" Binding = "{Binding Path=CiklumID}" Width="150"/>
+                        <DataGridTextColumn Header="Serial Number" Binding = "{Binding Path=SerialNumber}" Width="250"/>
+                        <DataGridTextColumn Header="Desciption" Binding = "{Binding Path=Description}" Visibility="Hidden"/>
+                        <DataGridTextColumn Header="Status" Binding = "{Binding Path=Status}" Width="*"/>
+                        <DataGridCheckBoxColumn Header="Fixed" Binding = "{Binding Path=Fixed}" Width="40"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>

@@ -104,6 +104,31 @@ namespace LazyAdmin.Windows
             App.Input(_EnterText.Text.TrimStart().ToString().ToUpper());
             _EnterText.Clear();
         }
+
+        private void StartFixing(object sender, RoutedEventArgs e)
+        {
+            if (_Start.Content == "Start")
+            {
+                //App.UploadToFixing(_DataGridFixing);
+                _Start.Content = "Cancel";
+                _Finish.Visibility = Visibility.Visible;
+                _DataGridFixing.Visibility = Visibility.Visible;
+                _DataGridFromAMT.Visibility = Visibility.Hidden;
+                _DataGridResult.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                _Start.Content = "Start";
+                _Finish.Visibility = Visibility.Hidden;
+                _DataGridFixing.Visibility = Visibility.Hidden;
+                _DataGridFromAMT.Visibility = Visibility.Visible;
+                _DataGridResult.Visibility = Visibility.Visible;
+            }
+        }
+        private void FinishFixing(object sender, RoutedEventArgs e)
+        {
+
+        }
     } //buttons
     public partial class _NavToolMenu : Window //main functional
     {
