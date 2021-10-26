@@ -1,12 +1,9 @@
-﻿using LazyAdmin.DataBase;
-using Microsoft.Win32;
+﻿using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Windows;
 using System.Windows.Input;
-
 
 namespace LazyAdmin.Windows
 {
@@ -15,12 +12,6 @@ namespace LazyAdmin.Windows
     /// </summary>
     public partial class _NavToolMenu : Window
     {
-        public _NavToolMenu()
-        {
-            InitializeComponent();
-            App.WindowSettings(_HeaderButtonGrid, this);
-            App.Load(_DataGridFromAMT, _DataGridResult);
-        }
         private void Upload(object sender, RoutedEventArgs e)
         {
             App.Upload(_DataGridFromAMT);
@@ -29,8 +20,7 @@ namespace LazyAdmin.Windows
         {
             if ((Keyboard.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift && e.Key == Key.Enter)
             {
-                string Search = _EnterText.Text;
-                MessageBox.Show("You press Shift+Enter");
+                MessageBox.Show("!");
             }
             else if (e.Key == Key.Enter)
             {
@@ -65,44 +55,6 @@ namespace LazyAdmin.Windows
                 _EnterText.Clear();
             }
         }
-
-        private void SaveFile(object sender, RoutedEventArgs e) //save
-        {
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            if (saveFileDialog.ShowDialog() == true)
-            {
-                Directory.CreateDirectory($@"{Environment.CurrentDirectory}\DataBase");
-                File.Copy($@"{Environment.CurrentDirectory}\GridOfAssetsFromAMT.json", $@"{Environment.CurrentDirectory}\DataBase\GridOfAssetsFromAMT.json", true);
-                File.Copy($@"{Environment.CurrentDirectory}\GridOfAssetsResult.json", $@"{Environment.CurrentDirectory}\DataBase\GridOfAssetsResult.json", true);
-                ZipFile.CreateFromDirectory($@"{Environment.CurrentDirectory}\DataBase", saveFileDialog.FileName+".zip");
-                File.Delete($@"{Environment.CurrentDirectory}\DataBase\GridOfAssetsFromAMT.json");
-                File.Delete($@"{Environment.CurrentDirectory}\DataBase\GridOfAssetsResult.json");
-                Directory.Delete($@"{Environment.CurrentDirectory}\DataBase");
-            }
-        }
-        private void OpenFile(object sender, RoutedEventArgs e) //load
-        {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            if (openFileDialog.ShowDialog() == true)
-            {
-                Directory.CreateDirectory($@"{Environment.CurrentDirectory}\OldDataBase");
-                File.Move($@"{Environment.CurrentDirectory}\GridOfAssetsFromAMT.json", $@"{Environment.CurrentDirectory}\OldDataBase\GridOfAssetsFromAMT.json");
-                File.Move($@"{Environment.CurrentDirectory}\GridOfAssetsResult.json", $@"{Environment.CurrentDirectory}\OldDataBase\GridOfAssetsResult.json");
-                try
-                {
-                    ZipFile.ExtractToDirectory(openFileDialog.FileName, $@"{Environment.CurrentDirectory}");
-                }
-                catch
-                {
-                    File.Move($@"{Environment.CurrentDirectory}\OldDataBase\GridOfAssetsFromAMT.json", $@"{Environment.CurrentDirectory}\GridOfAssetsFromAMT.json");
-                    File.Move($@"{Environment.CurrentDirectory}\OldDataBase\GridOfAssetsResult.json", $@"{Environment.CurrentDirectory}\GridOfAssetsResult.json");
-                }
-                File.Delete($@"{Environment.CurrentDirectory}\OldDataBase\GridOfAssetsFromAMT.json");
-                File.Delete($@"{Environment.CurrentDirectory}\OldDataBase\GridOfAssetsResult.json");
-                Directory.Delete($@"{Environment.CurrentDirectory}\OldDataBase");
-            }
-            App.Load(_DataGridFromAMT, _DataGridResult);
-        }
         private void ButtonFinishSending(object sender, RoutedEventArgs e)
         {
             App.FinishSending();
@@ -132,7 +84,7 @@ namespace LazyAdmin.Windows
             {
                 if (_DataGridResult.CurrentColumn.Header.ToString() != null)
                 {
-                    App.GetColumn(_DataGridResult.CurrentColumn.Header.ToString() +" Result");
+                    App.GetColumn(_DataGridResult.CurrentColumn.Header.ToString() + " Result");
                 }
             }
         }
@@ -146,16 +98,61 @@ namespace LazyAdmin.Windows
                 }
             }
         }
-        private static void Highlight()
-        {
-
-        }
         private void NoSerialNumber(object sender, RoutedEventArgs e)
         {
             _EnterText.Text = "No Serial Number";
             App.Input(_EnterText.Text.TrimStart().ToString().ToUpper());
             _EnterText.Clear();
         }
+    } //buttons
+    public partial class _NavToolMenu : Window //main functional
+    {
+        public _NavToolMenu()
+        {
+            InitializeComponent();
+            App.WindowSettings(_HeaderButtonGrid, this);
+            App.Load(_DataGridFromAMT, _DataGridResult);
+        }
+        private void SaveFile(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "ZIP files|*.zip";
+            saveFileDialog.DefaultExt = "zip";
+            saveFileDialog.AddExtension = true;
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                Directory.CreateDirectory($@"{Environment.CurrentDirectory}\DataBase");
+                File.Copy($@"{Environment.CurrentDirectory}\GridOfAssetsFromAMT.json", $@"{Environment.CurrentDirectory}\DataBase\GridOfAssetsFromAMT.json", true);
+                File.Copy($@"{Environment.CurrentDirectory}\GridOfAssetsResult.json", $@"{Environment.CurrentDirectory}\DataBase\GridOfAssetsResult.json", true);
+                ZipFile.CreateFromDirectory($@"{Environment.CurrentDirectory}\DataBase", saveFileDialog.FileName);
+                File.Delete($@"{Environment.CurrentDirectory}\DataBase\GridOfAssetsFromAMT.json");
+                File.Delete($@"{Environment.CurrentDirectory}\DataBase\GridOfAssetsResult.json");
+                Directory.Delete($@"{Environment.CurrentDirectory}\DataBase");
+            }
+        }
+        private void OpenFile(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "ZIP files|*.zip";
+            if (openFileDialog.ShowDialog() == true)
+            {
+                Directory.CreateDirectory($@"{Environment.CurrentDirectory}\OldDataBase");
+                File.Move($@"{Environment.CurrentDirectory}\GridOfAssetsFromAMT.json", $@"{Environment.CurrentDirectory}\OldDataBase\GridOfAssetsFromAMT.json");
+                File.Move($@"{Environment.CurrentDirectory}\GridOfAssetsResult.json", $@"{Environment.CurrentDirectory}\OldDataBase\GridOfAssetsResult.json");
+                try
+                {
+                    ZipFile.ExtractToDirectory(openFileDialog.FileName, $@"{Environment.CurrentDirectory}");
+                }
+                catch
+                {
+                    File.Move($@"{Environment.CurrentDirectory}\OldDataBase\GridOfAssetsFromAMT.json", $@"{Environment.CurrentDirectory}\GridOfAssetsFromAMT.json");
+                    File.Move($@"{Environment.CurrentDirectory}\OldDataBase\GridOfAssetsResult.json", $@"{Environment.CurrentDirectory}\GridOfAssetsResult.json");
+                }
+                File.Delete($@"{Environment.CurrentDirectory}\OldDataBase\GridOfAssetsFromAMT.json");
+                File.Delete($@"{Environment.CurrentDirectory}\OldDataBase\GridOfAssetsResult.json");
+                Directory.Delete($@"{Environment.CurrentDirectory}\OldDataBase");
+            }
+            App.Load(_DataGridFromAMT, _DataGridResult);
+        }
     }
-
 }

@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.ComponentModel;
-using System.Collections.ObjectModel;
-using System.Windows;
+﻿using System.ComponentModel;
 
 namespace LazyAdmin.DataBase
 {
@@ -15,7 +8,6 @@ namespace LazyAdmin.DataBase
         private string _SerialNumber;
         private string _Description;
         private string _Status;
-
 
         public string CiklumID
         {

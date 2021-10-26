@@ -31,8 +31,10 @@
             <Grid Height="434.04" Width="800" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <DataGrid x:Name="_DataGridFromAMT" Margin="0,65,400,0" AutoGenerateColumns="False" PreviewMouseDoubleClick="FromAMTCopyColumn">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Ciklum ID" Binding = "{Binding Path=CiklumID}"/>
-                        <DataGridTextColumn Header="Serial Number" Binding = "{Binding Path=SerialNumber}"/>
+                        <DataGridTextColumn Header="Ciklum ID" Binding = "{Binding Path=CiklumID}">
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="Serial Number" Binding = "{Binding Path=SerialNumber}">
+                        </DataGridTextColumn>
                         <DataGridTextColumn Header="Description" Binding = "{Binding Path=Description}" Width="*"/>
                     </DataGrid.Columns>
                 </DataGrid>

@@ -1,16 +1,11 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Collections.Generic;
-using System.Windows.Input;
 using LazyAdmin.DataBase;
-using System.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.Diagnostics;
 using System.Timers;
 using System.Media;
-using System.IO;
 
 namespace LazyAdmin
 {
@@ -34,7 +29,6 @@ namespace LazyAdmin
         private static FileIOService FileIOServiceResult;
         private static Timer Timer;
         #endregion
-
         static public void Load(DataGrid _DataGridFromAMT, DataGrid _DataGridResult) //Things which load on start
         {
             FileIOServiceFromAMT = new FileIOService(PATHFromAMT);
@@ -123,7 +117,7 @@ namespace LazyAdmin
                         IndexType += elements;
                         IndexManufacturer += elements;
                         IndexModel += elements;
-                        GridOfAssets.Add(new Asset() { CiklumID = ClipBoardData[IndexCiklumID], SerialNumber = ClipBoardData[IndexSerialNumber].ToUpper(), Description = (ClipBoardData[IndexType] +" "+ ClipBoardData[IndexManufacturer] + " " + ClipBoardData[IndexModel]) });
+                        GridOfAssets.Add(new Asset() { CiklumID = ClipBoardData[IndexCiklumID], SerialNumber = ClipBoardData[IndexSerialNumber].ToUpper(), Description = (ClipBoardData[IndexType] + " " + ClipBoardData[IndexManufacturer] + " " + ClipBoardData[IndexModel]) });
                     }
                 }
             }
@@ -176,7 +170,7 @@ namespace LazyAdmin
         static public void InputSending(DataGrid _DataGrid, string String) //input info from TextBox for DataGrids
         {
             bool success = int.TryParse(String, out int Number);
-            if (success && (Number.ToString().Length ==  13 || Number.ToString().Length == 6))
+            if (success && (Number.ToString().Length == 13 || Number.ToString().Length == 6))
             {
                 InputCiklumID = Number.ToString();
             }
@@ -220,7 +214,6 @@ namespace LazyAdmin
             else if (InputCiklumID != null && InputSerialNumber != null && IndexOfCiklumIDAsset != IndexOfSerialNumberAsset)
             {
                 GridOfAssetsResult.Add(new Asset() { CiklumID = InputCiklumID.ToString(), SerialNumber = InputSerialNumber.ToUpper(), Status = "CiklumID not equal Serial Number" });
-                GridOfAssets.RemoveAt(index);
                 ClearVariable();
                 SoundPlay("Error");
             }
@@ -254,19 +247,19 @@ namespace LazyAdmin
         {
             for (int i = 0; i < source.Count; i++)
             {
-                if (source[i].CiklumID.IndexOf(input) != -1)
+                if ((source[i].CiklumID != null) && (source[i].CiklumID.IndexOf(input) != -1))
                 {
                     IndexOfCiklumIDAsset = i;
                     ColumnOfDataGrid = "CiklumID";
                     break;
                 }
-                else if (source[i].SerialNumber.IndexOf(input) != -1)
+                else if ((source[i].SerialNumber != null) && (source[i].SerialNumber.IndexOf(input) != -1))
                 {
                     IndexOfSerialNumberAsset = i;
                     ColumnOfDataGrid = "SerialNumber";
                     break;
                 }
-                else if (source[i].AssetRow.IndexOf(input) != -1)
+                else if ((source[i].AssetRow != null) && (source[i].AssetRow.IndexOf(input) != -1))
                 {
                     IndexOfAsset = i;
                     ColumnOfDataGrid = "AssetRow";
@@ -461,11 +454,11 @@ namespace LazyAdmin
                 ToClipBoard += $"{GridOfAssets[i].CiklumID}";
                 if (i != GridOfAssets.Count - 1) ToClipBoard += "|";
             }
-            if(GridOfAssetsResult.Count != 0) ToClipBoard += "|";
+            if (GridOfAssetsResult.Count != 0) ToClipBoard += "|";
             for (int i = 0; i < GridOfAssetsResult.Count; i++)
             {
                 ToClipBoard += $"{GridOfAssetsResult[i].CiklumID}";
-                if(i != GridOfAssetsResult.Count-1) ToClipBoard += "|";
+                if (i != GridOfAssetsResult.Count - 1) ToClipBoard += "|";
             }
             Clipboard.SetText(ToClipBoard);
         }
@@ -483,7 +476,7 @@ namespace LazyAdmin
             for (int i = 0; i < GridOfAssetsResult.Count; i++)
             {
                 ToClipBoard += $"{GridOfAssetsResult[i].SerialNumber}";
-                if (i != GridOfAssetsResult.Count-1) ToClipBoard += "|";
+                if (i != GridOfAssetsResult.Count - 1) ToClipBoard += "|";
             }
             Clipboard.SetText(ToClipBoard);
         }
