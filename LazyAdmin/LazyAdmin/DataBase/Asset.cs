@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Windows.Controls;
 
 namespace LazyAdmin.DataBase
 {
@@ -8,6 +9,7 @@ namespace LazyAdmin.DataBase
         private string _SerialNumber;
         private string _Description;
         private string _Status;
+        private CheckBox _Fixed;    
 
         public string CiklumID
         {
@@ -54,7 +56,15 @@ namespace LazyAdmin.DataBase
         {
             get { return _CiklumID + _SerialNumber; }
         }
-
+        public CheckBox Fixed
+        {
+            get { return _Fixed; }
+            set 
+            {
+                if (_Fixed == Fixed) return;
+                _Fixed = Fixed;
+            }
+        }
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(string propertyName = "")
         {
