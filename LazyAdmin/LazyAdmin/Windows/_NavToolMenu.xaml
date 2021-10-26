@@ -49,13 +49,13 @@
                         <DataGridTextColumn Header="Status" Binding = "{Binding Path=Status}" Width="*"/>
                     </DataGrid.Columns>
                 </DataGrid>
-                <DataGrid x:Name="_DataGridFixing" Margin="0,65,0,0" AutoGenerateColumns="False" IsReadOnly="True" Visibility="Hidden">
+                <DataGrid x:Name="_DataGridFixing" Margin="0,65,0,0" AutoGenerateColumns="False" CanUserDeleteRows="False" CanUserAddRows="False" Visibility="Hidden">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Ciklum ID" Binding = "{Binding Path=CiklumID}" Width="150"/>
-                        <DataGridTextColumn Header="Serial Number" Binding = "{Binding Path=SerialNumber}" Width="250"/>
-                        <DataGridTextColumn Header="Desciption" Binding = "{Binding Path=Description}" Visibility="Hidden"/>
-                        <DataGridTextColumn Header="Status" Binding = "{Binding Path=Status}" Width="*"/>
-                        <DataGridCheckBoxColumn Header="Fixed" Binding = "{Binding Path=Fixed}" Width="40"/>
+                        <DataGridTextColumn Header="Ciklum ID" Binding = "{Binding Path=CiklumID}"  IsReadOnly="True" Width="150"/>
+                        <DataGridTextColumn Header="Serial Number" Binding = "{Binding Path=SerialNumber}"  IsReadOnly="True" Width="250"/>
+                        <DataGridTextColumn Header="Desciption" Binding = "{Binding Path=Description}"  IsReadOnly="True" Visibility="Hidden"/>
+                        <DataGridTextColumn Header="Status" Binding = "{Binding Path=Status}"  IsReadOnly="True" Width="*"/>
+                        <DataGridCheckBoxColumn Header="Fixed"  Binding = "{Binding Path=Fixed}"  IsReadOnly="False" Width="40"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>

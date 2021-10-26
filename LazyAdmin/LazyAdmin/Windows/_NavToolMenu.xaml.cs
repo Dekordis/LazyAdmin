@@ -109,7 +109,7 @@ namespace LazyAdmin.Windows
         {
             if (_Start.Content == "Start")
             {
-                //App.UploadToFixing(_DataGridFixing);
+                App.UploadToFixing(_DataGridFixing);
                 _Start.Content = "Cancel";
                 _Finish.Visibility = Visibility.Visible;
                 _DataGridFixing.Visibility = Visibility.Visible;

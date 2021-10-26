@@ -9,7 +9,7 @@ namespace LazyAdmin.DataBase
         private string _SerialNumber;
         private string _Description;
         private string _Status;
-        private CheckBox _Fixed;    
+        private bool _Fixed;
 
         public string CiklumID
         {
@@ -56,13 +56,14 @@ namespace LazyAdmin.DataBase
         {
             get { return _CiklumID + _SerialNumber; }
         }
-        public CheckBox Fixed
+        public bool Fixed
         {
             get { return _Fixed; }
-            set 
+            set
             {
                 if (_Fixed == Fixed) return;
                 _Fixed = Fixed;
+                OnPropertyChanged("Fixed");
             }
         }
         public event PropertyChangedEventHandler PropertyChanged;
