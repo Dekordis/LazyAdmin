@@ -529,8 +529,9 @@ namespace LazyAdmin
                     Grid.RemoveAt(i);
             }
         }
-       
+        #endregion
 
+        #region Fixed
         static public void UploadToFixing(DataGrid datagrid)
         {
             GridOfAssetsCheking = new ObservableCollection<Asset>();
@@ -538,14 +539,13 @@ namespace LazyAdmin
 
             for (int i = 0; i < GridOfAssetsResult.Count; i++)
             {
-                if(GridOfAssetsResult[i].Status != "Ok" && GridOfAssetsResult[i].Status != "FIXED...)")
+                if (GridOfAssetsResult[i].Status != "Ok" && GridOfAssetsResult[i].Status != "FIXED...)")
                 {
-                    //StatusLibrary
-                    GridOfAssetsCheking.Add(new Asset { CiklumID = GridOfAssetsResult[i].CiklumID, SerialNumber = GridOfAssetsResult[i].SerialNumber, Status = GridOfAssetsResult[i].Status});
+                    GridOfAssetsCheking.Add(new Asset { CiklumID = GridOfAssetsResult[i].CiklumID, SerialNumber = GridOfAssetsResult[i].SerialNumber, Status = GridOfAssetsResult[i].Status });
                 }
             }
         }
-        static  public void StatusLibrary(string Status)
+        static public void StatusLibrary(string Status)
         {
             if (Status == "")
             {
@@ -559,7 +559,7 @@ namespace LazyAdmin
         }
         static public void test()
         {
-            MessageBox.Show(GridOfAssetsCheking[0].Fixed.ToString()+"\n"+ GridOfAssetsCheking[1].Fixed.ToString());
+            MessageBox.Show(GridOfAssetsCheking[0].Fixed.ToString() + "\n" + GridOfAssetsCheking[1].Fixed.ToString());
         }
         #endregion
         #region Sounds
