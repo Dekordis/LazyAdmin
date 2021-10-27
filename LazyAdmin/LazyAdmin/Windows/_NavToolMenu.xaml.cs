@@ -127,7 +127,7 @@ namespace LazyAdmin.Windows
         }
         private void FinishFixing(object sender, RoutedEventArgs e)
         {
-            App.test();
+            App.FinishFixing(_DataGridFromAMT);
         }
         
     } //buttons
