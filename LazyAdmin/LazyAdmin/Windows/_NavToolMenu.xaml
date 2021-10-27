@@ -55,8 +55,24 @@
                         <DataGridTextColumn Header="Serial Number" Binding = "{Binding Path=SerialNumber}"  IsReadOnly="True" Width="250"/>
                         <DataGridTextColumn Header="Desciption" Binding = "{Binding Path=Description}"  IsReadOnly="True" Visibility="Hidden"/>
                         <DataGridTextColumn Header="Status" Binding = "{Binding Path=Status}"  IsReadOnly="True" Width="*"/>
-                        <DataGridCheckBoxColumn Header="Fixed"  Binding = "{Binding Path=Fixed}"  IsReadOnly="False" Width="40"/>
+                        <DataGridTemplateColumn Header="Fixed" IsReadOnly="False"  Width="40">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <CheckBox Margin="10, 0, 0, 0"  IsThreeState="False" IsChecked="{Binding Path=Fixed, UpdateSourceTrigger=PropertyChanged}">
+                                    </CheckBox>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
                     </DataGrid.Columns>
+                    <DataGrid.RowStyle>
+                        <Style TargetType="DataGridRow">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Fixed, UpdateSourceTrigger=PropertyChanged}" Value="True">
+                                    <Setter Property="Background" Value="LightGreen"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGrid.RowStyle>
                 </DataGrid>
             </Grid>
         </Viewbox>

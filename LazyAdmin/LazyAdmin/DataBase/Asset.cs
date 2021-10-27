@@ -61,8 +61,7 @@ namespace LazyAdmin.DataBase
             get { return _Fixed; }
             set
             {
-                if (_Fixed == Fixed) return;
-                _Fixed = Fixed;
+                _Fixed = value;
                 OnPropertyChanged("Fixed");
             }
         }

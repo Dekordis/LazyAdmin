@@ -556,13 +556,14 @@ namespace LazyAdmin
         {
             GridOfAssets.Clear();
             Upload(datagrid);
-
         }
-
-
-            #endregion
-            #region Sounds
-            static private void SoundPlay(string sound)
+        static public void test()
+        {
+            MessageBox.Show(GridOfAssetsCheking[0].Fixed.ToString()+"\n"+ GridOfAssetsCheking[1].Fixed.ToString());
+        }
+        #endregion
+        #region Sounds
+        static private void SoundPlay(string sound)
         {
             string MusicFile = "";
             if (sound == "Accept")

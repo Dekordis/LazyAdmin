@@ -127,8 +127,9 @@ namespace LazyAdmin.Windows
         }
         private void FinishFixing(object sender, RoutedEventArgs e)
         {
-
+            App.test();
         }
+        
     } //buttons
     public partial class _NavToolMenu : Window //main functional
     {
