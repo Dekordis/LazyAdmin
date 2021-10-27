@@ -138,6 +138,7 @@ namespace LazyAdmin.Windows
             InitializeComponent();
             App.WindowSettings(_HeaderButtonGrid, this);
             App.Load(_DataGridFromAMT, _DataGridResult);
+            _Start.Content = "Start";
         }
         private void SaveFile(object sender, RoutedEventArgs e)
         {
