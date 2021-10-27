@@ -38,7 +38,7 @@ namespace LazyAdmin.Windows
                 if (_EnterText.Text == "" || _EnterText.Text == null || _EnterText.Text == " ") _EnterText.Clear();
                 else if (_SendingEquipment.IsChecked == false)
                 {
-                    App.Input(_EnterText.Text.TrimStart().ToString().ToUpper());
+                    App.AddID(_EnterText.Text.TrimStart().ToString().ToUpper());
                     _EnterText.Clear();
                 }
                 else
@@ -98,6 +98,13 @@ namespace LazyAdmin.Windows
                 }
             }
         }
+        private void FixingHelp(object sender, MouseButtonEventArgs e)
+        {
+            if (e.RightButton == MouseButtonState.Pressed)
+            {
+                MessageBox.Show("help with issue");
+            }
+        }
         private void NoSerialNumber(object sender, RoutedEventArgs e)
         {
             _EnterText.Text = "No Serial Number";
@@ -128,8 +135,13 @@ namespace LazyAdmin.Windows
         private void FinishFixing(object sender, RoutedEventArgs e)
         {
             App.FinishFixing(_DataGridFromAMT);
+            _Start.Content = "Start";
+            _Finish.Visibility = Visibility.Hidden;
+            _DataGridFixing.Visibility = Visibility.Hidden;
+            _DataGridFromAMT.Visibility = Visibility.Visible;
+            _DataGridResult.Visibility = Visibility.Visible;
         }
-        
+
     } //buttons
     public partial class _NavToolMenu : Window //main functional
     {

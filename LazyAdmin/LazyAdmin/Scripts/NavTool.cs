@@ -20,6 +20,7 @@ namespace LazyAdmin
         private static string InputWrongSerialNumber = null;
         private static string ColumnOfDataGrid = null;
         private static int IndexOfAsset = -1;
+        private static bool AssetCreated = false;
         private static int IndexOfSerialNumberAsset = -1;
         private static int IndexOfCiklumIDAsset = -1;
         private static ObservableCollection<Asset> GridOfAssets;
@@ -33,12 +34,12 @@ namespace LazyAdmin
         private static string NoInAMT = "No in AMT";
         private static string WrongCiklumID = "Wrong CiklumID";
         private static string WrongSerialNumber = "Wrong S/N";
-        private static string CiklumIDNotMutchSerialNumber = "CiklumID not match S/N";
+        private static string CiklumIDNotMutchSerialNumber = "CiklumID does not match S/N";
         private static string StickCiklumID = "Stick CiklumID";
         private static string FixedNoInAMT = "Equipment was added to AMT";
         private static string FixedWrongCiklumID = "CiklumID was changed to correct";
-        private static string FixedWrongSerialNumber = "S/N was chabged to correct";
-        private static string FixedCiklumIDNotMutchSerialNumber = "CiklumID and S/N were recheced and changed to correct";
+        private static string FixedWrongSerialNumber = "S/N was changed to correct";
+        private static string FixedCiklumIDNotMutchSerialNumber = "CiklumID and S/N were changed to correct";
         private static string FixedStickCiklumID = "CiklumID has been sticked";
         private static string PreparedToDelivery = "Was prepared to delivery";
         private static string[] FixedStatusLibrary = { FixedNoInAMT, FixedWrongCiklumID, FixedWrongSerialNumber, FixedCiklumIDNotMutchSerialNumber, FixedStickCiklumID };
@@ -137,10 +138,93 @@ namespace LazyAdmin
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                MessageBox.Show(e.Message);
             }
         }
+        static public void AddID(string Input)
+        {
+            bool success = long.TryParse(Input, out long Number);
+            if (success && (Number.ToString().Length == 13 || Number.ToString().Length == 6))
+            {
+                if(InputCiklumID != null) SoundPlay("Repeat");
+                InputCiklumID = Input;
+            }
+            else
+            {
+                if (InputCiklumID != null) SoundPlay("Repeat");
+                InputSerialNumber = Input;
+            }
+            CreateAsset(GridOfAssets, GridOfAssetsResult);
+        }
+        static private void CreateAsset(ObservableCollection<Asset> Collection, ObservableCollection<Asset> CollectionResult)
+        {
+            if(InputCiklumID != null && InputSerialNumber != null)
+            {
+                CollectionResult.Add(new Asset { CiklumID = InputCiklumID, SerialNumber = InputSerialNumber });
+                for (int i = 0; i < CollectionResult.Count; i++)
+                {
+                    if (CollectionResult[i].AssetRow == InputCiklumID + InputSerialNumber)
+                    {
+                        for (int b = 0; b < Collection.Count; b++)
+                        {
+                            if (CollectionResult[i].AssetRow == Collection[b].AssetRow)
+                            {
+                                CollectionResult[i].Description = Collection[b].Description;
+                                if (InputCiklumID.Length == 6) CollectionResult[i].Status = Ok;
+                                else CollectionResult[i].Status = StickCiklumID;
+                                Collection.RemoveAt(b);
+                                ClearVariable();
+                                SoundPlay("Accept");
+                                return;
+                            }
+                            else if (CollectionResult[i].CiklumID == Collection[b].CiklumID)
+                            {
+                                CollectionResult[i].Description = Collection[b].Description;
+                                for (int s = 0; s < Collection.Count; s++)
+                                {
+                                    if (CollectionResult[i].SerialNumber == Collection[s].SerialNumber)
+                                    {
+                                        CollectionResult[i].Status = CiklumIDNotMutchSerialNumber;
+                                        ClearVariable();
+                                        SoundPlay("Error");
+                                        return;
+                                    }
+                                }
+                                CollectionResult[i].Status = WrongSerialNumber;
+                                ClearVariable();
+                                SoundPlay("Error");
+                                return;
+                            }
+                            else if (CollectionResult[i].SerialNumber == Collection[b].SerialNumber)
+                            {
+                                CollectionResult[i].Description = Collection[b].Description;
+                                for (int s = 0; s < Collection.Count; s++)
+                                {
+                                    if (CollectionResult[i].CiklumID == Collection[s].CiklumID)
+                                    {
+                                        CollectionResult[i].Status = CiklumIDNotMutchSerialNumber;
+                                        ClearVariable();
+                                        SoundPlay("Error");
+                                        return;
+                                    }
+                                }
+                                CollectionResult[i].Status = WrongCiklumID;
+                                ClearVariable();
+                                SoundPlay("Error");
+                                return;
+                            }
+                        }
+                        CollectionResult[i].Status = NoInAMT;
+                        ClearVariable();
+                        SoundPlay("Error");
+                        return;
+                    }
+                }
+            }
+        }
+
         static public void Input(string String) //input info from TextBox for DataGrids
         {
             Search(GridOfAssets, String);
@@ -586,6 +670,7 @@ namespace LazyAdmin
                         if (GridOfAssetsResult[i].Status != "Ok" && GridOfAssetsResult[i].Status != FixedStatusLibrary[b])
                         {
                             GridOfAssetsResult.RemoveAt(i);
+                            i--;
                             break;
                         }
                     }
@@ -603,7 +688,7 @@ namespace LazyAdmin
                 }
                 for (int i = 0; i < GridOfAssetsChecking.Count; i++)
                 {
-                    GridOfAssetsResult.Add(new Asset { CiklumID = GridOfAssetsChecking[i].CiklumID, SerialNumber = GridOfAssetsChecking[i].SerialNumber, Status = GridOfAssetsChecking[i].Status });
+                    GridOfAssetsResult.Add(new Asset { CiklumID = GridOfAssetsChecking[i].CiklumID, SerialNumber = GridOfAssetsChecking[i].SerialNumber, Description = GridOfAssetsChecking[i].Description, Status = GridOfAssetsChecking[i].Status });
                 }
                 GridOfAssets.Clear();
                 Upload(datagrid);
