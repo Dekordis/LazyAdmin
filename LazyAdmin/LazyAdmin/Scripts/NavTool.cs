@@ -16,16 +16,10 @@ namespace LazyAdmin
         #region Variables
         private static readonly string PATHFromAMT = $"{Environment.CurrentDirectory}\\GridOfAssetsFromAMT.json";
         private static readonly string PATHResult = $"{Environment.CurrentDirectory}\\GridOfAssetsResult.json";
-        private static string InputCiklumID = null;
-        private static string InputSerialNumber = null;
-        private static string InputWrongCiklumID = null;
-        private static string InputWrongSerialNumber = null;
-        private static string ColumnOfDataGrid = null;
-        private static int IndexOfAsset = -1;
-        private static bool AssetCreated = false;
-        private static bool UploadError = false;
-        private static int IndexOfSerialNumberAsset = -1;
-        private static int IndexOfCiklumIDAsset = -1;
+        private static string InputCiklumID;
+        private static string InputSerialNumber;
+        private static bool UploadError;
+        private static bool Mute;
         private static ObservableCollection<Asset> GridOfAssets;
         private static ObservableCollection<Asset> GridOfAssetsResult;
         private static ObservableCollection<Asset> GridOfAssetsChecking;
@@ -33,31 +27,33 @@ namespace LazyAdmin
         private static FileIOService FileIOServiceResult;
         private static Timer Timer;
         #region Status Library
-        private static string Ok = "Ok";
-        private static string NoInAMT = "No in AMT";
-        private static string WrongCiklumID = "Wrong CiklumID";
-        private static string WrongSerialNumber = "Wrong S/N";
-        private static string CiklumIDNotMutchSerialNumber = "CiklumID does not match S/N";
-        private static string StickCiklumID = "Stick CiklumID";
-        private static string FixedNoInAMT = "Equipment was added to AMT";
-        private static string FixedWrongCiklumID = "CiklumID was changed to correct";
-        private static string FixedWrongSerialNumber = "S/N was changed to correct";
-        private static string FixedCiklumIDNotMutchSerialNumber = "CiklumID and S/N were changed to correct";
-        private static string FixedStickCiklumID = "CiklumID has been sticked";
-        private static string PreparedToDelivery = "Was prepared to delivery";
+        private static readonly string Ok = "Ok";
+        private static readonly string NoInAMT = "No in AMT";
+        private static readonly string WrongCiklumID = "Wrong CiklumID";
+        private static readonly string WrongSerialNumber = "Wrong S/N";
+        private static readonly string CiklumIDNotMutchSerialNumber = "CiklumID does not match S/N";
+        private static readonly string StickCiklumID = "Stick CiklumID";
+        private static readonly string FixedNoInAMT = "Equipment was added to AMT";
+        private static readonly string FixedWrongCiklumID = "CiklumID was changed to correct";
+        private static readonly string FixedWrongSerialNumber = "S/N was changed to correct";
+        private static readonly string FixedCiklumIDNotMutchSerialNumber = "CiklumID and S/N were changed to correct";
+        private static readonly string FixedStickCiklumID = "CiklumID has been sticked";
+        private static readonly string PreparedToDelivery = "Was prepared to delivery";
+        private static readonly string PreparingToDelivery = "Preparing to delivery";
+
         #region Instruction Library
-        private static string InstructionNoInAMT = "1. Create IT Request\n1.1. Tittle: Please add equipment to AMT\n1.2. Add all information with asset to ticket\n1.3. Attach photo with current asset to tciket\n2. Waiting while HW Asset Manager added asset to AMT";
-        private static string InstructionWrongCiklumID = "1. Find this asset in AMT via SerialNumber\n2. Change CiklumID in AMT to correct from asset";
-        private static string InstructionWrongSerialNumber = "1. Finde this asset in AMT via CiklumID\n2. Change SerialNumber in AMT to correct from asset";
-        private static string InstructionCiklumIDNotMutchSerialNumber = "1. Finde this asset in AMT\n2. Change CiklumID in AMT to correct from asset\n(Reminder: Don't forget repeat this action for second asset with same issue)";
-        private static string InstructionStickCiklumID = "1. Stick CiklumID to asset\n2. Change Barcode in column(CiklumID) in AMT to stiked CiklumID\n3. Change Barcode in column(CiklumID) to stiked CiklumID";
+        private static readonly string InstructionNoInAMT = "1. Create IT Request\n1.1. Tittle: Please add equipment to AMT\n1.2. Add all information with asset to ticket\n1.3. Attach photo with current asset to tciket\n2. Waiting while HW Asset Manager added asset to AMT";
+        private static readonly string InstructionWrongCiklumID = "1. Find this asset in AMT via SerialNumber\n2. Change CiklumID in AMT to correct from asset";
+        private static readonly string InstructionWrongSerialNumber = "1. Finde this asset in AMT via CiklumID\n2. Change SerialNumber in AMT to correct from asset";
+        private static readonly string InstructionCiklumIDNotMutchSerialNumber = "1. Finde this asset in AMT\n2. Change CiklumID in AMT to correct from asset\n(Reminder: Don't forget repeat this action for second asset with same issue)";
+        private static readonly string InstructionStickCiklumID = "1. Stick CiklumID to asset\n2. Change Barcode in column(CiklumID) in AMT to stiked CiklumID\n3. Change Barcode in column(CiklumID) to stiked CiklumID";
         #endregion
-        private static string[] FixedStatusLibrary = { FixedNoInAMT, FixedWrongCiklumID, FixedWrongSerialNumber, FixedCiklumIDNotMutchSerialNumber, FixedStickCiklumID };
-        private static string[] StatusLibrary = { NoInAMT, WrongCiklumID, WrongSerialNumber, CiklumIDNotMutchSerialNumber, StickCiklumID };
-        private static string[] InstructionLibrary = { InstructionNoInAMT, InstructionWrongCiklumID, InstructionWrongSerialNumber, InstructionCiklumIDNotMutchSerialNumber, InstructionStickCiklumID };
+        private static readonly string[] FixedStatusLibrary = { FixedNoInAMT, FixedWrongCiklumID, FixedWrongSerialNumber, FixedCiklumIDNotMutchSerialNumber, FixedStickCiklumID };
+        private static readonly string[] StatusLibrary = { NoInAMT, WrongCiklumID, WrongSerialNumber, CiklumIDNotMutchSerialNumber, StickCiklumID };
+        private static readonly string[] InstructionLibrary = { InstructionNoInAMT, InstructionWrongCiklumID, InstructionWrongSerialNumber, InstructionCiklumIDNotMutchSerialNumber, InstructionStickCiklumID };
         #endregion
         #endregion
-        static public void Load(DataGrid _DataGridFromAMT, DataGrid _DataGridResult) //Things which load on start
+        public static void Load(DataGrid _DataGridFromAMT, DataGrid _DataGridResult) //Things which load on start
         {
             FileIOServiceFromAMT = new FileIOService(PATHFromAMT);
             FileIOServiceResult = new FileIOService(PATHResult);
@@ -79,6 +75,11 @@ namespace LazyAdmin
             GridOfAssetsResult.CollectionChanged += GridOfAssets_CollectionChanged;
             SetTimer(15000);
         }
+        public static void MuteSound()
+        {
+            if (Mute == false) Mute = true;
+            else Mute = false;
+        }
         #region Events for Saving
         private static void AutoSave(Object source, ElapsedEventArgs e) //Autosaving event
         {
@@ -94,7 +95,7 @@ namespace LazyAdmin
         }
         private static void GridOfAssets_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e) //Autosaving event
         {
-            if (e.Action == NotifyCollectionChangedAction.Add || e.Action == NotifyCollectionChangedAction.Remove || e.Action == NotifyCollectionChangedAction.Reset)
+            if (e.Action is NotifyCollectionChangedAction.Add or NotifyCollectionChangedAction.Remove or NotifyCollectionChangedAction.Reset)
             {
                 try
                 {
@@ -109,7 +110,7 @@ namespace LazyAdmin
         }
         #endregion
         #region Action with adding info to DataGrid
-        static public void Upload(DataGrid _DataGrid) //uploading information from Navision
+        public static void Upload(DataGrid _DataGrid) //uploading information from Navision
         {
             string[] StringClipBoardData = Clipboard.GetText().Split('\n'); // Count of rows
             string[] ClipBoardData = Clipboard.GetText().Split('\t');  // Array elements from ClipBoard
@@ -155,7 +156,7 @@ namespace LazyAdmin
                 UploadError = true;
             }
         }
-        static public void AddID(string Input)
+        public static void AddID(string Input, string Method)
         {
             bool success = long.TryParse(Input, out long Number);
             if (success && (Number.ToString().Length == 13 || Number.ToString().Length == 6))
@@ -168,16 +169,16 @@ namespace LazyAdmin
                 if (InputCiklumID != null) SoundPlay("Repeat");
                 InputSerialNumber = Input;
             }
-            CreateAsset(GridOfAssets, GridOfAssetsResult);
+            CreateAsset(GridOfAssets, GridOfAssetsResult, Method);
         }
-        static private void CreateAsset(ObservableCollection<Asset> Collection, ObservableCollection<Asset> CollectionResult)
+        private static void CreateAsset(ObservableCollection<Asset> Collection, ObservableCollection<Asset> CollectionResult, string Method)
         {
             if (InputCiklumID != null && InputSerialNumber != null)
             {
                 CollectionResult.Add(new Asset { CiklumID = InputCiklumID, SerialNumber = InputSerialNumber });
                 for (int i = 0; i < CollectionResult.Count; i++)
                 {
-                    if (CollectionResult[i].AssetRow == InputCiklumID + InputSerialNumber)
+                    if (CollectionResult[i].AssetRow == InputCiklumID + InputSerialNumber && Method == "Inventory")
                     {
                         for (int b = 0; b < Collection.Count; b++)
                         {
@@ -233,170 +234,17 @@ namespace LazyAdmin
                         SoundPlay("Error");
                         return;
                     }
-                }
-            }
-        }
-
-        static public void Input(string String) //input info from TextBox for DataGrids
-        {
-            Search(GridOfAssets, String);
-            bool success = long.TryParse(String, out long Number);
-            if (IndexOfCiklumIDAsset != -1 && ColumnOfDataGrid == "CiklumID")
-            {
-                if (InputCiklumID != null)
-                {
-                    SoundPlay("Repeat");
-                }
-                InputCiklumID = String;
-                ColumnOfDataGrid = null;
-            }
-            else if (IndexOfSerialNumberAsset != -1 && ColumnOfDataGrid == "SerialNumber")
-            {
-                if (InputSerialNumber != null)
-                {
-                    SoundPlay("Repeat");
-                }
-                InputSerialNumber = String;
-                ColumnOfDataGrid = null;
-            }
-            else if (success && (Number.ToString().Length == 13 || Number.ToString().Length == 6))
-            {
-                if (InputWrongCiklumID != null)
-                {
-                    SoundPlay("Repeat");
-                }
-                InputWrongCiklumID = Number.ToString();
-            }
-            else
-            {
-                if (InputWrongSerialNumber != null)
-                {
-                    SoundPlay("Repeat");
-                }
-                InputWrongSerialNumber = String;
-            }
-            if (IndexOfCiklumIDAsset != -1 || IndexOfSerialNumberAsset != -1) CheckingToResult(IndexOfCiklumIDAsset);
-            else if (InputWrongSerialNumber != null && InputWrongCiklumID != null) CheckingToResult();
-
-        }
-        static public void InputSending(DataGrid _DataGrid, string String) //input info from TextBox for DataGrids
-        {
-            bool success = int.TryParse(String, out int Number);
-            if (success && (Number.ToString().Length == 13 || Number.ToString().Length == 6))
-            {
-                InputCiklumID = Number.ToString();
-            }
-            else
-            {
-                InputSerialNumber = String;
-            }
-            CheckingToResult();
-        }
-        static public void CheckingToResult() //Method for cheking input info and add it to DataGrid
-        {
-            if (InputCiklumID != null && InputSerialNumber != null)
-            {
-                GridOfAssetsResult.Add(new Asset() { CiklumID = InputCiklumID.ToString(), SerialNumber = InputSerialNumber.ToUpper() });
-                ClearVariable();
-                SoundPlay("Accept");
-            }
-            else if (InputWrongCiklumID != null && InputWrongSerialNumber != null)
-            {
-                GridOfAssetsResult.Add(new Asset() { CiklumID = InputWrongCiklumID.ToString(), SerialNumber = InputWrongSerialNumber.ToUpper(), Status = NoInAMT });
-                ClearVariable();
-                SoundPlay("Error");
-            }
-        }
-        static public void CheckingToResult(int index) //Method for cheking input info and add it to DataGrid
-        {
-            if (InputCiklumID != null && InputSerialNumber != null && IndexOfCiklumIDAsset == IndexOfSerialNumberAsset && InputCiklumID.Length != 13)
-            {
-                GridOfAssetsResult.Add(new Asset() { CiklumID = InputCiklumID.ToString(), SerialNumber = InputSerialNumber.ToUpper(), Description = GridOfAssets[IndexOfCiklumIDAsset].Description, Status = Ok });
-                GridOfAssets.RemoveAt(index);
-                ClearVariable();
-                SoundPlay("Accept");
-            }
-            else if (InputCiklumID != null && InputSerialNumber != null && IndexOfCiklumIDAsset == IndexOfSerialNumberAsset && InputCiklumID.Length == 13)
-            {
-                GridOfAssetsResult.Add(new Asset() { CiklumID = InputCiklumID.ToString(), SerialNumber = InputSerialNumber.ToUpper(), Description = GridOfAssets[IndexOfCiklumIDAsset].Description, Status = StickCiklumID });
-                GridOfAssets.RemoveAt(index);
-                ClearVariable();
-                SoundPlay("Accept");
-            }
-            else if (InputCiklumID != null && InputSerialNumber != null && IndexOfCiklumIDAsset != IndexOfSerialNumberAsset)
-            {
-                GridOfAssetsResult.Add(new Asset() { CiklumID = InputCiklumID.ToString(), SerialNumber = InputSerialNumber.ToUpper(), Status = CiklumIDNotMutchSerialNumber });
-                ClearVariable();
-                SoundPlay("Error");
-            }
-            else if (InputCiklumID != null && InputWrongSerialNumber != null)
-            {
-                GridOfAssetsResult.Add(new Asset() { CiklumID = InputCiklumID.ToString(), SerialNumber = InputWrongSerialNumber.ToUpper(), Description = GridOfAssets[IndexOfCiklumIDAsset].Description, Status = WrongSerialNumber });
-                ClearVariable();
-                SoundPlay("Error");
-            }
-            else if (InputWrongCiklumID != null && InputSerialNumber != null)
-            {
-                GridOfAssetsResult.Add(new Asset() { CiklumID = InputWrongCiklumID.ToString(), SerialNumber = InputSerialNumber.ToUpper(), Description = GridOfAssets[IndexOfSerialNumberAsset].Description, Status = WrongCiklumID });
-                ClearVariable();
-                SoundPlay("Error");
-            }
-        }
-        private static void ClearVariable()
-        {
-            InputWrongCiklumID = null;
-            InputWrongSerialNumber = null;
-            InputCiklumID = null;
-            InputSerialNumber = null;
-            IndexOfCiklumIDAsset = -1;
-            IndexOfSerialNumberAsset = -1;
-            IndexOfAsset = -1;
-            ColumnOfDataGrid = null;
-        } //Method for clearing temporary variables
-        #endregion
-        #region Some additional methods
-        private static void Search(ObservableCollection<Asset> source, string input) //Method for searching 1. Index 2. Column. You need add some binding list, string with searching text and empty variable for result(column, index(int!))
-        {
-            for (int i = 0; i < source.Count; i++)
-            {
-                if ((source[i].CiklumID != null) && (source[i].CiklumID.IndexOf(input) != -1))
-                {
-                    IndexOfCiklumIDAsset = i;
-                    ColumnOfDataGrid = "CiklumID";
-                    break;
-                }
-                else if ((source[i].SerialNumber != null) && (source[i].SerialNumber.IndexOf(input) != -1))
-                {
-                    IndexOfSerialNumberAsset = i;
-                    ColumnOfDataGrid = "SerialNumber";
-                    break;
-                }
-                else if ((source[i].AssetRow != null) && (source[i].AssetRow.IndexOf(input) != -1))
-                {
-                    IndexOfAsset = i;
-                    ColumnOfDataGrid = "AssetRow";
-                    break;
-                }
-            }
-        }
-        private static void Search(ObservableCollection<Asset> source, string input, string status) //Method for searching 1. Index 2. Column. You need add some binding list, string with searching text and empty variable for result(column, index(int!))
-        {
-            if (status == "Status")
-                for (int i = 0; i < source.Count; i++)
-                {
-                    if (source[i].Status.IndexOf(input) != -1)
+                    else if(CollectionResult[i].AssetRow == InputCiklumID + InputSerialNumber && Method == "Sending")
                     {
-                        IndexOfAsset = source[i].Status.IndexOf(input);
-                        break;
+                        CollectionResult[i].Status = PreparingToDelivery;
+                        ClearVariable();
+                        SoundPlay("Accept");
+                        return;
                     }
-                };
+                }
+            }
         }
-        static public void ClearAssets() //Clearing GrindOfAsset
-        {
-            GridOfAssets.Clear();
-            GridOfAssetsResult.Clear();
-        }
-        static public void FinishSending() //Method for equal 2 observables collection (GridOfAssetResult and GridOfAsset)
+        public static void FinishSending() //Method for equal 2 observables collection (GridOfAssetResult and GridOfAsset)
         {
             if (GridOfAssets.Count == GridOfAssetsResult.Count)
             {
@@ -527,16 +375,6 @@ namespace LazyAdmin
                     result = null;
                 }
             }
-
-        }
-        private static void SetTimer(int interval) //Timer for autosaving
-        {
-            // Create a timer with a two second interval.
-            Timer = new Timer(interval);
-            // Hook up the Elapsed event for the timer. 
-            Timer.Elapsed += AutoSave;
-            Timer.AutoReset = true;
-            Timer.Enabled = true;
         }
         #endregion
         #region Output value to clipboard
@@ -637,14 +475,13 @@ namespace LazyAdmin
         {
             for (int i = Grid.Count - 1; i >= 0; i--)
             {
-                if (Grid[i].AssetRow == null || Grid[i].AssetRow == "")
+                if (Grid[i].AssetRow is null or "")
                     Grid.RemoveAt(i);
             }
         }
         #endregion
-
         #region Fixed
-        static public void UploadToFixing(DataGrid datagrid)
+        public static void UploadToFixing(DataGrid datagrid)
         {
             GridOfAssetsChecking = new ObservableCollection<Asset>();
             datagrid.ItemsSource = GridOfAssetsChecking;
@@ -661,7 +498,7 @@ namespace LazyAdmin
                             Error = true;
                         }
                     }
-                    if (Error == true) break;
+                    if (Error) break;
                     else if (GridOfAssetsResult[i].Status != Ok && GridOfAssetsResult[i].Status != FixedStatusLibrary[b])
                     {
                         string Help = "Error";
@@ -678,7 +515,7 @@ namespace LazyAdmin
                 }
             }
         }
-        static public void StatusConverter(string Status)
+        public static void StatusConverter(string Status)
         {
             if (Status == NoInAMT) Status = FixedNoInAMT;
             else if (Status == WrongCiklumID) Status = FixedWrongCiklumID;
@@ -687,7 +524,7 @@ namespace LazyAdmin
             else if (Status == StickCiklumID) Status = FixedStickCiklumID;
         }
 
-        static public void FinishFixing(DataGrid datagrid, DataGrid _DataGridFromAMT, DataGrid _DataGridResult) //Method for equal 2 observables collection (GridOfAssetResult and GridOfAsset)
+        public static void FinishFixing(DataGrid datagrid, DataGrid _DataGridFromAMT, DataGrid _DataGridResult) //Method for equal 2 observables collection (GridOfAssetResult and GridOfAsset)
         {
             UploadError = false;
             BackUp();
@@ -713,7 +550,7 @@ namespace LazyAdmin
                 {
                     for (int b = 0; b < StatusLibrary.Length; b++)
                     {
-                        if (GridOfAssetsChecking[i].Fixed == true && GridOfAssetsChecking[i].Status == StatusLibrary[b])
+                        if (GridOfAssetsChecking[i].Fixed && GridOfAssetsChecking[i].Status == StatusLibrary[b])
                         {
                             GridOfAssetsChecking[i].Status = FixedStatusLibrary[b];
                             break;
@@ -730,7 +567,7 @@ namespace LazyAdmin
                 FixingEquals();
             }
         }
-        static public void FixingEquals()
+        public static void FixingEquals()
         {
             for (int i = 0; i < GridOfAssetsResult.Count; i++)
             {
@@ -746,26 +583,50 @@ namespace LazyAdmin
         }
         #endregion
         #region Sounds
-        static private void SoundPlay(string sound)
+        private static void SoundPlay(string sound)
         {
-            string MusicFile = "";
-            if (sound == "Accept")
+            if (Mute == false)
             {
-                MusicFile = "Speech On";
+                string MusicFile = "";
+                if (sound == "Accept")
+                {
+                    MusicFile = "Speech On";
+                }
+                else if (sound == "Error")
+                {
+                    MusicFile = "Speech Off";
+                }
+                else if (sound == "Repeat")
+                {
+                    MusicFile = "chimes";
+                }
+                using var soundPlayer = new SoundPlayer(@$"c:\Windows\Media\{MusicFile}.wav");
+                soundPlayer.Play();
+                soundPlayer.Play();
             }
-            else if (sound == "Error")
-            {
-                MusicFile = "Speech Off";
-            }
-            else if (sound == "Repeat")
-            {
-                MusicFile = "chimes";
-            }
-            using var soundPlayer = new SoundPlayer(@$"c:\Windows\Media\{MusicFile}.wav");
-            soundPlayer.Play();
-            soundPlayer.Play();
         }
         #endregion
+        #region Some additional methods
+        private static void ClearVariable()
+        {
+            InputCiklumID = null;
+            InputSerialNumber = null;
+        } //Method for clearing temporary variables
+        public static void ClearAssets() //Clearing GrindOfAsset
+        {
+            GridOfAssets.Clear();
+            GridOfAssetsResult.Clear();
+        }
+
+        private static void SetTimer(int interval) //Timer for autosaving
+        {
+            // Create a timer with a two second interval.
+            Timer = new Timer(interval);
+            // Hook up the Elapsed event for the timer. 
+            Timer.Elapsed += AutoSave;
+            Timer.AutoReset = true;
+            Timer.Enabled = true;
+        }
         public static void BackUp()
         {
             Directory.CreateDirectory($@"{Environment.CurrentDirectory}\BackUpDataBase");
@@ -785,17 +646,18 @@ namespace LazyAdmin
         }
         private static void ErrorWithUpload(DataGrid datagrid)
         {
-            if (UploadError == true || GridOfAssets.Count == 0)
+            if (UploadError || GridOfAssets.Count == 0)
             {
                 UploadError = false;
                 if (MessageBox.Show("Plese copy correct data from AMT and press OK \nIf you press Cancel your information from AMT will be lost", "Error", MessageBoxButton.OKCancel) == MessageBoxResult.OK) Upload(datagrid);
                 else return;
-                if (UploadError == true || GridOfAssets.Count == 0)
+                if (UploadError || GridOfAssets.Count == 0)
                 {
                     MessageBox.Show("Failed to upload, try repeat");
                     ErrorWithUpload(datagrid);
                 }
             }
         }
+        #endregion
     }
 }

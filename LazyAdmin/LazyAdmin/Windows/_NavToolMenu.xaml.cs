@@ -35,15 +35,15 @@ namespace LazyAdmin.Windows
                         }
                     }
                 }
-                if (_EnterText.Text == "" || _EnterText.Text == null || _EnterText.Text == " ") _EnterText.Clear();
+                if (_EnterText.Text is "" or null or " ") _EnterText.Clear();
                 else if (_SendingEquipment.IsChecked == false)
                 {
-                    App.AddID(_EnterText.Text.TrimStart().ToString().ToUpper());
+                    App.AddID(_EnterText.Text.TrimStart().ToString().ToUpper(), "Inventory");
                     _EnterText.Clear();
                 }
                 else
                 {
-                    App.InputSending(_DataGridResult, _EnterText.Text.ToString().TrimStart().ToUpper());
+                    App.AddID(_EnterText.Text.ToString().TrimStart().ToUpper(), "Sending");
                     _EnterText.Clear();
                 }
             }
@@ -98,18 +98,19 @@ namespace LazyAdmin.Windows
                 }
             }
         }
-        private void FixingHelp(object sender, MouseButtonEventArgs e)
-        {
-            if (e.RightButton == MouseButtonState.Pressed)
-            {
-                MessageBox.Show("help with issue");
-            }
-        }
         private void NoSerialNumber(object sender, RoutedEventArgs e)
         {
             _EnterText.Text = "No Serial Number";
-            App.Input(_EnterText.Text.TrimStart().ToString().ToUpper());
-            _EnterText.Clear();
+            if (_SendingEquipment.IsChecked == false)
+            {
+                App.AddID(_EnterText.Text.TrimStart().ToString().ToUpper(), "Inventory");
+                _EnterText.Clear();
+            }
+            else
+            {
+                App.AddID(_EnterText.Text.ToString().TrimStart().ToUpper(), "Sending");
+                _EnterText.Clear();
+            }
         }
 
         private void StartFixing(object sender, RoutedEventArgs e)
@@ -142,6 +143,10 @@ namespace LazyAdmin.Windows
             _DataGridResult.Visibility = Visibility.Visible;
         }
 
+        private void Mute(object sender, RoutedEventArgs e)
+        {
+            App.MuteSound();
+        }
     } //buttons
     public partial class _NavToolMenu : Window //main functional
     {

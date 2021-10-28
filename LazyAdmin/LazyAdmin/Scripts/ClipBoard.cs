@@ -8,7 +8,7 @@ namespace LazyAdmin
 {
     partial class App
     {
-        static public void ClipBoardToNAV(string task, string[] Array) // This method must to process all information for copy it in our services
+        public static void ClipBoardToNAV(string task, string[] Array) // This method must to process all information for copy it in our services
         {
             if (task == "ToNav") //Parametr which take all Variables form array and add "|" between them, for search all assets in Navision
             {
@@ -50,7 +50,7 @@ namespace LazyAdmin
             }
 
         }
-        static public void ClipBoardToNAV(string task, string[] Array, int LengtOfString) // This method must to process all information for copy it in our services
+        public static void ClipBoardToNAV(string task, string[] Array, int LengtOfString) // This method must to process all information for copy it in our services
         {
             if (task == "ToExcel") //Parametr which build text for copy it to Excel document
             {
@@ -92,7 +92,7 @@ namespace LazyAdmin
                 Clipboard.SetText(ClipboardInput);
             }
         }
-        static public void ChangeClipboard(string task)
+        public static void ChangeClipboard(string task)
         {
             string[] StringClipBoardData = Clipboard.GetText().Split('\n'); // Count of rows
             string[] ClipBoardData = Clipboard.GetText().Split('\t');  // Array elements from ClipBoard
@@ -144,7 +144,7 @@ namespace LazyAdmin
                         Type += elements;
                         Manufacturer += elements;
                         Model += elements;
-                        if (ClipBoardData[Status] == "Operational" || ClipBoardData[Status] == "Temporary" || ClipBoardData[Status] == "Rented")
+                        if (ClipBoardData[Status] is "Operational" or "Temporary" or "Rented")
                         {
                             Result += $"{ClipBoardData[Reimb]} {ClipBoardData[Type]} {ClipBoardData[Manufacturer]} {ClipBoardData[Model]} with CiklumID {ClipBoardData[CiklumID]} and serial number {ClipBoardData[SerialNumber]} in status {ClipBoardData[Status]} assigned to {ClipBoardData[CurrentUser]}, E-Act {ClipBoardData[Eact]}";
                             Result += "\n \n";

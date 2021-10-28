@@ -7,7 +7,7 @@ namespace LazyAdmin
 {
     partial class App
     {
-        static public void WindowSettings(Grid HeaderGrid, Window CurrentWindow)
+        public static void WindowSettings(Grid HeaderGrid, Window CurrentWindow)
         {
             WindowDesign(CurrentWindow);
             Button _CloseWindow = new Button();
@@ -70,7 +70,7 @@ namespace LazyAdmin
 
             CurrentWindow.MouseLeftButtonDown += (s, ee) => { MoveWindow(CurrentWindow); };
         }
-        static public void CloseThisWindow(Window CurrentWindow)
+        public static void CloseThisWindow(Window CurrentWindow)
         {
             CurrentWindow.Close();
             Window MainWindow = Application.Current.MainWindow;
@@ -88,11 +88,11 @@ namespace LazyAdmin
             }
 
         }
-        static public void MinimizeThisWindow(Window CurrentWindow)
+        public static void MinimizeThisWindow(Window CurrentWindow)
         {
             CurrentWindow.WindowState = WindowState.Minimized;
         }
-        static public void MaximizeThisWindow(Window CurrentWindow)
+        public static void MaximizeThisWindow(Window CurrentWindow)
         {
             if (CurrentWindow.WindowState != WindowState.Maximized)
             {
@@ -104,11 +104,11 @@ namespace LazyAdmin
                 CurrentWindow.WindowState = WindowState.Normal;
             }
         }
-        static public void MoveWindow(Window CurrentWindow)
+        public static void MoveWindow(Window CurrentWindow)
         {
             CurrentWindow.DragMove();
         }
-        static public void WindowDesign(Window CurrentWindow)
+        public static void WindowDesign(Window CurrentWindow)
         {
             CurrentWindow.AllowsTransparency = true;
             CurrentWindow.WindowStyle = WindowStyle.None;
@@ -116,7 +116,7 @@ namespace LazyAdmin
             CurrentWindow.WindowStartupLocation = WindowStartupLocation.Manual;
             CurrentWindow.ResizeMode = ResizeMode.CanResizeWithGrip;
         }
-        static public void OpenWindow(Window CurrentWindow, Window TargetWindow)
+        public static void OpenWindow(Window CurrentWindow, Window TargetWindow)
         {
             TargetWindow.Left = CurrentWindow.Left;
             TargetWindow.Top = CurrentWindow.Top;

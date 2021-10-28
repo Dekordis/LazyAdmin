@@ -13,7 +13,7 @@
                 <Button x:Name="_UploadFromAMT" Content="Upload" HorizontalAlignment="Left" Margin="10,37,0,0" VerticalAlignment="Top" Height="25" Width="76" Click="Upload"/>
                 <TextBox x:Name="_EnterText" HorizontalAlignment="Left" Margin="139,41,0,0" Text="Enter S/N or CiklumID" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" Height="17" KeyDown="EnterText" PreviewMouseDown="ClearTextInTextBox"/>
                 <CheckBox x:Name="_SendingEquipment" Content="Sending Equipment" HorizontalAlignment="Left" Margin="294,42,0,0" VerticalAlignment="Top" Foreground="White"/>
-                <CheckBox x:Name="_Mute" Content="Mute" HorizontalAlignment="Left" Margin="423,42,0,0" VerticalAlignment="Top" Foreground="White" RenderTransformOrigin="0.618,2.194"/>
+                <CheckBox x:Name="_Mute" Content="Mute" HorizontalAlignment="Left" Margin="423,42,0,0" VerticalAlignment="Top" Foreground="White" RenderTransformOrigin="0.618,2.194" Click="Mute"/>
                 <Button x:Name="_GetCiklumID" Content="Get Ciklum ID" HorizontalAlignment="Left" Margin="562,37,0,0" VerticalAlignment="Top" Height="25" Width="81" Click="GetCiklumID"/>
                 <Button x:Name="_GetSerialNumber" Content="Get S/N" HorizontalAlignment="Left" Margin="645,37,0,0" VerticalAlignment="Top" Height="25" Width="86" Click="GetSerialnumber"/>
                 <Button x:Name="_Get" Content="Get" HorizontalAlignment="Left" Margin="731,37,0,0" VerticalAlignment="Top" Height="25" Width="59" Click="GetAll"/>
@@ -49,7 +49,7 @@
                         <DataGridTextColumn Header="Status" Binding = "{Binding Path=Status}" Width="*"/>
                     </DataGrid.Columns>
                 </DataGrid>
-                <DataGrid x:Name="_DataGridFixing" PreviewMouseDown="FixingHelp" Margin="0,65,0,0" AutoGenerateColumns="False" CanUserDeleteRows="False" CanUserAddRows="False" Visibility="Hidden">
+                <DataGrid x:Name="_DataGridFixing" Margin="0,65,0,0" AutoGenerateColumns="False" CanUserDeleteRows="False" CanUserAddRows="False" Visibility="Hidden">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Ciklum ID" Binding = "{Binding Path=CiklumID}" IsReadOnly="False" Width="150">
                             <DataGridTextColumn.ElementStyle>

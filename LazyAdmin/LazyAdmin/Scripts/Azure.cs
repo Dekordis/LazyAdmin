@@ -12,7 +12,7 @@ namespace LazyAdmin
         static readonly string Key = @"NSLF6WgwRXvwHdNQxvEjZWsCMvXrsBts3H+nqnAdycFNkxROKF6U3z9MP7/Lz+kluXfjdO+ewwcISduwQlKWgA=="; //This variable needed for contain Key for Azure folder
         static readonly string User = @"Azure\cklfsstorage"; //This variable needed for contain User of Azure
 
-        static public void AzureConnection(string Action)//This method needed for connect and disconnect Azure Folder
+        public static void AzureConnection(string Action)//This method needed for connect and disconnect Azure Folder
         {
             if (Action == "Connect")
             {
@@ -47,7 +47,7 @@ namespace LazyAdmin
             //Dear Serhii please create method with 2 parameters (connect, disconnect) Azure disk 
             //When method was finished it must delete all temp files and other not necessary objects (!just only use disconnect parametr!) 
         }
-        static public void RunScript(string PathtoFile, string TypeOfRun)
+        public static void RunScript(string PathtoFile, string TypeOfRun)
         {
 
             if (TypeOfRun == "Single")  //простой запус пс1
@@ -73,7 +73,7 @@ namespace LazyAdmin
                 PowerShellScriptToll.Start();
             }
         }
-        static public void RunScript(string[] PathtoFile)
+        public static void RunScript(string[] PathtoFile)
         {
             PowerShell Script = PowerShell.Create();
             foreach (var Path in PathtoFile)
@@ -82,7 +82,7 @@ namespace LazyAdmin
             }
             Script.Invoke();
         }
-        static public void GetFilesFromFolder(string Pathtofolder, string ExtentionFile)
+        public static void GetFilesFromFolder(string Pathtofolder, string ExtentionFile)
         {
             string[] files = System.IO.Directory.GetFiles(Pathtofolder, $"*.{ExtentionFile}");//set path to folder with files in var PathToFolder, set extention of needed files 
             foreach (var file in files)
