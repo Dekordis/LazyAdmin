@@ -9,6 +9,7 @@ namespace LazyAdmin.DataBase
         private string _SerialNumber;
         private string _Description;
         private string _Status;
+        private string _Instruction;
         private bool _Fixed;
 
         public string CiklumID
@@ -63,6 +64,16 @@ namespace LazyAdmin.DataBase
             {
                 _Fixed = value;
                 OnPropertyChanged("Fixed");
+            }
+        }
+        public string Instruction
+        {
+            get { return _Instruction; }
+            set
+            {
+                if (_Instruction == value) return;
+                _Instruction = value;
+                OnPropertyChanged("Instruction");
             }
         }
         public event PropertyChangedEventHandler PropertyChanged;

@@ -49,13 +49,30 @@
                         <DataGridTextColumn Header="Status" Binding = "{Binding Path=Status}" Width="*"/>
                     </DataGrid.Columns>
                 </DataGrid>
-                <DataGrid x:Name="_DataGridFixing" Margin="0,65,0,0" AutoGenerateColumns="False" CanUserDeleteRows="False" PreviewMouseDown="FixingHelp" CanUserAddRows="False" Visibility="Hidden">
+                <DataGrid x:Name="_DataGridFixing" PreviewMouseDown="FixingHelp" Margin="0,65,0,0" AutoGenerateColumns="False" CanUserDeleteRows="False" CanUserAddRows="False" Visibility="Hidden">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Ciklum ID" Binding = "{Binding Path=CiklumID}" IsReadOnly="False" Width="150"/>
+                        <DataGridTextColumn Header="Ciklum ID" Binding = "{Binding Path=CiklumID}" IsReadOnly="False" Width="150">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Path=Status}" Value="Stick CiklumID">
+                                            <Setter Property="Background" Value="Pink" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>                        
                         <DataGridTextColumn Header="Serial Number" Binding = "{Binding Path=SerialNumber}"  IsReadOnly="False" Width="250"/>
                         <DataGridTextColumn Header="Desciption" Binding = "{Binding Path=Description}"  IsReadOnly="True" Visibility="Hidden"/>
-                        <DataGridTextColumn Header="Status" Binding = "{Binding Path=Status}"  IsReadOnly="True" Width="*"/>
-                        <DataGridTemplateColumn Header="Fixed" IsReadOnly="False"  Width="40">
+                        <DataGridTextColumn Header="Status" Binding = "{Binding Path=Status}"  IsReadOnly="True" Width="*">
+                            <DataGridTextColumn.CellStyle>
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="ToolTip" Value="{Binding Path=Instruction}"/>
+                                    <Setter Property="ToolTipService.ShowDuration" Value="120000"/>
+                                </Style>
+                            </DataGridTextColumn.CellStyle>
+                        </DataGridTextColumn>
+                            <DataGridTemplateColumn Header="Fixed" IsReadOnly="False"  Width="40">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <CheckBox Margin="10, 0, 0, 0"  IsThreeState="False" IsChecked="{Binding Path=Fixed, UpdateSourceTrigger=PropertyChanged}">
@@ -69,9 +86,6 @@
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding Fixed, UpdateSourceTrigger=PropertyChanged}" Value="True">
                                     <Setter Property="Background" Value="LightGreen"/>
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding Path=CiklumID}" Value="Stick CiklumID">
-                                    <Setter Property="Background" Value="Pink"/>
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>

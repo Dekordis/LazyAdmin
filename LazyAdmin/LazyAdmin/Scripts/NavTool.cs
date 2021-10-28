@@ -6,6 +6,8 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Timers;
 using System.Media;
+using System.IO;
+using System.IO.Compression;
 
 namespace LazyAdmin
 {
@@ -21,6 +23,7 @@ namespace LazyAdmin
         private static string ColumnOfDataGrid = null;
         private static int IndexOfAsset = -1;
         private static bool AssetCreated = false;
+        private static bool UploadError = false;
         private static int IndexOfSerialNumberAsset = -1;
         private static int IndexOfCiklumIDAsset = -1;
         private static ObservableCollection<Asset> GridOfAssets;
@@ -42,8 +45,16 @@ namespace LazyAdmin
         private static string FixedCiklumIDNotMutchSerialNumber = "CiklumID and S/N were changed to correct";
         private static string FixedStickCiklumID = "CiklumID has been sticked";
         private static string PreparedToDelivery = "Was prepared to delivery";
+        #region Instruction Library
+        private static string InstructionNoInAMT = "1. Create IT Request\n1.1. Tittle: Please add equipment to AMT\n1.2. Add all information with asset to ticket\n1.3. Attach photo with current asset to tciket\n2. Waiting while HW Asset Manager added asset to AMT";
+        private static string InstructionWrongCiklumID = "1. Find this asset in AMT via SerialNumber\n2. Change CiklumID in AMT to correct from asset";
+        private static string InstructionWrongSerialNumber = "1. Finde this asset in AMT via CiklumID\n2. Change SerialNumber in AMT to correct from asset";
+        private static string InstructionCiklumIDNotMutchSerialNumber = "1. Finde this asset in AMT\n2. Change CiklumID in AMT to correct from asset\n(Reminder: Don't forget repeat this action for second asset with same issue)";
+        private static string InstructionStickCiklumID = "1. Stick CiklumID to asset\n2. Change Barcode in column(CiklumID) in AMT to stiked CiklumID\n3. Change Barcode in column(CiklumID) to stiked CiklumID";
+        #endregion
         private static string[] FixedStatusLibrary = { FixedNoInAMT, FixedWrongCiklumID, FixedWrongSerialNumber, FixedCiklumIDNotMutchSerialNumber, FixedStickCiklumID };
         private static string[] StatusLibrary = { NoInAMT, WrongCiklumID, WrongSerialNumber, CiklumIDNotMutchSerialNumber, StickCiklumID };
+        private static string[] InstructionLibrary = { InstructionNoInAMT, InstructionWrongCiklumID, InstructionWrongSerialNumber, InstructionCiklumIDNotMutchSerialNumber, InstructionStickCiklumID };
         #endregion
         #endregion
         static public void Load(DataGrid _DataGridFromAMT, DataGrid _DataGridResult) //Things which load on start
@@ -141,6 +152,7 @@ namespace LazyAdmin
             catch (Exception e)
             {
                 MessageBox.Show(e.Message);
+                UploadError = true;
             }
         }
         static public void AddID(string Input)
@@ -148,7 +160,7 @@ namespace LazyAdmin
             bool success = long.TryParse(Input, out long Number);
             if (success && (Number.ToString().Length == 13 || Number.ToString().Length == 6))
             {
-                if(InputCiklumID != null) SoundPlay("Repeat");
+                if (InputCiklumID != null) SoundPlay("Repeat");
                 InputCiklumID = Input;
             }
             else
@@ -160,7 +172,7 @@ namespace LazyAdmin
         }
         static private void CreateAsset(ObservableCollection<Asset> Collection, ObservableCollection<Asset> CollectionResult)
         {
-            if(InputCiklumID != null && InputSerialNumber != null)
+            if (InputCiklumID != null && InputSerialNumber != null)
             {
                 CollectionResult.Add(new Asset { CiklumID = InputCiklumID, SerialNumber = InputSerialNumber });
                 for (int i = 0; i < CollectionResult.Count; i++)
@@ -641,13 +653,29 @@ namespace LazyAdmin
             {
                 for (int b = 0; b < FixedStatusLibrary.Length; b++)
                 {
-                    if (GridOfAssetsResult[i].Status != "Ok" && GridOfAssetsResult[i].Status != FixedStatusLibrary[b])
+                    bool Error = false;
+                    for (int e = 0; e < FixedStatusLibrary.Length; e++)
                     {
-                        GridOfAssetsChecking.Add(new Asset { CiklumID = GridOfAssetsResult[i].CiklumID, SerialNumber = GridOfAssetsResult[i].SerialNumber, Status = GridOfAssetsResult[i].Status });
+                        if (GridOfAssetsResult[i].Status != Ok && GridOfAssetsResult[i].Status == FixedStatusLibrary[e])
+                        {
+                            Error = true;
+                        }
+                    }
+                    if (Error == true) break;
+                    else if (GridOfAssetsResult[i].Status != Ok && GridOfAssetsResult[i].Status != FixedStatusLibrary[b])
+                    {
+                        string Help = "Error";
+                        for (int h = 0; h < StatusLibrary.Length; h++)
+                        {
+                            if (GridOfAssetsResult[i].Status == StatusLibrary[h])
+                            {
+                                Help = InstructionLibrary[h];
+                            }
+                        }
+                        GridOfAssetsChecking.Add(new Asset { CiklumID = GridOfAssetsResult[i].CiklumID, SerialNumber = GridOfAssetsResult[i].SerialNumber, Status = GridOfAssetsResult[i].Status, Description = GridOfAssetsResult[i].Description, Instruction = Help });
                         break;
                     }
                 }
-
             }
         }
         static public void StatusConverter(string Status)
@@ -659,8 +687,14 @@ namespace LazyAdmin
             else if (Status == StickCiklumID) Status = FixedStickCiklumID;
         }
 
-        static public void FinishFixing(DataGrid datagrid) //Method for equal 2 observables collection (GridOfAssetResult and GridOfAsset)
+        static public void FinishFixing(DataGrid datagrid, DataGrid _DataGridFromAMT, DataGrid _DataGridResult) //Method for equal 2 observables collection (GridOfAssetResult and GridOfAsset)
         {
+            UploadError = false;
+            BackUp();
+            if (GridOfAssetsChecking.Count <= 0)
+            {
+                return;
+            }
             if (MessageBox.Show("Please copy all assets for inventory form AMT\nAnd press OK", "Finish fix", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
             {
                 for (int i = 0; i < GridOfAssetsResult.Count; i++)
@@ -692,6 +726,7 @@ namespace LazyAdmin
                 }
                 GridOfAssets.Clear();
                 Upload(datagrid);
+                ErrorWithUpload(datagrid);
                 FixingEquals();
             }
         }
@@ -731,5 +766,36 @@ namespace LazyAdmin
             soundPlayer.Play();
         }
         #endregion
+        public static void BackUp()
+        {
+            Directory.CreateDirectory($@"{Environment.CurrentDirectory}\BackUpDataBase");
+            File.Copy($@"{Environment.CurrentDirectory}\GridOfAssetsFromAMT.json", $@"{Environment.CurrentDirectory}\BackUpDataBase\GridOfAssetsFromAMT.json", true);
+            File.Copy($@"{Environment.CurrentDirectory}\GridOfAssetsResult.json", $@"{Environment.CurrentDirectory}\BackUpDataBase\GridOfAssetsResult.json", true);
+        }
+        public static void BackUp(DataGrid _DataGridFromAMT, DataGrid _DataGridResult)
+        {
+
+            File.Delete($@"{Environment.CurrentDirectory}\GridOfAssetsFromAMT.json");
+            File.Delete($@"{Environment.CurrentDirectory}\GridOfAssetsResult.json");
+            File.Move($@"{Environment.CurrentDirectory}\BackUpDataBase\GridOfAssetsFromAMT.json", $@"{Environment.CurrentDirectory}\GridOfAssetsFromAMT.json");
+            File.Move($@"{Environment.CurrentDirectory}\BackUpDataBase\GridOfAssetsResult.json", $@"{Environment.CurrentDirectory}\GridOfAssetsResult.json");
+            Directory.Delete($@"{Environment.CurrentDirectory}\BackUpDataBase");
+            _DataGridFromAMT.ItemsSource = GridOfAssets;
+            _DataGridResult.ItemsSource = GridOfAssetsResult;
+        }
+        private static void ErrorWithUpload(DataGrid datagrid)
+        {
+            if (UploadError == true || GridOfAssets.Count == 0)
+            {
+                UploadError = false;
+                if (MessageBox.Show("Plese copy correct data from AMT and press OK \nIf you press Cancel your information from AMT will be lost", "Error", MessageBoxButton.OKCancel) == MessageBoxResult.OK) Upload(datagrid);
+                else return;
+                if (UploadError == true || GridOfAssets.Count == 0)
+                {
+                    MessageBox.Show("Failed to upload, try repeat");
+                    ErrorWithUpload(datagrid);
+                }
+            }
+        }
     }
 }

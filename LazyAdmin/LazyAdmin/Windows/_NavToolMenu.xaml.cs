@@ -134,7 +134,7 @@ namespace LazyAdmin.Windows
         }
         private void FinishFixing(object sender, RoutedEventArgs e)
         {
-            App.FinishFixing(_DataGridFromAMT);
+            App.FinishFixing(_DataGridFromAMT, _DataGridFromAMT, _DataGridResult);
             _Start.Content = "Start";
             _Finish.Visibility = Visibility.Hidden;
             _DataGridFixing.Visibility = Visibility.Hidden;
