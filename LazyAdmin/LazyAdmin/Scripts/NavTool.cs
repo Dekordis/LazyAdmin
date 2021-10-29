@@ -178,7 +178,7 @@ namespace LazyAdmin
                 CollectionResult.Add(new Asset { CiklumID = InputCiklumID, SerialNumber = InputSerialNumber });
                 for (int i = 0; i < CollectionResult.Count; i++)
                 {
-                    if (CollectionResult[i].AssetRow == InputCiklumID + InputSerialNumber && Method == "Inventory")
+                    if (CollectionResult[i].AssetRow == InputCiklumID + InputSerialNumber && CollectionResult[i].Status == null && Method == "Inventory")
                     {
                         for (int b = 0; b < Collection.Count; b++)
                         {
@@ -575,8 +575,18 @@ namespace LazyAdmin
                 {
                     if (GridOfAssetsResult[i].AssetRow == GridOfAssets[b].AssetRow)
                     {
-                        GridOfAssets.RemoveAt(b);
-                        break;
+                        if(GridOfAssetsResult[i].Status != NoInAMT)
+                        {
+                            GridOfAssets.RemoveAt(b);
+                            break;
+                        }
+                        else
+                        {
+                            GridOfAssetsResult[i].Description = GridOfAssets[b].Description;
+                            GridOfAssets.RemoveAt(b);
+                            break;
+                        }
+
                     }
                 }
             }
