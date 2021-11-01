@@ -110,7 +110,7 @@ namespace LazyAdmin
     } //    "Buttons"
     public partial class MainWindow
     {
-        readonly string UpdatePath = @"\\cklfsstorage.file.core.windows.net\remoteinstall\LAZYADMIN\Prod\";
+        readonly string UpdatePath = @"\\cklfsstorage.file.core.windows.net\remoteinstall\LAZYADMIN\Prod\LazyAdmin\";
         string CheckVersion;
         private void ChekUpdates()
         {
