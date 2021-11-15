@@ -92,9 +92,16 @@ namespace LazyAdmin.Windows
         {
             if (e.RightButton == MouseButtonState.Pressed)
             {
-                if (_DataGridFromAMT.CurrentColumn.Header.ToString() != null)
+                if (_DataGridFromAMT.CurrentColumn.Header.ToString() != null && (_DataGridFromAMT.CurrentColumn.Header.ToString() == "Ciklum ID" || _DataGridFromAMT.CurrentColumn.Header.ToString() == "Serial Number"))
                 {
-                    App.GetColumn(_DataGridFromAMT.CurrentColumn.Header.ToString() + " From AMT");
+                    try
+                    {
+                        App.GetColumn(_DataGridFromAMT.CurrentColumn.Header.ToString() + " From AMT");
+                    }
+                    catch (Exception d)
+                    {
+                        MessageBox.Show(d.Message);
+                    }
                 }
             }
         }

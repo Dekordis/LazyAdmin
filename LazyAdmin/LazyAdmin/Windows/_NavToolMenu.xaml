@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LazyAdmin.Windows"
         mc:Ignorable="d"
-        Title="_NavToolMenu" Height="{Binding SystemParameters.PrimaryScreenHeight}" Width="{Binding SystemParameters.PrimaryScreenWidth}" WindowStyle="None" Background="Transparent" ResizeMode="NoResize">
+        Title="_NavToolMenu" WindowStyle="None" Background="Transparent" ResizeMode="NoResize">
     <Grid>
         <Viewbox Stretch="Fill">
             <Grid Height="434.04" Width="800">

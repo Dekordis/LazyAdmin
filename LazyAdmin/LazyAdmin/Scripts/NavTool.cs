@@ -75,11 +75,6 @@ namespace LazyAdmin
             GridOfAssetsResult.CollectionChanged += GridOfAssets_CollectionChanged;
             SetTimer(15000);
         }
-        public static void MuteSound()
-        {
-            if (Mute == false) Mute = true;
-            else Mute = false;
-        }
         #region Events for Saving
         private static void AutoSave(Object source, ElapsedEventArgs e) //Autosaving event
         {
@@ -383,14 +378,19 @@ namespace LazyAdmin
             ClearNullInCollection(GridOfAssets);
             ClearNullInCollection(GridOfAssetsResult);
             string ToClipBoard = "CiklumID\t" + "Serial Number\t" + "Description\t" + "Status\n";
-
-            for (int i = 0; i < GridOfAssets.Count; i++)
+            if (GridOfAssets.Count != 0)
             {
-                ToClipBoard += $"{GridOfAssets[i].CiklumID}\t{GridOfAssets[i].SerialNumber}\t{GridOfAssets[i].Description}\tNot Found\n";
+                for (int i = 0; i < GridOfAssets.Count; i++)
+                {
+                    ToClipBoard += $"{GridOfAssets[i].CiklumID}\t{GridOfAssets[i].SerialNumber}\t{GridOfAssets[i].Description}\tNot Found\n";
+                }
             }
-            for (int i = 0; i < GridOfAssetsResult.Count; i++)
+            if (GridOfAssetsResult.Count != 0)
             {
-                ToClipBoard += $"{GridOfAssetsResult[i].CiklumID}\t{GridOfAssetsResult[i].SerialNumber}\t{GridOfAssetsResult[i].Description}\t{GridOfAssetsResult[i].Status}\n";
+                for (int i = 0; i < GridOfAssetsResult.Count; i++)
+                {
+                    ToClipBoard += $"{GridOfAssetsResult[i].CiklumID}\t{GridOfAssetsResult[i].SerialNumber}\t{GridOfAssetsResult[i].Description}\t{GridOfAssetsResult[i].Status}\n";
+                }
             }
             Clipboard.SetText(ToClipBoard);
         }
@@ -399,16 +399,22 @@ namespace LazyAdmin
             string ToClipBoard = null;
             ClearNullInCollection(GridOfAssets);
             ClearNullInCollection(GridOfAssetsResult);
-            for (int i = 0; i < GridOfAssets.Count; i++)
+            if (GridOfAssets.Count != 0)
             {
-                ToClipBoard += $"{GridOfAssets[i].CiklumID}";
-                if (i != GridOfAssets.Count - 1) ToClipBoard += "|";
+                for (int i = 0; i < GridOfAssets.Count; i++)
+                {
+                    ToClipBoard += $"{GridOfAssets[i].CiklumID}";
+                    if (i != GridOfAssets.Count - 1) ToClipBoard += "|";
+                }
             }
-            if (GridOfAssetsResult.Count != 0) ToClipBoard += "|";
-            for (int i = 0; i < GridOfAssetsResult.Count; i++)
+            if (GridOfAssetsResult.Count != 0) 
             {
-                ToClipBoard += $"{GridOfAssetsResult[i].CiklumID}";
-                if (i != GridOfAssetsResult.Count - 1) ToClipBoard += "|";
+                if(GridOfAssets.Count != 0)ToClipBoard += "|";
+                for (int i = 0; i < GridOfAssetsResult.Count; i++)
+                {
+                    ToClipBoard += $"{GridOfAssetsResult[i].CiklumID}";
+                    if (i != GridOfAssetsResult.Count - 1) ToClipBoard += "|";
+                }
             }
             Clipboard.SetText(ToClipBoard);
         }
@@ -417,16 +423,22 @@ namespace LazyAdmin
             ClearNullInCollection(GridOfAssets);
             ClearNullInCollection(GridOfAssetsResult);
             string ToClipBoard = null;
-            for (int i = 0; i < GridOfAssets.Count; i++)
+            if (GridOfAssets.Count != 0)
             {
-                ToClipBoard += $"{GridOfAssets[i].SerialNumber}";
-                if (i != GridOfAssets.Count - 1) ToClipBoard += "|";
+                for (int i = 0; i < GridOfAssets.Count; i++)
+                {
+                    ToClipBoard += $"{GridOfAssets[i].SerialNumber}";
+                    if (i != GridOfAssets.Count - 1) ToClipBoard += "|";
+                }
             }
-            if (GridOfAssetsResult.Count != 0) ToClipBoard += "|";
-            for (int i = 0; i < GridOfAssetsResult.Count; i++)
+            if (GridOfAssetsResult.Count != 0)
             {
-                ToClipBoard += $"{GridOfAssetsResult[i].SerialNumber}";
-                if (i != GridOfAssetsResult.Count - 1) ToClipBoard += "|";
+                if (GridOfAssets.Count != 0) ToClipBoard += "|";
+                for (int i = 0; i < GridOfAssetsResult.Count; i++)
+                {
+                    ToClipBoard += $"{GridOfAssetsResult[i].SerialNumber}";
+                    if (i != GridOfAssetsResult.Count - 1) ToClipBoard += "|";
+                }
             }
             Clipboard.SetText(ToClipBoard);
         }
@@ -470,6 +482,7 @@ namespace LazyAdmin
             {
                 GetColumnCiklumID(GridOfAssetsResult);
             }
+            else return;
         }
         private static void ClearNullInCollection(ObservableCollection<Asset> Grid)
         {
@@ -614,6 +627,11 @@ namespace LazyAdmin
                 soundPlayer.Play();
                 soundPlayer.Play();
             }
+        }
+        public static void MuteSound()
+        {
+            if (Mute == false) Mute = true;
+            else Mute = false;
         }
         #endregion
         #region Some additional methods
