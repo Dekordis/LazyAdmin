@@ -2,7 +2,7 @@
   "profiles": {
     "LazyAdmin": {
       "commandName": "Project",
-      "workingDirectory": "D:\\Dev\\LazyAdmin(Rework)\\LazyAdmin\\LazyAdmin\\bin\\Debug\\net5.0-windows"
+      "workingDirectory": "E:\\Work\\Dev\\LazyAdmin\\LazyAdmin\\bin\\Debug\\net5.0-windows"
     }
   }
 }
